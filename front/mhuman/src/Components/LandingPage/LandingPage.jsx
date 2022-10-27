@@ -3,7 +3,7 @@ import './landingpagestyles.scss'
 
 function LandingPage() {
     return (
-        <h1>Hi! I'm the LandingPage!</h1>
+        <h1 className='title'>Hi! I'm the LandingPage!</h1>
     )
 }
 
