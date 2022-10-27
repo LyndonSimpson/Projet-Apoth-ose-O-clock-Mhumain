@@ -1,0 +1,4 @@
+%syntax-version=1.0.0
+%project=mhumain
+
+1.init_db 2022-10-27T14:30:14Z Lyndon <student@teleporter> # init database tables
