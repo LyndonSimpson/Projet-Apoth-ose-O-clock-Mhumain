@@ -1,9 +1,78 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Button, Form, Message } from 'semantic-ui-react'
 import './signupstyles.scss'
 
 function SignUp() {
+    const [emailValue, SetEmailValue] = useState('');
+    const [passwordValue, SetPasswordValue] = useState('');
+    const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+
+    const handleReset = () => { //reset all input 
+      SetEmailValue('');
+      SetPasswordValue('');
+      SetConfirmPasswordValue('');
+    }
+    const handleSubmit = (evt) => {
+      evt.preventDefault();
+      if (!emailValue.trim()) {
+        setErrorMessage("L'email est obligatoire")
+        return
+      }
+      if (!passwordValue.trim()) {
+        setErrorMessage("Le mot de passe est obligatoire")
+        return
+      }
+      if (passwordValue !== confirmPasswordValue) {
+        setErrorMessage('Votre confirmation de mot de passe est incorrect')
+        return
+      }
+      //TODO : use emailValue and passwordValue for add new user in db
+      setErrorMessage('TODO : use emailValue and passwordValue for add new user in db')
+      handleReset();
+    }
+    const handleDismiss = () => {
+      setErrorMessage('');
+    }
+
+      //TODO : add message for error on information
+
     return (
-        <h1>Hi! I'm the SignUpPage!</h1>
+        <Form onSubmit={handleSubmit}>
+        <Form.Field width={3}>
+        {errorMessage &&
+          <Message
+            onDismiss={handleDismiss}
+            header='Erreur'
+            content={errorMessage}
+          />
+          }
+          <input 
+            placeholder='Email'
+            value={emailValue}
+            onChange={(e)=>{SetEmailValue(e.target.value)}}
+          />
+          <input
+            placeholder='Mot de passe'
+            type='password'
+            value={passwordValue}
+            onChange={(e)=>{SetPasswordValue(e.target.value)}}
+          />
+          <input
+            placeholder='Confirmer le mot de passe'
+            type='password'
+            value={confirmPasswordValue}
+            onChange={(e)=>{SetConfirmPasswordValue(e.target.value)}}
+          />
+        </Form.Field>
+        <Button
+          type='button'
+          onClick={handleReset}
+        >
+          Reset
+        </Button>
+        <Button type='submit'>Valider</Button>
+      </Form>
     )
 }
 
