@@ -1,8 +1,7 @@
-import React, { UseState } from 'react';
+import React, { useState } from 'react';
 import './LogIn.scss'
 import { Button, Form } from 'semantic-ui-react'
 import bgVideo from '../../videos/catVideoLP.mp4'
-import { useState } from 'react';
 
 
 function LogIn() {
@@ -35,7 +34,7 @@ function LogIn() {
                                         value={passwordValue}
                                         onChange={(e) => { SetPasswordValue(e.target.value) }} />
                                 </Form.Field>
-                                <Button type='submit'>Se connecter </Button>
+                                <Button type='submit'> Se connecter </Button>
                             </Form>
                         </div>
                     </div>
