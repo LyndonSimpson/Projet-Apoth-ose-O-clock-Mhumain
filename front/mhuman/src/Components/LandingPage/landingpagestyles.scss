@@ -4,32 +4,16 @@
     object-fit: cover;
 }
 
-
-.content {
+.landingContent {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
 }
 
-.landing-title {
+.landingTitle {
     color: white;
-    position: fixed;
-    align-items: flex-start;
-}
-
-.buttons {
-    position: fixed;
-    width: 500px;
-    display: flex;
-    justify-content: space-around;
-}
-
-@media only screen and (max-width: 768px) {
-    .buttons {
-        flex-direction: column;
-        height: 300px;
-        width: 200px;
-    }
+    font-size: 1rem;
 }
 
