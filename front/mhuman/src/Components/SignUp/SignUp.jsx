@@ -19,13 +19,20 @@ function SignUp() {
         setErrorMessage("L'email est obligatoire")
         return
       }
+      if (!passwordValue.trim()) {
+        setErrorMessage("Le mot de passe est obligatoire")
+        return
+      }
       if (passwordValue !== confirmPasswordValue) {
         setErrorMessage('Votre confirmation de mot de passe est incorrect')
         return
       }
       //TODO : use emailValue and passwordValue for add new user in db
-
+      setErrorMessage('TODO : use emailValue and passwordValue for add new user in db')
       handleReset();
+    }
+    const handleDismiss = () => {
+      setErrorMessage('');
     }
 
       //TODO : add message for error on information
@@ -34,12 +41,11 @@ function SignUp() {
         <Form onSubmit={handleSubmit}>
         <Form.Field width={3}>
         {errorMessage &&
-            <Message>
-              <Message.Header>Erreur</Message.Header>
-              <p>
-                {errorMessage}
-              </p>
-            </Message>
+          <Message
+            onDismiss={handleDismiss}
+            header='Erreur'
+            content={errorMessage}
+          />
           }
           <input 
             placeholder='Email'
