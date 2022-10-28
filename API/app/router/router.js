@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const userController = require('../controller/user');
+const humanController = require('../controller/human');
 
 const router = Router();
 
-
+/*--------------------------------- user router (create, update, delete) : */
     /**
     * POST /user
     * @summary create user
@@ -17,15 +18,66 @@ const router = Router();
     * @summary update user
     * @description update an existing user account into the database
     */
-     router.patch("/user/:id", userController.update);
+    router.patch("/user/:id", userController.update);
 
     /**
     * DELETE /user
     * @summary update user
     * @description update an existing user account into the database
-    * @param {Number} req.params.id
+    * @param {string} req.params.id
     */
     router.delete("/user/:id", userController.delete);
+
+
+/*--------------------------------- human router (create, read, update, delete) : */
+/*--------------------------------- this router needs to be protected/accessed through connecte_user_middleware */
+
+    /**
+    * POST /human
+    * @summary create human
+    * @description inserts a new human profile into the database
+    * @param {string} request.body
+    */
+    router.post("/human", humanController.newHuman);
+
+    /**
+    * GET /human
+    * @summary get all humans
+    * @description retrieves all the human profiles from the database
+    */
+    router.get("/human", humanController.allHumans);
+
+    /**
+    * GET /human/:id
+    * @summary selects a specific human
+    * @description retrieves the human with the id passed in params from database.
+    */
+    router.get("/human/:id", humanController.oneHuman);
+
+    /**
+    * PATCH /human
+    * @summary update huma profile
+    * @description update an existing human profile into the database with id passed in params
+    */
+    router.patch("/human/:id", humanController.update); //TODO -- seule route que je n'ai pas encore testée
+
+    /**
+    * DELETE /human
+    * @summary update huma profile
+    * @description update an existing human profile into the database with id passed in params
+    */
+    router.delete("/human/:id", humanController.delete);
+
+
+    
+    
+
+
+
+
+
+
+
 
 
 
