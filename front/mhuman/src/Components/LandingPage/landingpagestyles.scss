@@ -4,6 +4,7 @@
     object-fit: cover;
 }
 
+
 .content {
     display: flex;
     justify-content: center;
@@ -28,6 +29,7 @@
     .buttons {
         flex-direction: column;
         height: 300px;
+        width: 200px;
     }
 }
 
