@@ -17,6 +17,7 @@ const router = Router();
     * PATCH /user
     * @summary update user
     * @description update an existing user account into the database
+    * @param {number} id.path.required - category identifier
     */
     router.patch("/user/:id", userController.update);
 
@@ -24,7 +25,7 @@ const router = Router();
     * DELETE /user
     * @summary update user
     * @description update an existing user account into the database
-    * @param {string} req.params.id
+    * @param {number} id.path.required - category identifier
     */
     router.delete("/user/:id", userController.delete);
 
@@ -51,6 +52,7 @@ const router = Router();
     * GET /human/:id
     * @summary selects a specific human
     * @description retrieves the human with the id passed in params from database.
+    * @param {number} id.path.required - category identifier
     */
     router.get("/human/:id", humanController.oneHuman);
 
@@ -58,6 +60,7 @@ const router = Router();
     * PATCH /human
     * @summary update huma profile
     * @description update an existing human profile into the database with id passed in params
+    * @param {number} id.path.required - category identifier
     */
     router.patch("/human/:id", humanController.update); //TODO -- seule route que je n'ai pas encore testée
 
@@ -65,21 +68,9 @@ const router = Router();
     * DELETE /human
     * @summary update huma profile
     * @description update an existing human profile into the database with id passed in params
+    * @param {number} id.path.required - category identifier
     */
     router.delete("/human/:id", humanController.delete);
-
-
-    
-    
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;
