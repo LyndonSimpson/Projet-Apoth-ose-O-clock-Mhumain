@@ -15,6 +15,10 @@ function SignUp() {
     }
     const handleSubmit = (evt) => {
       evt.preventDefault();
+      if (!emailValue.trim()) {
+        setErrorMessage("L'email est obligatoire")
+        return
+      }
       if (passwordValue !== confirmPasswordValue) {
         setErrorMessage('Votre confirmation de mot de passe est incorrect')
         return
