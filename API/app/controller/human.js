@@ -39,7 +39,7 @@ const humanController = {
     const id = req.params.id;
     try {
       const result = await dataMapper.updateHuman(req.body.pseudo, req.body.image, req.body.name,
-                                                  req.body.description, req.body.age, req.body.age,
+                                                  req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
                                                   id);
       res.json(result);

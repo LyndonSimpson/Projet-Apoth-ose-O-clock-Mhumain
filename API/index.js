@@ -2,7 +2,8 @@ const express = require('express');
 const dotenv = require('dotenv');
 //dotenv.config();
 
-const router = require('./app/router/router');
+const userRouter = require('./app/router/user');
+const humanRouter = require('./app/router/human');
 
 const PORT = process.env.PORT || 3000;
 
@@ -45,7 +46,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 
-app.use(router); 
+app.use(userRouter, humanRouter); 
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}, visit at http http://localhost:3000/`);
