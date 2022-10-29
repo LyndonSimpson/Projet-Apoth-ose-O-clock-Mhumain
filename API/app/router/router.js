@@ -14,6 +14,21 @@ const router = Router();
     router.post("/user", userController.newUser);
 
     /**
+    * GET /user
+    * @summary get all users
+    * @description retrieves all the user accounts from the database
+    */
+     router.get("/user", userController.allusers);
+
+     /**
+     * GET /user/:id
+     * @summary selects a specific user
+     * @description retrieves the user with the id passed in params from database.
+     * @param {number} id.path.required - category identifier
+     */
+     router.get("/user/:id", userController.oneUser);
+
+    /**
     * PATCH /user
     * @summary update user
     * @description update an existing user account into the database

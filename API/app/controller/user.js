@@ -11,6 +11,25 @@ const userController = {
       res.status(500).send(`An error occured with the database :\n${error.message}`);
     }
   },
+  oneUser: async (req, res) => {
+    const id = req.params.id;
+    try {
+      const result = await dataMapper.getUserById(id);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  allUsers: async (req, res) => {
+    try {
+      const result = await dataMapper.getUsers();
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
   update: async (req, res) => {
     const id = req.params.id;
     try {

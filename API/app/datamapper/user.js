@@ -11,6 +11,22 @@ const userDattaMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    async getUserById(id) { 
+
+      const query = {
+          text: `SELECT * FROM account WHERE id = $1`,
+          values: [id]
+        };
+      const result = await database.query(query);
+      return result.rows;
+  },
+    async getUsers() { 
+
+      const query =`SELECT * FROM account;`;
+
+      const result = await database.query(query);
+      return result.rows;
+  },
     async updateUser(id, email, password) { 
 
         const query = {
