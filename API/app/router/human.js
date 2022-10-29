@@ -46,4 +46,4 @@ const router = Router();
      router.delete("/human/:id", humanController.delete);
  
  
- module.exports = router;
+module.exports = router;

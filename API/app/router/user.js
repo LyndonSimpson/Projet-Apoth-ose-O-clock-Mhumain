@@ -42,3 +42,7 @@ const router = Router();
     * @param {number} id.path.required - category identifier
     */
     router.delete("/user/:id", userController.delete);
+
+
+
+module.exports = router;
