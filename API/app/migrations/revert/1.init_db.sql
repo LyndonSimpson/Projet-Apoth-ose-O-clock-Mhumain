@@ -2,7 +2,7 @@
 
 BEGIN;
 
-DROP TABLE cat_has_favorites, cat, human, account; 
+DROP TABLE has_favorites, cat, human, account; 
 DROP DOMAIN email;
 
 COMMIT;
