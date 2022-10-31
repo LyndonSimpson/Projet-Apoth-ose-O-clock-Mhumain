@@ -7,11 +7,11 @@ import SignUp from '../SignUp/SignUp';
 
 function LandingPage() {
   const [choice, setChoice] = useState('');
-  const handleSignUpButton = () => {
+  const handleSignUp = () => {
     setChoice('SignUp');
   };
 
-  const handleLogInButton = () => {
+  const handleLogIn = () => {
     setChoice('LogIn');
   };
 
@@ -32,14 +32,15 @@ function LandingPage() {
       {!choice
         && (
         <Buttons
-          handleSignUpClick={handleSignUpButton}
-          handleLogInClick={handleLogInButton}
+          handleSignUpClick={handleSignUp}
+          handleLogInClick={handleLogIn}
         />
         )}
       {choice === 'SignUp'
       && (
         <SignUp
           handleReturnClick={handleReturnButton}
+          handleSucceededCreateUser={handleLogIn}
         />
       )}
       {choice === 'LogIn'

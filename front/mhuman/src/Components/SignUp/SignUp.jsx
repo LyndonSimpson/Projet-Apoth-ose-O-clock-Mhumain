@@ -3,16 +3,34 @@ import {
   Button, Form, Message, Icon,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+
 import Logo from '../LandingPage/logo.png';
 import './signupstyles.scss';
 
 function SignUp({
   handleReturnClick,
+  handleSucceededCreateUser,
 }) {
   const [emailValue, SetEmailValue] = useState('');
   const [passwordValue, SetPasswordValue] = useState('');
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const fetchData = async (emailvalue, passwordvalue) => {
+    try {
+      const response = await axios.post('http://localhost:3001/user', {
+        email: emailvalue,
+        password: passwordvalue,
+      });
+      if (response.status === 200) {
+        handleSucceededCreateUser();
+      }
+    } catch (err) {
+      console.log(err);
+      // TODO récuperer l'erreur et renvoyer un message à l'utilisateur
+    }
+  };
 
   const handleReset = () => { // reset all input
     SetEmailValue('');
@@ -34,7 +52,7 @@ function SignUp({
       return;
     }
     // TODO : use emailValue and passwordValue for add new user in db
-    setErrorMessage('TODO : use emailValue and passwordValue for add new user in db');
+    fetchData(emailValue, passwordValue);
     handleReset();
   };
   const handleDismiss = () => {
@@ -117,6 +135,7 @@ function SignUp({
 
 SignUp.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
+  handleSucceededCreateUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(SignUp);
