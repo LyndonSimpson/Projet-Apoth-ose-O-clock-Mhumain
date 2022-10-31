@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 
-import './appheaderstyles.scss';
+import './headerstyles.scss';
 
-function AppHeader() {
+function Header() {
   return (
     <header className="header">
-      <img className="logo" src="logocouleur.png" alt="logo adopte ton mhumains" />
+      <Link to="/search"><img className="logo" src="logocouleur.png" alt="logo adopte ton mhumains" /></Link>
       <div className="nav-icon">
         <Link to="/search"><Icon name="search" size="big" /></Link>
         <Link to="/fav"><Icon name="heart outline" size="big" /></Link>
@@ -17,4 +17,4 @@ function AppHeader() {
   );
 }
 
-export default React.memo(AppHeader);
+export default React.memo(Header);
