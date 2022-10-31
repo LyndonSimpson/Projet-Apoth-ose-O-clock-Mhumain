@@ -3,16 +3,33 @@ import {
   Button, Form, Message, Icon,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import Logo from '../LandingPage/logo.png';
+import axios from 'axios';
+
+import Logo from '../logo.png';
 import './signupstyles.scss';
 
 function SignUp({
   handleReturnClick,
+  handleSucceededCreateUser,
 }) {
   const [emailValue, SetEmailValue] = useState('');
   const [passwordValue, SetPasswordValue] = useState('');
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const fetchData = async (emailvalue, passwordvalue) => {
+    try {
+      const response = await axios.post('http://localhost:3001/user', {
+        email: emailvalue,
+        password: passwordvalue,
+      });
+      if (response.status === 200) {
+        handleSucceededCreateUser();
+      }
+    } catch (err) {
+      setErrorMessage(err.message);
+    }
+  };
 
   const handleReset = () => { // reset all input
     SetEmailValue('');
@@ -21,27 +38,28 @@ function SignUp({
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    // Je verifie que l'utilisateur à entré un email
     if (!emailValue.trim()) {
       setErrorMessage("L'email est obligatoire");
       return;
     }
+    // Je verifie que l'utilisateur à entré un mot de passe
     if (!passwordValue.trim()) {
       setErrorMessage('Le mot de passe est obligatoire');
       return;
     }
+    // Je verifie si l'utilisateur à bien confirmer son mot de passe
     if (passwordValue !== confirmPasswordValue) {
       setErrorMessage('Votre confirmation de mot de passe est incorrect');
       return;
     }
     // TODO : use emailValue and passwordValue for add new user in db
-    setErrorMessage('TODO : use emailValue and passwordValue for add new user in db');
+    fetchData(emailValue, passwordValue);
     handleReset();
   };
-  const handleDismiss = () => {
+  const handleDismiss = () => { // Gere la fermeture du message
     setErrorMessage('');
   };
-
-  // TODO : add message for error on information
 
   return (
     <div className="signup-form">
@@ -63,6 +81,7 @@ function SignUp({
         <Form.Field>
           <input
             placeholder="Email"
+            type="email"
             value={emailValue}
             onChange={(e) => { SetEmailValue(e.target.value); }}
           />
@@ -117,6 +136,7 @@ function SignUp({
 
 SignUp.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
+  handleSucceededCreateUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(SignUp);
