@@ -5,7 +5,7 @@ import {
   Button, Form, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import Logo from '../LandingPage/logo.png';
+import Logo from '../logo.png';
 
 function LogIn({
   handleReturnClick,

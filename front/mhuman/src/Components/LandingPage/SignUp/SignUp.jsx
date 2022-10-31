@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import axios from 'axios';
 
-import Logo from '../LandingPage/logo.png';
+import Logo from '../logo.png';
 import './signupstyles.scss';
 
 function SignUp({

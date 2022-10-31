@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import './landingpagestyles.scss';
 import Buttons from './Buttons/Buttons';
 import videoCat from '../../videos/videoCat.mp4';
-import LogIn from '../LogIn/LogIn';
-import SignUp from '../SignUp/SignUp';
+import LogIn from './LogIn/LogIn';
+import SignUp from './SignUp/SignUp';
 
 function LandingPage() {
   const [choice, setChoice] = useState('');
