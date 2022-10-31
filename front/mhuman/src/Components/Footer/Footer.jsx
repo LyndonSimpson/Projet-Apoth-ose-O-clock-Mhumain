@@ -1,9 +1,12 @@
 import React from 'react';
+
 import { Link } from 'react-router-dom';
+
 import './footerstyles.scss';
 
 function Footer() {
   return (
+
     <footer className="footer">
       <div className="left-link">
         <Link to="/faq">FAQ</Link>
@@ -18,6 +21,7 @@ function Footer() {
         <Link to="/about">A propos</Link>
       </div>
     </footer>
+
   );
 }
 
