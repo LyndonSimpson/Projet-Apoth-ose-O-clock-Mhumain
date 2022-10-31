@@ -5,7 +5,7 @@ const router = Router();
 
 
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
-/*--------------------------------- user router (create, update, delete) : */
+/*--------------------------------- human router (create, read, update, delete) : */
     /**
     * POST /human
     * @summary create human
@@ -31,16 +31,16 @@ const router = Router();
  
      /**
      * PATCH /human
-     * @summary update huma profile
+     * @summary update human profile
      * @description update an existing human profile into the database with id passed in params
      * @param {number} id.path.required - category identifier
      */
-     router.patch("/human/:id", humanController.update); //TODO -- seule route que je n'ai pas encore testée
+     router.patch("/human/:id", humanController.update); 
  
      /**
      * DELETE /human
-     * @summary update huma profile
-     * @description update an existing human profile into the database with id passed in params
+     * @summary delete human profile
+     * @description delete an existing human profile into the database with id passed in params
      * @param {number} id.path.required - category identifier
      */
      router.delete("/human/:id", humanController.delete);

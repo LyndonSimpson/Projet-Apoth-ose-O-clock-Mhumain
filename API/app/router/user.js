@@ -3,7 +3,7 @@ const userController = require('../controller/user');
 
 const router = Router();
 
-/*--------------------------------- user router (create, update, delete) : */
+/*--------------------------------- user router (create, read, update, delete) : */
     /**
     * POST /user
     * @summary create user
@@ -37,8 +37,8 @@ const router = Router();
 
     /**
     * DELETE /user
-    * @summary update user
-    * @description update an existing user account into the database
+    * @summary delete user
+    * @description delete an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
     router.delete("/user/:id", userController.delete);
