@@ -14,20 +14,20 @@ const router = Router();
     */
      router.post("/cat", catController.newCat);
 
-     /**
-     * GET /cat
-     * @summary get all cats
-     * @description retrieves all the cat profiles from the database
-     */
-     router.get("/cat", catController.allCats);
+    /**
+    * GET /cat
+    * @summary get all cats
+    * @description retrieves all the cat profiles from the database
+    */
+    router.get("/cat", catController.allCats);
  
-     /**
-     * GET /cat/:id
-     * @summary selects a specific cat
-     * @description retrieves the cat with the id passed in params from database.
-     * @param {number} id.path.required - category identifier
-     */
-     router.get("/cat/:id", catController.oneCat);
+    /**
+    * GET /cat/:id
+    * @summary selects a specific cat
+    * @description retrieves the cat with the id passed in params from database.
+    * @param {number} id.path.required - category identifier
+    */
+    router.get("/cat/:id", catController.oneCat);
  
      /**
      * PATCH /cat
@@ -35,7 +35,7 @@ const router = Router();
      * @description update an existing cat profile into the database with id passed in params
      * @param {number} id.path.required - category identifier
      */
-     router.patch("/cat/:id", catController.update); 
+     router.patch("/cat/:id", catController.update);  // enlever le is_adopted si on fait une route patch dédiée à patch seulement le "is_adopted" et le "owner_id"
  
      /**
      * DELETE /cat
