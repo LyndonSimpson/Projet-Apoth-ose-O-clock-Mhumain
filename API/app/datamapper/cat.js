@@ -32,14 +32,25 @@ const catDataMapper = {
         return result.rows;
     },
     async updateCat(pseudo, image, name, description, race, age, sexe, color, likes_pets, likes_kids,
-        needs_garden, is_adopted, siblings_id, owner_id, id) { 
+        needs_garden, siblings_id, id) { 
             // no "account_id" because the user that created the profil cannot change!
         const query = {
             text: `UPDATE cat
-            SET pseudo = $1, image = $2, name = $3, description = $4, race = $5, age = $6, sexe = $7, color = $8, likes_pets = $9, likes_kids = $10, needs_garden = $11, is_adopted = $12, siblings_id = $13, owner_id = $14
-            WHERE id = $15`,
+            SET pseudo = $1, image = $2, name = $3, description = $4, race = $5, age = $6, sexe = $7, color = $8, likes_pets = $9, likes_kids = $10, needs_garden = $11, siblings_id = $12
+            WHERE id = $13`,
             values: [pseudo, image, name, description, race, age, sexe, color, likes_pets, likes_kids,
-                needs_garden, is_adopted, siblings_id, owner_id, id]
+                needs_garden, siblings_id, id]
+          };
+        const result = await database.query(query);
+        return result.rows;
+    },
+    async adopt(owner_id, id) { 
+        const is_adopted = true;    
+        const query = {
+            text: `UPDATE cat
+            SET is_adopted = $1, owner_id = $2
+            WHERE id = $3`,
+            values: [is_adopted, owner_id, id]
           };
         const result = await database.query(query);
         return result.rows;
