@@ -41,7 +41,7 @@ const humanController = {
       const result = await dataMapper.updateHuman(req.body.pseudo, req.body.image, req.body.name,
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
-                                                  id);
+                                                  id); // no "account_id" because the user that create the profil cannot change!
       res.json(result);
     } catch (error) {
       console.error(error);
