@@ -28,6 +28,14 @@ const router = Router();
     * @param {number} id.path.required - category identifier
     */
     router.get("/cat/:id", catController.oneCat);
+
+    /**
+    * GET /adoptedcats/:id
+    * @summary selects a specific cat
+    * @description retrieves the cat with the id passed in params from database.
+    * @param {number} id.path.required - category identifier
+    */
+    router.get("/adptedcats/:id", catController.getAdoptedCats);
  
     /**
     * PATCH /cat
@@ -43,7 +51,7 @@ const router = Router();
     * @description adopts the cat with the id passed in params from database. the cat now is adopted and has an owner.
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/cat/:id", catController.adoptCat);
+    router.patch("/cat/adopt/:id", catController.adoptCat);
  
     /**
     * DELETE /cat

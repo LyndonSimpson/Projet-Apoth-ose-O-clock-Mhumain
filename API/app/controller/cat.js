@@ -27,6 +27,15 @@ const catController = {
       res.status(500).send(`An error occured with the database :\n${error.message}`);
     }
   },
+  getAdoptedCats: async (req, res) => {
+    try {
+      const result = await dataMapper.adoptedCats();
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
   allCats: async (req, res) => {
     
     try {

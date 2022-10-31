@@ -15,7 +15,7 @@ const catFavoritesDattaMapper = {
 
     const query ={
         text: `SELECT *
-               FROM huma hu
+               FROM human hu
                WHERE hu.id IN (
                     SELECT human_id FROM cat_has_favorites WHERE cat_id = $1
                )`,

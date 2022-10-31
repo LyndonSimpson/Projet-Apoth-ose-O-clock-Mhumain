@@ -21,6 +21,13 @@ const catDataMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    async adoptedCats() { 
+
+        const query =`SELECT * FROM cat WHERE is_adopted = true;`;
+            
+        const result = await database.query(query);
+        return result.rows;
+    },
     async getCatById(id) { 
 
         const query = {
