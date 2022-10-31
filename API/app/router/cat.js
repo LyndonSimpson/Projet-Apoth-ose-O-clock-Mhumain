@@ -35,7 +35,7 @@ const router = Router();
     * @description retrieves the cat with the id passed in params from database.
     * @param {number} id.path.required - category identifier
     */
-    router.get("/adptedcats/:id", catController.getAdoptedCats);
+    router.get("/adoptedcats", catController.getAdoptedCats);
  
     /**
     * PATCH /cat

@@ -23,7 +23,7 @@ const catDataMapper = {
     },
     async adoptedCats() { 
 
-        const query =`SELECT * FROM cat WHERE is_adopted = true;`;
+        const query =`SELECT * FROM cat WHERE is_adopted = true;`; // or "1" for true bolean - must do some tests here!
             
         const result = await database.query(query);
         return result.rows;
