@@ -43,8 +43,18 @@ const catController = {
       const result = await dataMapper.updateCat(req.body.pseudo, req.body.image, req.body.name,
                                                 req.body.description, req.body.race, req.body.age, req.body.sexe,
                                                 req.body.color,
-                                                req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
-                                                req.body.is_adopted, req.body.siblings_id, req.body.owner_id, // no "account_id" because the user that create the profil cannot change!
+                                                req.body.likes_pets, req.body.likes_kids, req.body.needs_garden, req.body.siblings_id, // no "account_id" because the user that create the profil cannot change!
+                                                  id);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  adoptCat: async (req, res) => {
+    const id = req.params.id;
+    try {
+      const result = await dataMapper.adopt(req.body.human_id, // this is going to become the owner_id in.
                                                   id);
       res.json(result);
     } catch (error) {
