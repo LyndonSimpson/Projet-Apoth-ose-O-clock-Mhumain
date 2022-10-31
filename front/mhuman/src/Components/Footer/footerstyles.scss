@@ -1,0 +1,32 @@
+.footer {
+    background-color: #FEFAE0;
+    display: flex;
+    justify-content: space-between;
+
+    padding: 1rem;
+}
+
+.left-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-start;
+
+    width: 10%;
+}
+
+.right-link {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+
+    width: 10%;
+}
+
+.middle-link {
+    h2 {
+        font-size: 2rem;
+        font-weight: bold;
+    }
+}
