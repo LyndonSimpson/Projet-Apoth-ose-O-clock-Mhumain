@@ -27,8 +27,7 @@ function SignUp({
         handleSucceededCreateUser();
       }
     } catch (err) {
-      console.log(err);
-      // TODO récuperer l'erreur et renvoyer un message à l'utilisateur
+      setErrorMessage(err.message);
     }
   };
 
@@ -39,14 +38,17 @@ function SignUp({
   };
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    // Je verifie que l'utilisateur à entré un email
     if (!emailValue.trim()) {
       setErrorMessage("L'email est obligatoire");
       return;
     }
+    // Je verifie que l'utilisateur à entré un mot de passe
     if (!passwordValue.trim()) {
       setErrorMessage('Le mot de passe est obligatoire');
       return;
     }
+    // Je verifie si l'utilisateur à bien confirmer son mot de passe
     if (passwordValue !== confirmPasswordValue) {
       setErrorMessage('Votre confirmation de mot de passe est incorrect');
       return;
@@ -55,11 +57,9 @@ function SignUp({
     fetchData(emailValue, passwordValue);
     handleReset();
   };
-  const handleDismiss = () => {
+  const handleDismiss = () => { // Gere la fermeture du message
     setErrorMessage('');
   };
-
-  // TODO : add message for error on information
 
   return (
     <div className="signup-form">
@@ -81,6 +81,7 @@ function SignUp({
         <Form.Field>
           <input
             placeholder="Email"
+            type="email"
             value={emailValue}
             onChange={(e) => { SetEmailValue(e.target.value); }}
           />
