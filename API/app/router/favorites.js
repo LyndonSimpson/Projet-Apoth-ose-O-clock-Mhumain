@@ -3,45 +3,37 @@ const favoritesController = require('../controller/favorites');
 
 const router = Router();
 
-/*--------------------------------- favorites router (create, read, update, delete) : */
+/*--------------------------------- favorites router (create, read, update not needed, delete) : */
     /**
     * POST /favorites
     * @summary creates a favorite between a cat and a human
     * @description inserts a favorite relationship into the database
     * @param {string} request.body
     */
-    router.post("/user", userController.newUser);
+    router.post("/favorites", favoritesController.newFavorite);
 
     /**
-    * GET /user
-    * @summary get all users
-    * @description retrieves all the user accounts from the database
+    * GET /favorites
+    * @summary get all favorites on a profile
+    * @description retrieves all the favorites of a profile from the database / an ID (the connected PROFILE_ID, not account) needs to be passed (hidden) to know who the favorites belong to!
     */
-    router.get("/user", userController.allUsers);
+    router.get("/favorites", favoritesController.allFavorites);
 
      /**
-     * GET /user/:id
-     * @summary selects a specific user
-     * @description retrieves the user with the id passed in params from database.
+     * GET /favorite/:id
+     * @summary selects a specific favorite 
+     * @description retrieves the favorite with the id passed in params from database. / an ID (the connected PROFILE_ID, not account) needs to be passed (hidden) to know who the favorites belong to!
      * @param {number} id.path.required - category identifier
      */
-    router.get("/user/:id", userController.oneUser);
+    router.get("/favorites/:id", favoritesController.oneFavorite);
 
     /**
-    * PATCH /user
-    * @summary update user
-    * @description update an existing user account into the database
+    * DELETE /favorite
+    * @summary delete favorite
+    * @description delete an existing favorite profile from the database
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/user/:id", userController.update);
-
-    /**
-    * DELETE /user
-    * @summary delete user
-    * @description delete an existing user account into the database
-    * @param {number} id.path.required - category identifier
-    */
-    router.delete("/user/:id", userController.delete);
+    router.delete("/user/:id", favoritesController.delete);
 
 
 
