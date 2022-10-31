@@ -1,0 +1,56 @@
+.ProfileTitle {
+    margin: auto;
+    height: 17vh;
+    border: black 1px solid;
+}
+
+.ProfileContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.CatProfile {
+    width: 50%;
+    border: black 1px solid;
+}
+
+.DisplayProfile {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 50vh;
+}
+
+// .ProfilePictureContainer {
+//     border: 1px black solid;
+//     width: 10em;
+//     height: 10em;
+//     border-radius: 10px;
+// }
+
+.ProfilePicture {
+    width: 10em;
+    height: 10em;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.AddProfilePlus {
+    border: 2px grey solid;
+    width: 10em;
+    height: 10em;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.BsPlusLg {
+    font-size: 2em;
+    color: grey;
+}
+
+.HumainProfile {
+    width: 50%;
+    border: black 1px solid;
+}
