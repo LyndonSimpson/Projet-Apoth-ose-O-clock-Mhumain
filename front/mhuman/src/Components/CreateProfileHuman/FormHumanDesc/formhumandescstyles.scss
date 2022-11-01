@@ -1,0 +1,15 @@
+.form-desc-human {
+    width: 90%;
+
+
+    &-buttons {
+        width: 50vw;
+        display: flex;
+        justify-content: space-around;
+    }
+
+    &-area {
+        width: 90%;
+        height: 150px;
+   }
+}

@@ -1,19 +1,30 @@
 import './formapistyles.scss';
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
+import axios from 'axios';
 import Cat from '../../../styles/cat.jpg';
 
+const baseURL = 'https://api.thecatapi.com/v1/images/search';
+
 function FormAPI() {
+  const [catPicture, setCatPicture] = useState([]);
+
+  React.useEffect(() => {
+    async function getCatPicture() {
+      const response = await axios.get(baseURL);
+      setCatPicture(response.data);
+    }
+    getCatPicture();
+  }, []);
+
   return (
     <div className="form-api">
       <div className="image-api">
         <Image
           className="api-image"
-          src={Cat}
-          as="a"
+          src={catPicture.url}
           size="medium"
-          target="_blank"
         />
       </div>
       <div className="anecdote-api">

@@ -26,9 +26,10 @@ function FormHumanCheckbox() {
     <>
       {!next && (
       <div className="form-checkbox">
-        <Form className="form-human">
-          {Checkboxes.map(({ description }, index) => (
+        <Form className="check-human">
+          {Checkboxes.map(({ description, id }, index) => (
             <Form.Field
+              key={id}
               control={Checkbox}
               name={description}
               value={description}
@@ -40,7 +41,7 @@ function FormHumanCheckbox() {
           ))}
 
         </Form>
-        <div className="form-human-button">
+        <div className="check-human-button">
           <Button
             onClick={handleFormButton}
             animated
