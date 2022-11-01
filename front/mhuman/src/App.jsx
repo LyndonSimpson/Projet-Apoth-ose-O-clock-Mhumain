@@ -6,9 +6,9 @@ import './App.scss';
 import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 
-import { Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
 import CreateProfile from './Components/CreateProfile/CreateProfile';
+import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 
 function App() {
   return (
@@ -16,9 +16,20 @@ function App() {
       <Routes>
         <Route
           path="/"
-
           element={
             <LandingPage />
+          }
+        />
+        <Route
+          path="/createprofile"
+          element={
+            <CreateProfile />
+          }
+        />
+        <Route
+          path="/profileselect"
+          element={
+            <ProfileSelect />
           }
         />
         <Route
