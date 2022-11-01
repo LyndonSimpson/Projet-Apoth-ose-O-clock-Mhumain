@@ -1,4 +1,4 @@
-.form-human {
+.form-cat {
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -30,7 +30,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .form-human-informations {
+    .form-cat-informations {
         margin-top: 100px;
     }
 }

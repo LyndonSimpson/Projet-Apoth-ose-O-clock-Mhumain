@@ -3,17 +3,16 @@ import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import { Image } from 'semantic-ui-react';
 import axios from 'axios';
-import Cat from '../../../styles/cat.jpg';
 
 const baseURL = 'https://api.thecatapi.com/v1/images/search';
 
 function FormAPI() {
-  const [catPicture, setCatPicture] = useState([]);
+  const [catPicture, setCatPicture] = useState(null);
 
   React.useEffect(() => {
     async function getCatPicture() {
       const response = await axios.get(baseURL);
-      setCatPicture(response.data);
+      setCatPicture(response.data[0]);
     }
     getCatPicture();
   }, []);
@@ -23,7 +22,7 @@ function FormAPI() {
       <div className="image-api">
         <Image
           className="api-image"
-          src={catPicture.url}
+          src={catPicture ? catPicture.url : null}
           size="medium"
         />
       </div>

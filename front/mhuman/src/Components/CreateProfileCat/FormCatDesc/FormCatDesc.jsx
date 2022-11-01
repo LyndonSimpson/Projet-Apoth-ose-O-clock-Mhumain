@@ -1,4 +1,4 @@
-import './formhumandescstyles.scss';
+import './formcatdescstyles.scss';
 import React, { useState } from 'react';
 import {
   Button, TextArea, Icon,
@@ -6,7 +6,7 @@ import {
 import PropTypes from 'prop-types';
 import LandingPage from '../../LandingPage/LandingPage';
 
-function FormHumanDesc({
+function FormCatDesc({
   handleReturnClick,
 }) {
   const [next, setNext] = useState('');
@@ -20,8 +20,8 @@ function FormHumanDesc({
   return (
     <div>
       {!next && (
-      <form className="form-desc-human">
-        <TextArea className="form-desc-human-area" rows={2} placeholder="Dites-nous en plus sur vous..." />
+      <form className="form-desc-cat">
+        <TextArea className="form-desc-cat-area" rows={2} placeholder="Dites-nous en plus sur vous..." />
 
         <div>
           {
@@ -38,7 +38,7 @@ function FormHumanDesc({
           ))
         }
           <input
-            className="form-desc-human-input"
+            className="form-desc-cat-input"
             onChange={(e) => {
               setImage(e.target.files);
             }}
@@ -50,9 +50,9 @@ function FormHumanDesc({
 
         </div>
 
-        <div className="form-desc-human-buttons">
+        <div className="form-desc-cat-buttons">
           <Button
-            className="form-desc-human-button"
+            className="form-desc-cat-button"
             onClick={handleReturnClick}
             size="big"
             animated="fade"
@@ -64,7 +64,7 @@ function FormHumanDesc({
           </Button>
 
           <Button
-            className="form-desc-human-button"
+            className="form-desc-cat-button"
             onClick={handleReturnClick}
             size="big"
             animated="fade"
@@ -86,8 +86,8 @@ function FormHumanDesc({
   );
 }
 
-FormHumanDesc.propTypes = {
+FormCatDesc.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
 };
 
-export default React.memo(FormHumanDesc);
+export default React.memo(FormCatDesc);

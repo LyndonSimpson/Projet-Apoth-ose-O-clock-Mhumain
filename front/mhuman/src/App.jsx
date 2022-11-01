@@ -4,6 +4,7 @@ import './App.scss';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
+import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 
 function App() {
   return (
@@ -14,8 +15,12 @@ function App() {
           element={<LandingPage />}
         />
         <Route
-          path="/createprofile"
+          path="/createprofilehuman"
           element={<CreateProfileHuman />}
+        />
+        <Route
+          path="/createprofilecat"
+          element={<CreateProfileCat />}
         />
       </Routes>
     </div>

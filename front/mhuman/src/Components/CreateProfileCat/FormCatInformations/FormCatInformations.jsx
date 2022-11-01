@@ -1,14 +1,19 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import './formhumaninformationstyles.scss';
+import './formcatinformationstyles.scss';
 import React, { useState } from 'react';
 import {
-  Button, Icon, Form, Input, Message,
+  Button, Icon, Form, Input, Message, Dropdown,
 } from 'semantic-ui-react';
 
 import PropTypes from 'prop-types';
-import FormHumanDesc from '../FormHumanDesc/FormHumanDesc';
+import FormCatDesc from '../FormCatDesc/FormCatDesc';
 
-function FormHumanInformations({
+const options = [
+  { key: 'months', text: 'mois', value: 'months' },
+  { key: 'years', text: 'ans', value: 'years' },
+];
+
+function FormCatInformations({
   handleReturnClick,
 }) {
   const [next, setNext] = useState('');
@@ -30,7 +35,7 @@ function FormHumanInformations({
     if (!ageValue.trim()) {
       setErrorMessage('L\'age est obligatoire');
     }
-    setNext('FormHumanDesc');
+    setNext('FormCatDesc');
   };
   const handleDismiss = () => {
     setErrorMessage('');
@@ -39,7 +44,7 @@ function FormHumanInformations({
   return (
     <>
       {!next && (
-        <div className="form-human-informations">
+        <div className="form-cat-informations">
           {errorMessage
           && (
           <Message
@@ -70,7 +75,7 @@ function FormHumanInformations({
               />
               <Input
                 className="form-informations-input"
-                label={{ basic: true, content: 'ans' }}
+                label={<Dropdown defaultValue="mois" options={options} />}
                 labelPosition="right"
                 placeholder="Entrez votre âge"
                 type="number"
@@ -126,9 +131,9 @@ function FormHumanInformations({
                 />
               </Form.Group>
             </div>
-            <div className="form-human-buttons">
+            <div className="form-cat-buttons">
               <Button
-                className="form-human-button"
+                className="form-cat-button"
                 onClick={handleReturnClick}
                 size="big"
                 animated="fade"
@@ -140,7 +145,7 @@ function FormHumanInformations({
               </Button>
 
               <Button
-                className="form-human-button"
+                className="form-cat-button"
                 onClick={handleSubmit}
                 size="big"
                 animated="fade"
@@ -154,16 +159,16 @@ function FormHumanInformations({
           </form>
         </div>
       )}
-      {next === 'FormHumanDesc'
+      {next === 'FormCatDesc'
         && (
-          <FormHumanDesc />
+          <FormCatDesc />
         )}
     </>
   );
 }
 
-FormHumanInformations.propTypes = {
+FormCatInformations.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
 };
 
-export default React.memo(FormHumanInformations);
+export default React.memo(FormCatInformations);
