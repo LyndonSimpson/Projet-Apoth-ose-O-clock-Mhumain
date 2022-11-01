@@ -15,7 +15,7 @@ const catRouter = require('./app/router/cat');
 const catFavoritesRouter = require('./app/router/catFavorites');
 const humanFavoritesRouter = require('./app/router/humanFavorites');
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT;
 
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
