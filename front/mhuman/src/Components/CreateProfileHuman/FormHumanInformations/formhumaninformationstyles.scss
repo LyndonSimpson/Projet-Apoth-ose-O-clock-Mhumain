@@ -1,0 +1,20 @@
+.form-human {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-informations {
+    display: flex;
+    flex-direction: column;
+
+    &-input {
+        width: 350px;
+        margin-top: 1rem;
+    }
+
+    &-radios {
+        margin-top: 1rem;
+    }
+}
