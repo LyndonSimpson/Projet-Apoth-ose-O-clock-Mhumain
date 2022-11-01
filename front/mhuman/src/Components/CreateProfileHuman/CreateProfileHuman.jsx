@@ -1,10 +1,10 @@
 import React from 'react';
-import './createprofile.scss';
+import './createprofilehumanstyles.scss';
 import FormHuman from './FormHumanCheckbox/FormHumanCheckbox';
 import FormAPI from './FormAPI/FormAPI';
 import Logo from '../../styles/logo.png';
 
-function CreateProfile() {
+function CreateProfileHuman() {
   return (
     <div className="profile">
       <div className="profile-form">
@@ -20,4 +20,4 @@ function CreateProfile() {
   );
 }
 
-export default React.memo(CreateProfile);
+export default React.memo(CreateProfileHuman);

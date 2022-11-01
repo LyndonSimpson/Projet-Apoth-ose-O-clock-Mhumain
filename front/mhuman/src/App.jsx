@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import './App.scss';
 import { Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
-import CreateProfile from './Components/CreateProfile/CreateProfile';
+import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         />
         <Route
           path="/createprofile"
-          element={<CreateProfile />}
+          element={<CreateProfileHuman />}
         />
       </Routes>
     </div>

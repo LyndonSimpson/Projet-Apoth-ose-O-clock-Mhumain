@@ -15,12 +15,23 @@
     }
 
     &-API {
-        border: 2px solid black;
         width: 50vw;
+        border-left: 2px solid vars.$darkgreen;
+        background-color: vars.$lightgreen;
     }
 }
 
 .create-title {
     top: 0;
     position: fixed;
+}
+
+@media only screen and (max-width: 768px) {
+    .profile-API{
+        display: none;
+    }
+
+    .profile-form {
+        width: 100vw;
+    }
 }
