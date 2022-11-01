@@ -5,7 +5,7 @@ const humanController = {
   newHuman: async (req, res) => {
     
     try {
-      const result = await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name,
+      const result = await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
                                                   req.body.account_id);
@@ -38,7 +38,7 @@ const humanController = {
   update: async (req, res) => {
     const id = req.params.id;
     try {
-      const result = await dataMapper.updateHuman(req.body.pseudo, req.body.image, req.body.name,
+      const result = await dataMapper.updateHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
                                                   id); // no "account_id" because the user that create the profil cannot change!

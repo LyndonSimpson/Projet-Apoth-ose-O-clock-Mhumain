@@ -4,7 +4,7 @@ const dataMapper = require("../datamapper/user");
 const userController = {
   newUser: async (req, res) => {
     try {
-      const result = await dataMapper.createUser(req.body.email, req.body.password);
+      const result = await dataMapper.createUser(req.body.email, req.body.password); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
       res.json(result);
     } catch (error) {
       console.error(error);
@@ -33,7 +33,7 @@ const userController = {
   update: async (req, res) => {
     const id = req.params.id;
     try {
-      const result = await dataMapper.updateUser(id, req.body.email, req.body.password);
+      const result = await dataMapper.updateUser(id, req.body.email, req.body.password); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
       res.json(result);
     } catch (error) {
       console.error(error);
