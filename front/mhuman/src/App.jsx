@@ -7,8 +7,9 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 
 import LandingPage from './Components/LandingPage/LandingPage';
-import CreateProfile from './Components/CreateProfile/CreateProfile';
-import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
+
+import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
+import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 
 function App() {
   return (
@@ -21,9 +22,12 @@ function App() {
           }
         />
         <Route
-          path="/createprofile"
-          element={
-            <CreateProfile />
+          path="/createprofilehuman"
+          element={<CreateProfileHuman />}
+        />
+        <Route
+          path="/createprofilecat"
+          element={<CreateProfileCat />}
           }
         />
         <Route

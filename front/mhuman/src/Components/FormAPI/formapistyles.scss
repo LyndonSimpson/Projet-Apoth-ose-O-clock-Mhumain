@@ -1,0 +1,17 @@
+@use 'src/styles/vars';
+
+.form-api {
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.anecdote-api {
+    width: 90%;
+    margin-top: 2rem;
+
+    background-color: #F0F;
+}
