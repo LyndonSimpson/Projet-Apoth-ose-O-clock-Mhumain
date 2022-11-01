@@ -1,0 +1,24 @@
+.header {
+    background-color: #FEFAE0;
+}
+
+.logo {
+    height: 150px;
+    margin: -20px 0;
+}
+
+.nav-icon {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    margin: 1rem;
+
+    .icon {
+        color: #606C38;
+        margin: 1rem;
+
+        &:hover {
+            color: #283618
+        }
+    }
+}
