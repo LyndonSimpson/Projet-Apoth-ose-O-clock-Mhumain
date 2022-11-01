@@ -1,7 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require("cors");
-//dotenv.config();
+
+dotenv.config();
+
+const csurf = require('csurf');
+const csrfProtection = csurf({ cookie: true });
+const cookieParser = require('cookie-parser');
+
+const cors = require('cors');
 
 const userRouter = require('./app/router/user');
 const humanRouter = require('./app/router/human');
@@ -47,11 +53,15 @@ expressJSDocSwagger(app)(options);
 const bodyParser = require("body-parser");
 
 
-app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 }));
+app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
-app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 }));
+app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
 app.use(express.urlencoded({extended: true}));
+
+app.use(cookieParser());
+
+app.use(csrfProtection);
 
 app.use(express.json());
 
