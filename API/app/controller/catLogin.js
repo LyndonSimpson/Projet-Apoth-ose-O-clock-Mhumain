@@ -35,7 +35,8 @@ const catLoginController = {
         // si tout va bien, rajoute le cat dans la session
         const sessionUser = searchedCat[0];
         req.session.cat = sessionUser; 
-        //console.log(req.session.cat)
+        console.log(req.session.user);
+        console.log(req.session.cat)
         // maintenant que le cat est loggé, on renvoie vers la page d'accueil
             res.json(sessionUser);  
         } catch (error) {

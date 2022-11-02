@@ -38,6 +38,15 @@ const catDataMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    async getOneCatByPseudo(pseudo) {
+
+        const query = {
+          text: `SELECT * FROM cat WHERE pseudo = $1`,
+          values: [pseudo]
+        };
+        const result = await database.query(query);
+        return result.rows;
+    },
     async getMyCats(id) { 
 
         const query = {
