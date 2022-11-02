@@ -21,6 +21,15 @@ const userDattaMapper = {
     const result = await database.query(query);
     return result.rows;
   },
+  async getOneUserByEmail(email) {
+
+    const query = {
+      text: `SELECT * FROM account WHERE email = $1`,
+      values: [email]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
   async getUsers() {
 
     const query = `SELECT * FROM account;`;
