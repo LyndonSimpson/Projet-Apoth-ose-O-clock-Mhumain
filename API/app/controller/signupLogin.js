@@ -78,9 +78,10 @@ const userController = {
         //console.log(req.session.user)
         // maintenant que l'user est loggé, on renvoie vers la page d'accueil
         if (searchedUser.is_admin === true) {
-            res.json(searchedUser); //TODO, ici mettre le code pour middlWare admin ? - renvoyer le user vers page admin si page admin
+        req.session.user.role = 'admin';
+            res.json(searchedUser);
         } else {
-            res.json(sessionUser); //TODO gérer le "res." aussi ici 
+            res.json(sessionUser);  
         }
         } catch (error) {
             console.error(error);
@@ -92,6 +93,8 @@ const userController = {
     disconnect(req, res) {
         // on va juste changer la valeur de la session
         req.session.user = false;
+        res.send('succesfully disconnected')
+        console.log(req.session.user);
         // TODO ajouter ici le code qui va gérer l'action une fois que le user est déconnecté 
     }
 };

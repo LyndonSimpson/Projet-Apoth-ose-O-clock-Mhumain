@@ -3,12 +3,12 @@ const dataMapper = require("../datamapper/human");
 
 const humanController = {
   newHuman: async (req, res) => {
-    
+    console.log(req.session.user);
     try {
       const result = await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
-                                                  req.body.account_id);
+                                                  req.session.user.id); 
       res.json(result);
     } catch (error) {
       console.error(error);

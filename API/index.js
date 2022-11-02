@@ -61,7 +61,7 @@ app.use(session({
   saveUninitialized: true,
   resave: true,
   secret: process.env.SESSION_SECRET
-}))
+}));
 
 app.use(userMiddleware);
 
