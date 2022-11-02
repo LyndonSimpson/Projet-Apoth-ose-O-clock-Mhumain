@@ -29,7 +29,7 @@ function FormCatInformations({
 }) {
   const [next, setNext] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [catBreeds, setCatBreeds] = useState('');
+  const [catBreeds, setCatBreeds] = useState([]);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!nameValue.trim()) {
@@ -62,13 +62,16 @@ function FormCatInformations({
   React.useEffect(() => {
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
-      setCatBreeds(response.data.map((element) => ({
-        key: element.name,
-        text: element.name,
-        value: element.name,
-        image: { avatar: true, src: element.image.url },
-      })));
-      console.log(catBreeds);
+      const formatObj = response.data.map((obj) => ({
+        key: obj.name,
+        text: obj.name,
+        value: obj.name,
+        image: {
+          avatar: true,
+          src: obj.image ? obj.image.url : null,
+        },
+      }));
+      setCatBreeds(formatObj);
     }
     getCatBreed();
   }, []);
