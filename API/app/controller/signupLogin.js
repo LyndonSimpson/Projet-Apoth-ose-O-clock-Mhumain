@@ -15,7 +15,7 @@ const userController = {
         // chercher si l'utilisateur peut créer ce compte (via la méthode findOne )
         try {
             const searchedUser = await dataMapper.getOneUserByEmail(req.body.email);
-            console.log(searchedUser);
+            //console.log(searchedUser);
             if (searchedUser.email) { //TODO j'ai ajouté ".email" à searchedUser ici -semble avoir réparé le pb
                 throw new Error("Email already exists");
             }
@@ -54,20 +54,33 @@ const userController = {
             }
 
         // si on a un utilisateur, on vérifie que le mdp soit valide
-        const validPwd = bcrypt.compareSync(req.body.password, searchedUser.password);
+        const pass = req.body.password; 
+        //console.log(pass);
+        const hash = searchedUser.map(x => x.password);
+        const hash3 = typeof(pass);
+        const hash2 = hash[0];
+
+        const sessionUser = searchedUser[0];
+
+        //console.log(hash);
+        //console.log(hash2);
+        //console.log(hash3);
+        //console.log(sessionUser);
+
+        const validPwd = await bcrypt.compare(pass, hash2);
         if (!validPwd) {
             throw new Error("Login does not work, email or password invalid");
         }
         // si tout va bien, rajoute l'utilisateur dans la session
-        req.session.user = searchedUser.dataValues;
+        req.session.user = sessionUser;
         // pour éviter tout problème, on va supprimer le mdp de la session
         delete req.session.user.password;
-        console.log(req.session.user)
+        //console.log(req.session.user)
         // maintenant que l'user est loggé, on renvoie vers la page d'accueil
         if (searchedUser.is_admin === true) {
             res.json(searchedUser); //TODO, ici mettre le code pour middlWare admin ? - renvoyer le user vers page admin si page admin
         } else {
-            res.json(searchedUser); //TODO gérer le "res." aussi ici 
+            res.json(sessionUser); //TODO gérer le "res." aussi ici 
         }
         } catch (error) {
             console.error(error);

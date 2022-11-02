@@ -28,6 +28,7 @@ const userDattaMapper = {
       values: [email]
     };
     const result = await database.query(query);
+    //console.log(result);
     return result.rows;
   },
   async getUsers() {
