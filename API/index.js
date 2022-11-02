@@ -1,7 +1,13 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const cors = require("cors");
-//dotenv.config();
+
+dotenv.config();
+
+const csurf = require('csurf');
+const csrfProtection = csurf({ cookie: true });
+const cookieParser = require('cookie-parser');
+
+const cors = require('cors');
 
 const userRouter = require('./app/router/user');
 const humanRouter = require('./app/router/human');
@@ -9,7 +15,11 @@ const catRouter = require('./app/router/cat');
 const catFavoritesRouter = require('./app/router/catFavorites');
 const humanFavoritesRouter = require('./app/router/humanFavorites');
 
-const PORT = process.env.PORT || 3001;
+const session = require('express-session');
+
+const userMiddleware = require('./app/middlewares/user');
+
+const PORT = process.env.PORT;
 
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
@@ -44,14 +54,26 @@ const app = express();
 
 expressJSDocSwagger(app)(options);
 
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser"); // TODO check que cette const est necessaire (pas used ici en middleware et on a un autre parser express)
 
+// on rajoute la gestion des sessions
+app.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: process.env.SESSION_SECRET
+}))
 
-app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 }));
+app.use(userMiddleware);
 
-app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 }));
+app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
+
+app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
 app.use(express.urlencoded({extended: true}));
+
+app.use(cookieParser());
+
+//app.use(csrfProtection); //TODO - CURF casse insomnia - voir le pb avec Benjamin
 
 app.use(express.json());
 

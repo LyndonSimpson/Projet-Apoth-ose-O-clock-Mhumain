@@ -4,7 +4,7 @@ const dataMapper = require("../datamapper/catFavorites");
 const catFavoritesController = {
   newFavorite: async (req, res) => {
     try {
-      const result = await dataMapper.createFavorite(req.body.profile_id, req.body.liked_profile_id);
+      const result = await dataMapper.createFavorite(req.body.profile_id, req.body.liked_profile_id); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
       res.json(result);
     } catch (error) {
       console.error(error);
