@@ -7,9 +7,6 @@ const emailValidator = require('email-validator');
 const bcrypt = require('bcrypt');
 
 const userController = {
-
-
-    
     async signupAction (req, res) {
         // on a recu des infos de l'utilisateur (le post de son formulaire)
         // chercher si l'utilisateur peut créer ce compte (via la méthode findOne )
@@ -43,7 +40,6 @@ const userController = {
             res.status(500).send(`An error occured with the database :\n${error.message}`);
           }
     },
-
     async loginAction(req, res) {
         // On tente de récupérer l'utilisateur
         try {
@@ -52,21 +48,17 @@ const userController = {
             if (!searchedUser) {
                 throw new Error("Login does not work, email or password invalid");
             }
-
         // si on a un utilisateur, on vérifie que le mdp soit valide
         const pass = req.body.password; 
         //console.log(pass);
         const hash = searchedUser.map(x => x.password);
         const hash3 = typeof(pass);
         const hash2 = hash[0];
-
         const sessionUser = searchedUser[0];
-
         //console.log(hash);
         //console.log(hash2);
         //console.log(hash3);
         //console.log(sessionUser);
-
         const validPwd = await bcrypt.compare(pass, hash2);
         if (!validPwd) {
             throw new Error("Login does not work, email or password invalid");
@@ -87,9 +79,7 @@ const userController = {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
           }
-     
     },
-
     disconnect(req, res) {
         // on va juste changer la valeur de la session
         req.session.user = false;
@@ -98,5 +88,4 @@ const userController = {
         // TODO ajouter ici le code qui va gérer l'action une fois que le user est déconnecté 
     }
 };
-
 module.exports = userController;

@@ -12,7 +12,7 @@ const humanFavoritesController = {
     }
   },
   allFavorites: async (req, res) => {
-    const id = req.params.id;
+    const id = req.params.id; //TODO il va falloir mettre ici qqchose comme id = req.session.profile.id; - en créant session.profile
     try {
       const result = await dataMapper.getFavorites(id);
       res.json(result);
