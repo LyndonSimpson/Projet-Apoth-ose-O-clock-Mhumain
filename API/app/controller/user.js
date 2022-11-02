@@ -1,5 +1,6 @@
 const dataMapper = require("../datamapper/user");
-
+const humanDataMapper = require("../datamapper/human");
+const catDataMapper = require("../datamapper/cat");
 
 const userController = {
   
@@ -7,6 +8,27 @@ const userController = {
     const id = req.params.id;
     try {
       const result = await dataMapper.getUserById(id);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  getMyHumanProfiles: async (req, res) => {
+    const id = req.session.user.id;
+    console.log(id);
+    try {
+      const result = await humanDataMapper.getMyhumans(id);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  getMyCatProfiles: async (req, res) => {
+    const id = req.session.user.id;
+    try {
+      const result = await catDataMapper.getMyCats(id);
       res.json(result);
     } catch (error) {
       console.error(error);
