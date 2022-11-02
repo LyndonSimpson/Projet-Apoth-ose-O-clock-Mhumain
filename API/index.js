@@ -73,7 +73,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(cookieParser());
 
-app.use(csrfProtection);
+//app.use(csrfProtection); //TODO - CURF casse insomnia - voir le pb avec Benjamin
 
 app.use(express.json());
 

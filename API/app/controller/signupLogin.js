@@ -16,14 +16,14 @@ const userController = {
         try {
             const searchedUser = await dataMapper.getOneUserByEmail(req.body.email);
             console.log(searchedUser);
-            if (searchedUser) {
+            if (searchedUser.email) { //TODO j'ai ajouté ".email" à searchedUser ici -semble avoir réparé le pb
                 throw new Error("Email already exists");
             }
             // vérifie que le format de l'email est valide ex: user@user.com
             if (!emailValidator.validate(req.body.email)) {
                 throw new Error("Email format is not valid");
             }
-            // vérifier que le mdp correspond au mdp à confirmer
+            //vérifier que le mdp correspond au mdp à confirmer
             if (req.body.password !== req.body.passwordConfirm) {
                 throw new Error("Password and confirmed Password does not match");
             }
@@ -32,7 +32,7 @@ const userController = {
             const encryptedMsg =  bcrypt.hashSync(req.body.password, 10);
 
             // Préparer une instance de user
-            const newUser =  await dataMapper.createUser(res.body.email, encryptedMsg);
+            const newUser =  await dataMapper.createUser(req.body.email, encryptedMsg);
             // sauvegarder l'user
             
            // renvoyer l'utilisateur vers la page de connexion

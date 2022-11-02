@@ -27,14 +27,14 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", loggedMiddleware, signupLoginController.disconnect);
+    router.get("/user/logout", signupLoginController.disconnect);
 
     /**
     * GET /user
     * @summary get all users
     * @description retrieves all the user accounts from the database
     */
-    router.get("/user", loggedMiddleware, userController.allUsers);
+    router.get("/user", userController.allUsers);
 
     /**
     * GET /user/:id
@@ -42,7 +42,7 @@ const router = Router();
     * @description retrieves the user with the id passed in params from database.
     * @param {number} id.path.required - category identifier
     */
-    router.get("/user/:id", loggedMiddleware, userController.oneUser);
+    router.get("/user/:id", userController.oneUser);
 
     /**
     * PATCH /user
@@ -50,7 +50,7 @@ const router = Router();
     * @description update an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/user/:id", loggedMiddleware, userController.update);
+    router.patch("/user/:id", userController.update);
 
     /**
     * DELETE /user
@@ -58,7 +58,7 @@ const router = Router();
     * @description delete an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/user/:id", loggedMiddleware, userController.delete);
+    router.delete("/user/:id", userController.delete);
 
 
 
