@@ -24,16 +24,10 @@ function FormHumanInformations({
   handleHasGarden,
   contentValue,
   handleContentValue,
+  handleSubmitForm,
 }) {
   const [next, setNext] = useState('');
-  // const [nameValue, setNameValue] = useState('');
-  // const [pseudoValue, setPseudoValue] = useState('');
-  // const [ageValue, setAgeValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  // const [selectedPetsRadio, setSelectedPetsRadio] = useState('false');
-  // const [selectedKidsRadio, setSelectedKidsRadio] = useState('false');
-  // const [selectedGardenRadio, setSelectedGardenRadio] = useState('false');
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!nameValue.trim()) {
@@ -46,24 +40,13 @@ function FormHumanInformations({
     }
     if (!ageValue.trim()) {
       setErrorMessage('L\'age est obligatoire');
+      return;
     }
     setNext('FormHumanDesc');
   };
   const handleDismiss = () => {
     setErrorMessage('');
   };
-
-  // const handleChangePetsRadio = (evt, { value }) => {
-  //   setSelectedPetsRadio(value);
-  // };
-
-  // const handleChangeKidsRadio = (evt, { value }) => {
-  //   setSelectedKidsRadio(value);
-  // };
-
-  // const handleChangeGardenRadio = (evt, { value }) => {
-  //   setSelectedGardenRadio(value);
-  // };
 
   const handleReturnButton = () => {
     setNext('');
@@ -209,6 +192,7 @@ function FormHumanInformations({
             handleReturnClick={handleReturnButton}
             contentValue={contentValue}
             handleContentValue={handleContentValue}
+            handleSubmitForm={handleSubmitForm}
           />
         )}
     </>
@@ -234,6 +218,7 @@ FormHumanInformations.propTypes = {
   handleHasGarden: propTypes.func.isRequired,
   contentValue: propTypes.string.isRequired,
   handleContentValue: propTypes.func.isRequired,
+  handleSubmitForm: propTypes.func.isRequired,
 };
 
 export default React.memo(FormHumanInformations);

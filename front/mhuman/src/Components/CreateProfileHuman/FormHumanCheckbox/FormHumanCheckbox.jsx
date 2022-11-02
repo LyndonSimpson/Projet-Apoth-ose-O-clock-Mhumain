@@ -22,6 +22,7 @@ function FormHumanCheckbox({
   handleHasGarden,
   contentValue,
   handleContentValue,
+  handleSubmitForm,
 }) {
   const [next, setNext] = useState('');
   const [isChecked, setIsChecked] = useState(
@@ -93,6 +94,7 @@ function FormHumanCheckbox({
             handleHasGarden={handleHasGarden}
             contentValue={contentValue}
             handleContentValue={handleContentValue}
+            handleSubmitForm={handleSubmitForm}
           />
         )}
     </>
@@ -117,6 +119,7 @@ FormHumanCheckbox.propTypes = {
   handleHasGarden: propTypes.func.isRequired,
   contentValue: propTypes.string.isRequired,
   handleContentValue: propTypes.func.isRequired,
+  handleSubmitForm: propTypes.func.isRequired,
 };
 
 export default React.memo(FormHumanCheckbox);

@@ -1,8 +1,7 @@
 import './formhumandescstyles.scss';
 import React, { useState } from 'react';
-import { Navigate } from 'react-router-dom';
 import {
-  Button, TextArea, Icon,
+  Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
@@ -10,19 +9,36 @@ function FormHumanDesc({
   handleReturnClick,
   contentValue,
   handleContentValue,
+  handleSubmitForm,
 }) {
-  // const [content, setContent] = useState('');
   const [image, setImage] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
+  const handleSubmitContent = () => {
+    if (!contentValue.trim()) {
+      setErrorMessage('Une description est obligatoire');
+    }
+  };
+
+  const handleDismiss = () => {
+    setErrorMessage('');
   };
 
   return (
     <div>
+      {errorMessage
+          && (
+          <Message
+            negative
+            className="error-msg"
+            header="Erreur"
+            onDismiss={handleDismiss}
+            content={errorMessage}
+          />
+          )}
       <form
         className="form-desc-human"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => { handleSubmitForm(e); }}
       >
         <TextArea
           className="form-desc-human-area"
@@ -74,6 +90,7 @@ function FormHumanDesc({
 
           <Button
             className="form-desc-human-button"
+            onClick={handleSubmitContent}
             size="big"
             animated="fade"
             type="submit"
@@ -95,6 +112,7 @@ FormHumanDesc.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
   contentValue: PropTypes.string.isRequired,
   handleContentValue: PropTypes.func.isRequired,
+  handleSubmitForm: PropTypes.func.isRequired,
 };
 
 export default React.memo(FormHumanDesc);

@@ -1,27 +1,52 @@
 import './formcatdescstyles.scss';
 import React, { useState } from 'react';
 import {
-  Button, TextArea, Icon,
+  Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import LandingPage from '../../LandingPage/LandingPage';
 
 function FormCatDesc({
   handleReturnClick,
+  contentValue,
+  handleContentValue,
+  handleSubmitForm,
 }) {
-  const [next, setNext] = useState('');
   const [image, setImage] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-    setNext('LandingPage');
+  const handleSubmitContent = () => {
+    if (!contentValue.trim()) {
+      setErrorMessage('Une description est obligatoire');
+    }
+  };
+
+  const handleDismiss = () => {
+    setErrorMessage('');
   };
 
   return (
     <div>
-      {!next && (
-      <form className="form-desc-cat">
-        <TextArea className="form-desc-cat-area" rows={2} placeholder="Dites-nous en plus sur vous..." />
+      {errorMessage
+          && (
+          <Message
+            negative
+            className="error-msg"
+            header="Erreur"
+            onDismiss={handleDismiss}
+            content={errorMessage}
+          />
+          )}
+      <form
+        className="form-desc-cat"
+        onSubmit={(e) => { handleSubmitForm(e); }}
+      >
+        <TextArea
+          className="form-desc-cat-area"
+          rows={2}
+          placeholder="Dites-nous en plus sur vous..."
+          value={contentValue}
+          onChange={(e) => { handleContentValue(e.target.value); }}
+        />
 
         <div>
           {
@@ -65,9 +90,10 @@ function FormCatDesc({
 
           <Button
             className="form-desc-cat-button"
-            onClick={handleReturnClick}
+            onClick={handleSubmitContent}
             size="big"
             animated="fade"
+            type="submit"
           >
             <Button.Content visible>Je veux me faire adopter par un chat!</Button.Content>
             <Button.Content hidden>
@@ -76,11 +102,7 @@ function FormCatDesc({
           </Button>
         </div>
       </form>
-      )}
-      {next === 'LandingPage'
-    && (
-      <LandingPage />
-    )}
+
     </div>
 
   );
@@ -88,6 +110,9 @@ function FormCatDesc({
 
 FormCatDesc.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
+  contentValue: PropTypes.string.isRequired,
+  handleContentValue: PropTypes.func.isRequired,
+  handleSubmitForm: PropTypes.func.isRequired,
 };
 
 export default React.memo(FormCatDesc);

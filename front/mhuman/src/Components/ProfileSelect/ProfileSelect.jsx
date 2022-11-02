@@ -1,6 +1,6 @@
 import React from 'react';
 import './profileselect.scss';
-
+import { Link } from 'react-router-dom';
 import logo from './fakeData/Logo-Mhumain-Colored.png';
 import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
@@ -16,13 +16,17 @@ function ProfileSelect() {
             <ProfileCard />
             <ProfileCard />
             <ProfileCard />
-            <AddProfile />
+            <Link to="/createprofilecat">
+              <AddProfile />
+            </Link>
           </div>
         </div>
         <div className="HumainProfile">
           <h1 className="ProfileSubtitle"> Profils Humain</h1>
           <div className="DisplayProfile">
-            <AddProfile />
+            <Link to="/createprofilehuman">
+              <AddProfile />
+            </Link>
           </div>
         </div>
       </section>
