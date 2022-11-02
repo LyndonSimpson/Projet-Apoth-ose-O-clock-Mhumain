@@ -4,27 +4,26 @@ const dataMapper = require("../datamapper/human");
 const humanController = {
   newHuman: async (req, res) => {
     const id = req.session.user.id;
-    const AlreadyExists = await dataMapper.getMyhumans(id);
-    const email = AlreadyExists.map(x => x.email);
-    console.log(email);
-    if(AlreadyExists) {
-      res.send('You already have a human profile on this account')
-    } else {
+    const fakeObject = {};
     //todo ajouter une condition avec une requête qui bloque la création d'un nouvel humain
     //todo si il y a un humain avec le account_id situé dans req.session.user.id !, "select * from human where account_id = req.session.user.id"
-
-    console.log(req.session.user);
     try {
+    const AlreadyExists = await dataMapper.getMyhumans(id);
+    const check = AlreadyExists[0];
+    const isEmpty = Object.keys(check || fakeObject).length === 0;
+    console.log(isEmpty);
+      if(!isEmpty) {
+        res.status(500).send('You already have a human profile on this account')
+      } else {
       const result = await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
                                                   req.session.user.id); 
-      res.json(result);
+      res.json(result); }
     } catch (error) {
       console.error(error);
       res.status(500).send(`An error occured with the database :\n${error.message}`);
     }
-  }
   },
   oneHuman: async (req, res) => {
     const id = req.params.id;
