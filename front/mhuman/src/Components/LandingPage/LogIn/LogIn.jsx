@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import './LogIn.scss';
 import {
@@ -13,6 +14,7 @@ function LogIn({
   const [emailValue, SetEmailValue] = useState('');
   const [passwordValue, SetPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [isConnected, setIsConnected] = useState('');
 
   const fetchData = async () => {
     try {
@@ -48,7 +50,7 @@ function LogIn({
     }
     if (found.password === passwordValue) {
       // TODO redirect vers le sass d'accueil
-      setErrorMessage('Vous etes connectés');
+      setIsConnected(true);
     } else {
       // Si le mot de passe ne correspond pas je renvoi une erreur à l'utilisateur
       setErrorMessage('Le mot de passe est incorrecte');
@@ -67,6 +69,9 @@ function LogIn({
             <div className="landingTitle">
               <img src={Logo} alt="logo" />
             </div>
+            {isConnected && (
+              <Navigate to="/profileselect" />
+            )}
             {errorMessage
           && (
           <Message

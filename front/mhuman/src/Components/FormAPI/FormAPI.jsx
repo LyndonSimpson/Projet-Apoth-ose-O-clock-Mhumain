@@ -4,15 +4,22 @@ import React, { useState } from 'react';
 import { Image } from 'semantic-ui-react';
 import axios from 'axios';
 
+// Put cat's picture API in const
 const baseURL = 'https://api.thecatapi.com/v1/images/search';
+const URL = 'https://catfact.ninja/fact';
 
 function FormAPI() {
   const [catPicture, setCatPicture] = useState(null);
+  const [catFact, setCatFact] = useState('');
 
   React.useEffect(() => {
     async function getCatPicture() {
-      const response = await axios.get(baseURL);
+      const [response, secondResponse] = await Promise.all([
+        axios.get(baseURL),
+        axios.get(URL),
+      ]);
       setCatPicture(response.data[0]);
+      setCatFact(secondResponse.data);
     }
     getCatPicture();
   }, []);
@@ -23,23 +30,16 @@ function FormAPI() {
         <Image
           className="api-image"
           src={catPicture ? catPicture.url : null}
-          size="medium"
+          size="big"
         />
       </div>
       <div className="anecdote-api">
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. At quos quis repellendus
-          omnis dolorum ea quam voluptas deleniti aspernatur soluta aut corporis, praesentium quia pariatur earum accusantium quidem natus laboriosam.
-
+          {catFact.fact}
         </p>
       </div>
     </div>
   );
 }
-
-// FormAPI.propTypes = {
-//   image: PropTypes.string.isRequired,
-//   anecdote: PropTypes.string.isRequired,
-// };
 
 export default React.memo(FormAPI);

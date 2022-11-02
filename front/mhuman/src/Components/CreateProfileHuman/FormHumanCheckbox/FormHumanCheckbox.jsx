@@ -3,10 +3,26 @@ import React, { useState } from 'react';
 import {
   Checkbox, Form, Button, Icon,
 } from 'semantic-ui-react';
+import propTypes from 'prop-types';
 import FormHumanInformations from '../FormHumanInformations/FormHumanInformations';
 import Checkboxes from './utils/checkboxesHuman';
 
-function FormHumanCheckbox() {
+function FormHumanCheckbox({
+  nameValue,
+  handleNameValue,
+  pseudoValue,
+  handlePseudoValue,
+  ageValue,
+  handleAgeValue,
+  hasPets,
+  handleHasPets,
+  hasKids,
+  handleHasKids,
+  hasGarden,
+  handleHasGarden,
+  contentValue,
+  handleContentValue,
+}) {
   const [next, setNext] = useState('');
   const [isChecked, setIsChecked] = useState(
     new Array(Checkboxes.length).fill(false),
@@ -20,6 +36,10 @@ function FormHumanCheckbox() {
     const updatedCheckedState = isChecked.map((item, index) => (index === position ? !item : item));
 
     setIsChecked(updatedCheckedState);
+  };
+
+  const handleReturnButton = () => {
+    setNext('');
   };
 
   return (
@@ -57,10 +77,46 @@ function FormHumanCheckbox() {
       )}
       {next === 'FormHumanInformations'
         && (
-          <FormHumanInformations />
+          <FormHumanInformations
+            handleReturnClick={handleReturnButton}
+            nameValue={nameValue}
+            handleNameValue={handleNameValue}
+            pseudoValue={pseudoValue}
+            handlePseudoValue={handlePseudoValue}
+            ageValue={ageValue}
+            handleAgeValue={handleAgeValue}
+            hasPets={hasPets}
+            handleHasPets={handleHasPets}
+            hasKids={hasKids}
+            handleHasKids={handleHasKids}
+            hasGarden={hasGarden}
+            handleHasGarden={handleHasGarden}
+            contentValue={contentValue}
+            handleContentValue={handleContentValue}
+          />
         )}
     </>
   );
 }
+
+FormHumanCheckbox.propTypes = {
+  nameValue: propTypes.string.isRequired,
+  handleNameValue: propTypes.func.isRequired,
+  pseudoValue: propTypes.string.isRequired,
+  handlePseudoValue: propTypes.func.isRequired,
+  ageValue: propTypes.oneOfType([
+    propTypes.number,
+    propTypes.string,
+  ]).isRequired,
+  handleAgeValue: propTypes.func.isRequired,
+  hasPets: propTypes.string.isRequired,
+  handleHasPets: propTypes.func.isRequired,
+  hasKids: propTypes.string.isRequired,
+  handleHasKids: propTypes.func.isRequired,
+  hasGarden: propTypes.string.isRequired,
+  handleHasGarden: propTypes.func.isRequired,
+  contentValue: propTypes.string.isRequired,
+  handleContentValue: propTypes.func.isRequired,
+};
 
 export default React.memo(FormHumanCheckbox);

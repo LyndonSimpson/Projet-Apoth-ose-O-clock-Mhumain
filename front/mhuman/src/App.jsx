@@ -7,6 +7,7 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 
 import LandingPage from './Components/LandingPage/LandingPage';
+import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
@@ -28,7 +29,6 @@ function App() {
         <Route
           path="/createprofilecat"
           element={<CreateProfileCat />}
-          }
         />
         <Route
           path="/profileselect"

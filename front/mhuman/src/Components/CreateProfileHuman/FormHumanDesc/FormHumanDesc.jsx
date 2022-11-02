@@ -1,27 +1,36 @@
 import './formhumandescstyles.scss';
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import {
   Button, TextArea, Icon,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import LandingPage from '../../LandingPage/LandingPage';
 
 function FormHumanDesc({
   handleReturnClick,
+  contentValue,
+  handleContentValue,
 }) {
-  const [next, setNext] = useState('');
+  // const [content, setContent] = useState('');
   const [image, setImage] = useState([]);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    setNext('LandingPage');
   };
 
   return (
     <div>
-      {!next && (
-      <form className="form-desc-human">
-        <TextArea className="form-desc-human-area" rows={2} placeholder="Dites-nous en plus sur vous..." />
+      <form
+        className="form-desc-human"
+        onSubmit={handleSubmit}
+      >
+        <TextArea
+          className="form-desc-human-area"
+          rows={2}
+          placeholder="Dites-nous en plus sur vous..."
+          value={contentValue}
+          onChange={(e) => { handleContentValue(e.target.value); }}
+        />
 
         <div>
           {
@@ -65,9 +74,9 @@ function FormHumanDesc({
 
           <Button
             className="form-desc-human-button"
-            onClick={handleReturnClick}
             size="big"
             animated="fade"
+            type="submit"
           >
             <Button.Content visible>Je veux me faire adopter par un chat!</Button.Content>
             <Button.Content hidden>
@@ -76,11 +85,7 @@ function FormHumanDesc({
           </Button>
         </div>
       </form>
-      )}
-      {next === 'LandingPage'
-    && (
-      <LandingPage />
-    )}
+
     </div>
 
   );
@@ -88,6 +93,8 @@ function FormHumanDesc({
 
 FormHumanDesc.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
+  contentValue: PropTypes.string.isRequired,
+  handleContentValue: PropTypes.func.isRequired,
 };
 
 export default React.memo(FormHumanDesc);
