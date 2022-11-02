@@ -3,6 +3,13 @@ const dataMapper = require("../datamapper/human");
 
 const humanController = {
   newHuman: async (req, res) => {
+    const id = req.session.user.id;
+    const AlreadyExists = await dataMapper.getMyhumans(id);
+    const email = AlreadyExists.map(x => x.email);
+    console.log(email);
+    if(AlreadyExists) {
+      res.send('You already have a human profile on this account')
+    } else {
     //todo ajouter une condition avec une requête qui bloque la création d'un nouvel humain
     //todo si il y a un humain avec le account_id situé dans req.session.user.id !, "select * from human where account_id = req.session.user.id"
 
@@ -17,6 +24,7 @@ const humanController = {
       console.error(error);
       res.status(500).send(`An error occured with the database :\n${error.message}`);
     }
+  }
   },
   oneHuman: async (req, res) => {
     const id = req.params.id;

@@ -16,7 +16,6 @@ const userController = {
   },
   getMyHumanProfiles: async (req, res) => {
     const id = req.session.user.id;
-    console.log(id);
     try {
       const result = await humanDataMapper.getMyhumans(id);
       res.json(result);
