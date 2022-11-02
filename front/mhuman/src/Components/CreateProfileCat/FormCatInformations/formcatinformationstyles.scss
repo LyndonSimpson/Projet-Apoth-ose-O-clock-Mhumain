@@ -27,10 +27,16 @@
     &-radios {
         margin-top: 1rem;
     }
+
+    &-dropdown {
+        width: 350px;
+        margin-top: 1rem;
+    }
 }
 
 @media only screen and (max-width: 768px) {
     .form-cat-informations {
         margin-top: 100px;
     }
+
 }
