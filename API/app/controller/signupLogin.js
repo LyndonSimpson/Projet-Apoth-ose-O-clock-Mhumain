@@ -81,7 +81,7 @@ const userController = {
         req.session.user.role = 'admin';
             res.json(searchedUser);
         } else {
-            res.json(sessionUser); 
+            res.json(sessionUser);  
         }
         } catch (error) {
             console.error(error);
