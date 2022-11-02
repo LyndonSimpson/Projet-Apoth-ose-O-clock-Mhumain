@@ -38,6 +38,16 @@ const catDataMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    async getMyCats(id) { 
+
+        const query = {
+            text: `SELECT * FROM cat WHERE account_id = $1`,
+            values: [id]
+          };
+            
+        const result = await database.query(query);
+        return result.rows;
+    },
     async updateCat(pseudo, image, name, description, race, age, sexe, color, likes_pets, likes_kids,
         needs_garden, siblings_id, id) { 
             // no "account_id" because the user that created the profil cannot change!

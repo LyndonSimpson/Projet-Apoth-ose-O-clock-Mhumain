@@ -53,6 +53,22 @@ const router = Router();
     router.patch("/user/:id", userController.update);
 
     /**
+    * GET /user/humans
+    * @summary gets all the human profiles of the user in session
+    * @description gets all the owned human profiles of the logged in user. 
+    *  - category identifier
+    */
+    router.get("/userhumans", userController.getMyHumanProfiles);
+
+    /**
+    * GET /user/cats
+    * @summary gets all the cat profiles of the user in session
+    * @description gets all the owned cat profiles of the logged in user. 
+    *  - category identifier
+    */
+    router.get("/usercats", userController.getMyCatProfiles);
+
+    /**
     * DELETE /user
     * @summary delete user
     * @description delete an existing user account into the database

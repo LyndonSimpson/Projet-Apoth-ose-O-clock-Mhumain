@@ -3,6 +3,9 @@ const dataMapper = require("../datamapper/human");
 
 const humanController = {
   newHuman: async (req, res) => {
+    //todo ajouter une condition avec une requête qui bloque la création d'un nouvel humain
+    //todo si il y a un humain avec le account_id situé dans req.session.user.id !, "select * from human where account_id = req.session.user.id"
+
     console.log(req.session.user);
     try {
       const result = await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it

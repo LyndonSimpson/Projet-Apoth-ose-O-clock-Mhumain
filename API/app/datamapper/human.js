@@ -31,6 +31,16 @@ const humanDataMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    async getMyhumans(id) { 
+
+        const query = {
+            text: `SELECT * FROM human WHERE account_id = $1`,
+            values: [id]
+          };
+            
+        const result = await database.query(query);
+        return result.rows;
+    },
     async updateHuman(pseudo, image, name, description, age, has_pets, has_kids,
                       has_garden, id) { 
 
