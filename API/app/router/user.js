@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
+const loggedMiddleware = require('../middlewares/logged');
  
 const router = Router();
 
@@ -14,19 +15,26 @@ const router = Router();
     router.post("/user/signup", signupLoginController.signupAction);
     
     /**
-    * GET /user
+    * POST /user
     * @summary login user
     * @description lets a user log in, checks the email and the encrupted password in DB.
     * @param {string} request.body
     */
-    router.get("/user/login", signupLoginController.loginAction); 
+    router.post("/user/login", signupLoginController.loginAction);
+
+    /**
+    * GET /user
+    * @summary logs out the user
+    * @description logs out a user and takes him out of his session.
+    */
+    router.get("/user/logout", loggedMiddleware, signupLoginController.disconnect);
 
     /**
     * GET /user
     * @summary get all users
     * @description retrieves all the user accounts from the database
     */
-    router.get("/user", userController.allUsers);
+    router.get("/user", loggedMiddleware, userController.allUsers);
 
     /**
     * GET /user/:id
@@ -34,7 +42,7 @@ const router = Router();
     * @description retrieves the user with the id passed in params from database.
     * @param {number} id.path.required - category identifier
     */
-    router.get("/user/:id", userController.oneUser);
+    router.get("/user/:id", loggedMiddleware, userController.oneUser);
 
     /**
     * PATCH /user
@@ -42,7 +50,7 @@ const router = Router();
     * @description update an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/user/:id", userController.update);
+    router.patch("/user/:id", loggedMiddleware, userController.update);
 
     /**
     * DELETE /user
@@ -50,7 +58,7 @@ const router = Router();
     * @description delete an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/user/:id", userController.delete);
+    router.delete("/user/:id", loggedMiddleware, userController.delete);
 
 
 

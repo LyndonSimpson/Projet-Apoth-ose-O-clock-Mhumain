@@ -15,6 +15,10 @@ const catRouter = require('./app/router/cat');
 const catFavoritesRouter = require('./app/router/catFavorites');
 const humanFavoritesRouter = require('./app/router/humanFavorites');
 
+const session = require('express-session');
+
+const userMiddleware = require('./app/middlewares/user');
+
 const PORT = process.env.PORT;
 
 const expressJSDocSwagger = require('express-jsdoc-swagger');
@@ -50,8 +54,16 @@ const app = express();
 
 expressJSDocSwagger(app)(options);
 
-const bodyParser = require("body-parser");
+const bodyParser = require("body-parser"); // TODO check que cette const est necessaire (pas used ici en middleware et on a un autre parser express)
 
+// on rajoute la gestion des sessions
+app.use(session({
+  saveUninitialized: true,
+  resave: true,
+  secret: process.env.SESSION_SECRET
+}))
+
+app.use(userMiddleware);
 
 app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
 

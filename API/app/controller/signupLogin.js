@@ -80,11 +80,6 @@ const userController = {
         // on va juste changer la valeur de la session
         req.session.user = false;
         // TODO ajouter ici le code qui va gérer l'action une fois que le user est déconnecté 
-    },
-    
-    profilePage(req, res) {
-       
-        //res.render('profile');
     }
 };
 
