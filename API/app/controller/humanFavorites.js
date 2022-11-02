@@ -4,8 +4,9 @@ const dataMapper = require("../datamapper/humanFavorites");
 const humanFavoritesController = {
   newFavorite: async (req, res) => {
     try {
-      const result = await dataMapper.createFavorite(req.body.profile_id, req.body.liked_profile_id); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
-      res.json(result);
+      const result = await dataMapper.createFavorite(req.session.user.id, req.body.liked_profile_id); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+      res.json(result);                                                   //TODO req.session.user.id ici ! --- le human connecté like depuis son id!
+                                                                          //reste plus qu'à voir comment récupérer le liked_profile_id
     } catch (error) {
       console.error(error);
       res.status(500).send(`An error occured with the database :\n${error.message}`);
