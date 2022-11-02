@@ -92,6 +92,8 @@ const userController = {
     disconnect(req, res) {
         // on va juste changer la valeur de la session
         req.session.user = false;
+        res.send('succesfully disconnected')
+        console.log(req.session.user);
         // TODO ajouter ici le code qui va gérer l'action une fois que le user est déconnecté 
     }
 };

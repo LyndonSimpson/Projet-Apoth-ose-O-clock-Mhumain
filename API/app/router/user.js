@@ -27,7 +27,7 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", signupLoginController.disconnect);
+    router.get("/user/logout", loggedMiddleware, signupLoginController.disconnect);
 
     /**
     * GET /user
