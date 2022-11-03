@@ -25,16 +25,19 @@ function App() {
         <Route
           path="/createprofilehuman"
           element={<CreateProfileHuman />}
+          end
         />
         <Route
           path="/createprofilecat"
           element={<CreateProfileCat />}
+          end
         />
         <Route
           path="/profileselect"
           element={
             <ProfileSelect />
           }
+          end
         />
         <Route
           path="/home"
