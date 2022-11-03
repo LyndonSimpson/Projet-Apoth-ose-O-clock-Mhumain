@@ -8,7 +8,7 @@ const router = Router();
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
 /*--------------------------------- cat router (create, read, update, delete) : */
     /**
-    * POST /cat create
+    * POST /cat/signup
     * @summary create cat
     * @description inserts a new cat profile into the database
     * @param {string} request.body
@@ -16,14 +16,15 @@ const router = Router();
     router.post("/cat/signup", catLoginController.signupAction); 
 
     /**
-    * post /cat login
+    * POST /cat/login
     * @summary get all cats
     * @description let's the user with a session.user log in on his selected cat profile
+    * @param {string} request.body
     */
     router.post("/cat/login", catLoginController.loginAction);
 
     /**
-    * get /cat lgout
+    * GET /cat/logout
     * @summary get all cats
     * @description let's the user with a session.user log in on his selected cat profile
     */
@@ -34,7 +35,7 @@ const router = Router();
     * @summary login as a cat - miaow
     * @description retrieves all the cat profiles from the database
     */
-     router.get("/cat", catController.allCats);
+    router.get("/cat", catController.allCats);
  
     /**
     * GET /cat/:id

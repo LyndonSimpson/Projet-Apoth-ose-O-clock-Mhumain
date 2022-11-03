@@ -61,7 +61,7 @@ const userController = {
         //console.log(hash);
         //console.log(hash2);
         //console.log(hash3);
-        //console.log(sessionUser);
+        console.log(sessionUser);
         const validPwd = await bcrypt.compare(pass, hash2);
         if (!validPwd) {
             throw new Error("Login does not work, email or password invalid");
