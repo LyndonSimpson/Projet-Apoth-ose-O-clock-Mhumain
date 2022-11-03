@@ -40,7 +40,7 @@ const router = Router();
     * GET /user/:id
     * @summary selects a specific user
     * @description retrieves the user with the id passed in params from database.
-    * @param {number} id.path.required - category identifier
+    * @param {integer} request.params - id PK
     */
     router.get("/user/:id", userController.oneUser);
 

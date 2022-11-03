@@ -41,7 +41,7 @@ const router = Router();
     * GET /cat/:id
     * @summary selects a specific cat
     * @description retrieves the cat with the id passed in params from database.
-    * @param {number} id.path.required - category identifier
+    * @param {number} request.params - id PK
     */
     router.get("/cat/:id", catController.oneCat);
 
