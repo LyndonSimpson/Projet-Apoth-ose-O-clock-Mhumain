@@ -7,7 +7,10 @@ const catLoginController = {
         try {
             const searchedCat = await dataMapper.getOneCatByPseudo(req.body.pseudo);
             //console.log(searchedCat);
-            if (searchedCat[0].pseudo == req.body.pseudo) {
+            const fakeObject = {};
+            const check = searchedCat[0];
+            const pseudo = check || fakeObject;
+            if (pseudo.pseudo == req.body.pseudo) {
                 throw new Error("cat pseudonyme already exists");
             }
             // Préparer une instance de cat

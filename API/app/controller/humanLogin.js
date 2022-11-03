@@ -8,9 +8,11 @@ const humanLoginController = {
             const AlreadyExists = await dataMapper.getMyhumans(id);
             const check = AlreadyExists[0];
             const isEmpty = Object.keys(check || fakeObject).length === 0;
-            const searchedhuman = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
-            //console.log(searchedHuman);
-            if (searchedhuman[0].pseudo == req.body.pseudo) {
+            const searchedHuman = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
+            const fakeObject1 = {};
+            const check1 = searchedHuman[0];
+            const pseudo = check1 || fakeObject1;
+            if (pseudo.pseudo == req.body.pseudo){
                 throw new Error("human pseudonyme already exists");
             } if(!isEmpty) {
                 res.status(500).send('You already have a human profile on this account')

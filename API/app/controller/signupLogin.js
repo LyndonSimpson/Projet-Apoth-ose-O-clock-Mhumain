@@ -13,7 +13,10 @@ const userController = {
         try {
             const searchedUser = await dataMapper.getOneUserByEmail(req.body.email);
             //console.log(searchedUser);
-            if (searchedUser[0].email == req.body.email) { //TODO j'ai ajouté ".email" à searchedUser ici -semble avoir réparé le pb
+            const fakeObject = {};
+            const check = searchedUser[0];
+            const email = check || fakeObject;
+            if (email.email == req.body.email) { //TODO j'ai ajouté ".email" à searchedUser ici -semble avoir réparé le pb
                 throw new Error("Email already exists");
             }
             // vérifie que le format de l'email est valide ex: user@user.com
