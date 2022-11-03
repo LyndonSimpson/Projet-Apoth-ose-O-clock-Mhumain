@@ -16,8 +16,6 @@
 }
 
 .form-informations {
-    display: flex;
-    flex-direction: column;
 
     &-input {
         width: 350px;
@@ -36,7 +34,7 @@
 
 @media only screen and (max-width: 768px) {
     .form-cat-informations {
-        margin-top: 100px;
+        margin-top: 80px;
     }
 
 }

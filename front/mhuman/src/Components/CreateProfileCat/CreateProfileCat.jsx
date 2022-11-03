@@ -10,9 +10,12 @@ function CreateProfileCat() {
   const [nameValue, setNameValue] = useState('');
   const [pseudoValue, setPseudoValue] = useState('');
   const [ageValue, setAgeValue] = useState('');
-  const [hasPets, setHasPets] = useState('false');
-  const [hasKids, setHasKids] = useState('false');
-  const [hasGarden, setHasGarden] = useState('false');
+  const [colorValue, setColorValue] = useState('');
+  const [sexeValue, setSexeValue] = useState('');
+  const [catBreedsValue, setCatBreedsValue] = useState('');
+  const [likesPets, setLikesPets] = useState('false');
+  const [likesKids, setLikesKids] = useState('false');
+  const [needsGarden, setNeedsGarden] = useState('false');
   const [contentValue, setContentValue] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
 
@@ -25,9 +28,12 @@ function CreateProfileCat() {
         name: payload.name,
         description: payload.description,
         age: payload.age,
-        has_pets: payload.has_pets,
-        has_kids: payload.has_kids,
-        has_garden: payload.has_garden,
+        race: payload.race,
+        sexe: payload.sexe,
+        color: payload.color,
+        likes_pets: payload.likes_pets,
+        likes_kids: payload.likes_kids,
+        needs_garden: payload.needs_garden,
       });
       console.log(response);
       if (response.status === 200) {
@@ -48,14 +54,23 @@ function CreateProfileCat() {
   const handleAgeValue = (value) => {
     setAgeValue(value);
   };
-  const handleHasPets = (evt, { value }) => {
-    setHasPets(value);
+  const handleColorValue = (value) => {
+    setColorValue(value);
   };
-  const handleHasKids = (evt, { value }) => {
-    setHasKids(value);
+  const handleCatBreedsValue = (value) => {
+    setCatBreedsValue(value);
   };
-  const handleHasGarden = (evt, { value }) => {
-    setHasGarden(value);
+  const handleSexeValue = (value) => {
+    setSexeValue(value);
+  };
+  const handleLikesPets = (evt, { value }) => {
+    setLikesPets(value);
+  };
+  const handleLikesKids = (evt, { value }) => {
+    setLikesKids(value);
+  };
+  const handleNeedsGarden = (evt, { value }) => {
+    setNeedsGarden(value);
   };
   const handleContentValue = (value) => {
     setContentValue(value);
@@ -73,9 +88,12 @@ function CreateProfileCat() {
       name: nameValue,
       description: contentValue,
       age: ageValue,
-      has_pets: hasPets,
-      has_kids: hasKids,
-      has_garden: hasGarden,
+      race: catBreedsValue,
+      color: colorValue,
+      sexe: sexeValue,
+      likes_pets: likesPets,
+      likes_kids: likesKids,
+      needs_garden: needsGarden,
     });
   };
 
@@ -83,7 +101,7 @@ function CreateProfileCat() {
     <div className="profile">
       <div className="profile-form">
         <div className="create-title">
-          <img src={Logo} alt="logo" />
+          <img className="profile-logo" src={Logo} alt="logo" />
         </div>
         <FormCatCheckbox
           nameValue={nameValue}
@@ -92,12 +110,18 @@ function CreateProfileCat() {
           handlePseudoValue={handlePseudoValue}
           ageValue={ageValue}
           handleAgeValue={handleAgeValue}
-          hasPets={hasPets}
-          handleHasPets={handleHasPets}
-          hasKids={hasKids}
-          handleHasKids={handleHasKids}
-          hasGarden={hasGarden}
-          handleHasGarden={handleHasGarden}
+          colorValue={colorValue}
+          handleColorValue={handleColorValue}
+          catBreedsValue={catBreedsValue}
+          handleCatBreedsValue={handleCatBreedsValue}
+          sexeValue={sexeValue}
+          handleSexeValue={handleSexeValue}
+          likesPets={likesPets}
+          handleLikesPets={handleLikesPets}
+          likesKids={likesKids}
+          handleLikesKids={handleLikesKids}
+          needsGarden={needsGarden}
+          handleNeedsGarden={handleNeedsGarden}
           contentValue={contentValue}
           handleContentValue={handleContentValue}
           handleSubmitForm={handleSubmitForm}
