@@ -2,20 +2,27 @@ const dataMapper = require("../datamapper/human");
 
 const humanLoginController = {
     async signupAction (req, res) {
-        
+        const id = req.session.user.id;
+        const fakeObject = {};
         try {
-            const searchedhuman = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
-            //console.log(searchedHuman);
-            if (searchedhuman.pseudo) {
+            const AlreadyExists = await dataMapper.getMyhumans(id);
+            const check = AlreadyExists[0];
+            const isEmpty = Object.keys(check || fakeObject).length === 0;
+            const searchedHuman = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
+            const fakeObject1 = {};
+            const check1 = searchedHuman[0];
+            const pseudo = check1 || fakeObject1;
+            if (pseudo.pseudo == req.body.pseudo){
                 throw new Error("human pseudonyme already exists");
-            }
-            // Préparer une instance de cat
+            } if(!isEmpty) {
+                res.status(500).send('You already have a human profile on this account')
+            } else { // Préparer une instance de human
             const newHuman =  await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             req.body.description, req.body.age,
             req.body.has_pets, req.body.has_kids, req.body.has_garden,
             req.session.user.id);
 
-           res.json(newHuman);
+           res.json(newHuman);}
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);

@@ -12,6 +12,7 @@ const humanDataMapper = {
                 has_garden, account_id]
           };
         const result = await database.query(query);
+        console.log(result.rows);
         return result.rows;
     },
     async getHumans() { 
