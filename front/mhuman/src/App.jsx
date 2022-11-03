@@ -9,6 +9,7 @@ import Footer from './Components/Footer/Footer';
 import LandingPage from './Components/LandingPage/LandingPage';
 import CreateProfile from './Components/CreateProfile/CreateProfile';
 import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
+import HomePage from './Components/HomePage/HomePage';
 
 function App() {
   return (
@@ -18,6 +19,12 @@ function App() {
           path="/"
           element={
             <LandingPage />
+          }
+        />
+        <Route
+          path="/homepage"
+          element={
+            <HomePage />
           }
         />
         <Route
