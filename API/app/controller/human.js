@@ -11,7 +11,7 @@ const humanController = {
     const AlreadyExists = await dataMapper.getMyhumans(id);
     const check = AlreadyExists[0];
     const isEmpty = Object.keys(check || fakeObject).length === 0;
-    console.log(isEmpty);
+    //console.log(isEmpty);
       if(!isEmpty) {
         res.status(500).send('You already have a human profile on this account')
       } else {
