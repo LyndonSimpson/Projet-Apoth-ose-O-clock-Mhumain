@@ -54,7 +54,9 @@ const app = express();
 
 expressJSDocSwagger(app)(options);
 
-const bodyParser = require("body-parser"); // TODO check que cette const est necessaire (pas used ici en middleware et on a un autre parser express)
+const bodyParser = require("body-parser"); 
+app.use(bodyParser.json());
+
 
 // on rajoute la gestion des sessions
 app.use(session({
@@ -67,7 +69,8 @@ app.use(userMiddleware);
 
 app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
-app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200 })); //TODO see if settings are safe
+app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ?
+// found this all over internet : app.use(cors({origin: true, credentials: true}));
 
 app.use(express.urlencoded({extended: true}));
 
