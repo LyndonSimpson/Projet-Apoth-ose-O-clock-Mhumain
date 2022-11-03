@@ -65,11 +65,25 @@ app.use(session({
   secret: process.env.SESSION_SECRET
 }));
 
-app.use(userMiddleware);
+//app.use(userMiddleware);
 
-app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
+// cors
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
 
-app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ?
+  // response to preflight request
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  }
+  else {
+    next();
+  }
+});
+//app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
+
+//app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ?
 // found this all over internet : app.use(cors({origin: true, credentials: true}));
 
 app.use(express.urlencoded({extended: true}));
