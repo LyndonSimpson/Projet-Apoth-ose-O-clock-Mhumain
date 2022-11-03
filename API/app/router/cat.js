@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const catController = require('../controller/cat');
+const catLoginController = require('../controller/catLogin.js');
 
 const router = Router();
 
@@ -7,19 +8,26 @@ const router = Router();
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
 /*--------------------------------- cat router (create, read, update, delete) : */
     /**
-    * POST /cat
+    * POST /cat create
     * @summary create cat
     * @description inserts a new cat profile into the database
     * @param {string} request.body
     */
-    router.post("/cat", catController.newCat);
+    router.post("/cat/signup", catLoginController.signupAction); 
 
     /**
-    * GET /cat
+    * post /cat login
     * @summary get all cats
     * @description retrieves all the cat profiles from the database
     */
-    router.get("/cat", catController.allCats);
+    router.post("/cat/login", catLoginController.loginAction);
+
+    /**
+    * GET /cat login
+    * @summary login as a cat - miaow
+    * @description let's the user with a session.user log in on his selected cat profile
+    */
+     router.get("/cat", catLoginController.loginAction);
  
     /**
     * GET /cat/:id

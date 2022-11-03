@@ -15,7 +15,7 @@ const router = Router();
     router.post("/user/signup", signupLoginController.signupAction);
     
     /**
-    * POST /user
+    * POST /user/login
     * @summary login user
     * @description lets a user log in, checks the email and the encrupted password in DB.
     * @param {string} request.body
@@ -53,7 +53,7 @@ const router = Router();
     router.patch("/user/:id", userController.update);
 
     /**
-    * GET /user/humans
+    * GET /userhumans
     * @summary gets all the human profiles of the user in session
     * @description gets all the owned human profiles of the logged in user. 
     *  - category identifier
