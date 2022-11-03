@@ -17,17 +17,18 @@ function SignUp({
   const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchData = async (emailvalue, passwordvalue) => {
+  const fetchData = async (email, password, passwordConfirm) => {
     try {
-      const response = await axios.post('http://localhost:3001/user', {
-        email: emailvalue,
-        password: passwordvalue,
+      const response = await axios.post('http://localhost:3001/user/signup', {
+        email,
+        password,
+        passwordConfirm,
       });
       if (response.status === 200) {
         handleSucceededCreateUser();
       }
     } catch (err) {
-      setErrorMessage(err.message);
+      setErrorMessage(err.response.data);
     }
   };
 
@@ -54,7 +55,7 @@ function SignUp({
       return;
     }
     // TODO : use emailValue and passwordValue for add new user in db
-    fetchData(emailValue, passwordValue);
+    fetchData(emailValue, passwordValue, confirmPasswordValue);
     handleReset();
   };
   const handleDismiss = () => { // Gere la fermeture du message
