@@ -1,8 +1,3 @@
-INSERT INTO "account" ("id", "email", "password", "is_admin") VALUES 
-(1, 'lyndon@street.fr', 'Maka_1', false),
-(2, 'aline@ghetto.com', 'heyA_1', false),
-(3, 'romain@street.fr', 'Wesh_1', false),
-(4, 'hugo@ghetto.com', 'Yoman_1', false);
 
 
 INSERT INTO "human" ("pseudo", "image", "name", "description", "age", "has_pets", "has_kids", "has_garden", "account_id") VALUES
