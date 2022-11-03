@@ -17,19 +17,25 @@ function FormCatInformations({
   handlePseudoValue,
   ageValue,
   handleAgeValue,
-  hasPets,
-  handleHasPets,
-  hasKids,
-  handleHasKids,
-  hasGarden,
-  handleHasGarden,
+  colorValue,
+  handleColorValue,
+  catBreedsValue,
+  handleCatBreedsValue,
+  sexeValue,
+  handleSexeValue,
+  likesPets,
+  handleLikesPets,
+  likesKids,
+  handleLikesKids,
+  needsGarden,
+  handleNeedsGarden,
   contentValue,
   handleContentValue,
   handleSubmitForm,
 }) {
   const [next, setNext] = useState('');
+  const [listOption, setListOption] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [catBreeds, setCatBreeds] = useState('');
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!nameValue.trim()) {
@@ -42,6 +48,10 @@ function FormCatInformations({
     }
     if (!ageValue.trim()) {
       setErrorMessage('L\'age est obligatoire');
+      return;
+    }
+    if (!colorValue.trim()) {
+      setErrorMessage('La couleur est obligatoire');
       return;
     }
     setNext('FormCatDesc');
@@ -77,7 +87,17 @@ function FormCatInformations({
           style: { width: '30px' },
         },
       }));
-      setCatBreeds(listOptions);
+      listOptions.unshift({
+        key: 'Chat de gouttière',
+        text: 'Chat de gouttière',
+        value: 'Chat de gouttière',
+        image: {
+          avatar: true,
+          src: null,
+          style: { width: '30px' },
+        },
+      });
+      setListOption(listOptions);
     }
     getCatBreed();
   }, []);
@@ -101,7 +121,7 @@ function FormCatInformations({
               <Input
                 className="form-informations-input"
                 id="form-input-control-first-name"
-                placeholder="Name"
+                placeholder="Nom du chat"
                 value={nameValue}
                 onChange={(e) => { handleNameValue(e.target.value); }}
               />
@@ -116,7 +136,7 @@ function FormCatInformations({
                 className="form-informations-input"
                 label={<Dropdown defaultValue="mois" options={options} />}
                 labelPosition="right"
-                placeholder="Entrez votre âge"
+                placeholder="Entrez l'âge du chat"
                 type="number"
                 value={ageValue}
                 onChange={(e) => { handleAgeValue(e.target.value); }}
@@ -124,87 +144,91 @@ function FormCatInformations({
               <Input
                 className="form-informations-input"
                 id="form-input-control-color"
-                placeholder="Couleur"
-                // value={colorValue}
-                // onChange={(e) => { handleColorValue(e.target.value); }}
+                placeholder="Indiquez la couleur du chat"
+                value={colorValue}
+                onChange={(e) => { handleColorValue(e.target.value); }}
               />
               <Dropdown
                 className="form-informations-dropdown"
                 clearable
-                placeholder="Selectionnez la race"
+                placeholder="Sélectionnez la race du chat"
                 fluid
                 selection
-                options={catBreeds}
+                value={catBreedsValue}
+                options={listOption}
+                onChange={(e, data) => { handleCatBreedsValue(data.value); }}
               />
               <Dropdown
                 className="form-informations-dropdown"
                 placeholder="Sexe"
                 selection
                 options={selectedSexe}
+                value={sexeValue}
+                onChange={(e, data) => { handleSexeValue(data.value); }}
               />
             </Form.Group>
 
             <div className="form-informations-radios">
-              <Form.Group grouped>
-                <label htmlFor="has_pets">Aime-t-il les autres animaux ?</label>
+              <Form.Group>
+                <label htmlFor="likes_pets">Aime-t-il les autres animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="has_pets"
+                    name="likes_pets"
                     value="true"
-                    checked={hasPets === 'true'}
-                    onChange={handleHasPets}
+                    checked={likesPets === 'true'}
+                    onChange={handleLikesPets}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="has_pets"
+                    name="likes_pets"
                     value="false"
-                    checked={hasPets === 'false'}
-                    onChange={handleHasPets}
+                    checked={likesPets === 'false'}
+                    onChange={handleLikesPets}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="has_kids">Aime-t-il les enfants ?</label>
+                <label htmlFor="likes_kids">Aime-t-il les enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="has_kids"
+                    name="likes_kids"
                     value="true"
-                    checked={hasKids === 'true'}
-                    onChange={handleHasKids}
+                    checked={likesKids === 'true'}
+                    onChange={handleLikesKids}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="has_kids"
+                    name="likes_kids"
                     value="false"
-                    checked={hasKids === 'false'}
-                    onChange={handleHasKids}
+                    checked={likesKids === 'false'}
+                    onChange={handleLikesKids}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="has_garden">A-t-il besoin d'un jardin ?</label>
+                <label htmlFor="needs_garden">A-t-il besoin d'un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="has_garden"
+                    name="needs_garden"
                     value="true"
-                    checked={hasGarden === 'true'}
-                    onChange={handleHasGarden}
+                    checked={needsGarden === 'true'}
+                    onChange={handleNeedsGarden}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="has_garden"
+                    name="needs_garden"
                     value="false"
-                    checked={hasGarden === 'false'}
-                    onChange={handleHasGarden}
+                    checked={needsGarden === 'false'}
+                    onChange={handleNeedsGarden}
                   />
                 </Form.Field>
               </Form.Group>
@@ -213,7 +237,6 @@ function FormCatInformations({
               <Button
                 className="form-cat-button"
                 onClick={handleReturnClick}
-                size="big"
                 animated="fade"
               >
                 <Button.Content visible>Retour</Button.Content>
@@ -225,7 +248,6 @@ function FormCatInformations({
               <Button
                 className="form-cat-button"
                 onClick={handleSubmit}
-                size="big"
                 animated="fade"
               >
                 <Button.Content visible>Next</Button.Content>
@@ -261,12 +283,18 @@ FormCatInformations.propTypes = {
     propTypes.string,
   ]).isRequired,
   handleAgeValue: propTypes.func.isRequired,
-  hasPets: propTypes.string.isRequired,
-  handleHasPets: propTypes.func.isRequired,
-  hasKids: propTypes.string.isRequired,
-  handleHasKids: propTypes.func.isRequired,
-  hasGarden: propTypes.string.isRequired,
-  handleHasGarden: propTypes.func.isRequired,
+  colorValue: propTypes.string.isRequired,
+  handleColorValue: propTypes.func.isRequired,
+  catBreedsValue: propTypes.string.isRequired,
+  handleCatBreedsValue: propTypes.func.isRequired,
+  sexeValue: propTypes.string.isRequired,
+  handleSexeValue: propTypes.func.isRequired,
+  likesPets: propTypes.string.isRequired,
+  handleLikesPets: propTypes.func.isRequired,
+  likesKids: propTypes.string.isRequired,
+  handleLikesKids: propTypes.func.isRequired,
+  needsGarden: propTypes.string.isRequired,
+  handleNeedsGarden: propTypes.func.isRequired,
   contentValue: propTypes.string.isRequired,
   handleContentValue: propTypes.func.isRequired,
   handleSubmitForm: propTypes.func.isRequired,

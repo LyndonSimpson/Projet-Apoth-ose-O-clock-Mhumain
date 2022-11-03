@@ -43,7 +43,7 @@ function FormCatDesc({
         <TextArea
           className="form-desc-cat-area"
           rows={2}
-          placeholder="Dites-nous en plus sur vous..."
+          placeholder="A propos du chat..."
           value={contentValue}
           onChange={(e) => { handleContentValue(e.target.value); }}
         />
@@ -79,7 +79,6 @@ function FormCatDesc({
           <Button
             className="form-desc-cat-button"
             onClick={handleReturnClick}
-            size="big"
             animated="fade"
           >
             <Button.Content visible>Retour</Button.Content>
@@ -91,11 +90,10 @@ function FormCatDesc({
           <Button
             className="form-desc-cat-button"
             onClick={handleSubmitContent}
-            size="big"
             animated="fade"
             type="submit"
           >
-            <Button.Content visible>Je veux me faire adopter par un chat!</Button.Content>
+            <Button.Content visible>Je veux adopter un humain!</Button.Content>
             <Button.Content hidden>
               <Icon name="heart" />
             </Button.Content>

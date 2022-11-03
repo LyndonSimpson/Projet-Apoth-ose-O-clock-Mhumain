@@ -162,7 +162,6 @@ function FormHumanInformations({
               <Button
                 className="form-human-button"
                 onClick={handleReturnClick}
-                size="big"
                 animated="fade"
               >
                 <Button.Content visible>Retour</Button.Content>
@@ -174,7 +173,6 @@ function FormHumanInformations({
               <Button
                 className="form-human-button"
                 onClick={handleSubmit}
-                size="big"
                 animated="fade"
               >
                 <Button.Content visible>Next</Button.Content>
