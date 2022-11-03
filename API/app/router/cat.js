@@ -18,16 +18,23 @@ const router = Router();
     /**
     * post /cat login
     * @summary get all cats
-    * @description retrieves all the cat profiles from the database
+    * @description let's the user with a session.user log in on his selected cat profile
     */
     router.post("/cat/login", catLoginController.loginAction);
 
     /**
-    * GET /cat login
-    * @summary login as a cat - miaow
+    * get /cat lgout
+    * @summary get all cats
     * @description let's the user with a session.user log in on his selected cat profile
     */
-     router.get("/cat", catLoginController.loginAction);
+    router.get("/cat/logout", catLoginController.disconnect);
+
+    /**
+    * GET /cat login
+    * @summary login as a cat - miaow
+    * @description retrieves all the cat profiles from the database
+    */
+     router.get("/cat", catController.allCats);
  
     /**
     * GET /cat/:id

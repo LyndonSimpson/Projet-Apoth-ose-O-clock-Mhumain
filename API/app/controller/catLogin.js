@@ -6,9 +6,9 @@ const catLoginController = {
         // chercher si l'utilisateur peut créer ce compte (via la méthode findOne )
         try {
             const searchedCat = await dataMapper.getOneCatByPseudo(req.body.pseudo);
-            //console.log(searchedUser);
+            //console.log(searchedCat);
             if (searchedCat.pseudo) {
-                throw new Error("Email already exists");
+                throw new Error("cat pseudonyme already exists");
             }
             // Préparer une instance de cat
             const newCat =  await dataMapper.createCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
@@ -35,8 +35,8 @@ const catLoginController = {
         // si tout va bien, rajoute le cat dans la session
         const sessionUser = searchedCat[0];
         req.session.cat = sessionUser; 
-        console.log(req.session.user);
-        console.log(req.session.cat)
+        //console.log(req.session.user);
+        //console.log(req.session.cat)
         // maintenant que le cat est loggé, on renvoie vers la page d'accueil
             res.json(sessionUser);  
         } catch (error) {
