@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import './landingpagestyles.scss';
 import Buttons from './Buttons/Buttons';
 import videoCat from '../../videos/videoCat.mp4';
 import LogIn from './LogIn/LogIn';
 import SignUp from './SignUp/SignUp';
 
-function LandingPage() {
+function LandingPage({
+  handleConnectedUser,
+}) {
   const [choice, setChoice] = useState('');
   const handleSignUp = () => {
     setChoice('SignUp');
@@ -47,10 +50,15 @@ function LandingPage() {
       && (
         <LogIn
           handleReturnClick={handleReturnButton}
+          handleConnectedUser={handleConnectedUser}
         />
       )}
     </div>
   );
 }
+
+LandingPage.propTypes = {
+  handleConnectedUser: PropTypes.func.isRequired,
+};
 
 export default React.memo(LandingPage);
