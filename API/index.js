@@ -67,23 +67,10 @@ app.use(session({
 
 //app.use(userMiddleware);
 
-// cors (fait par Eden pour la spé réact - CORS à la mano)
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Accept, Authorization');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-
-  // response to preflight request
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(200);
-  }
-  else {
-    next();
-  }
-});
 app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
 app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ? found this all over internet : app.use(cors({origin: true, credentials: true}));
+//todo we have to set "content-type : application/json?"
 
 app.use(express.urlencoded({extended: true}));
 

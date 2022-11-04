@@ -96,7 +96,7 @@ const userController = {
             res.sendStatus(401);
         }
 
-        
+        //todo surement plus besoin de ce code maintnant!
         //console.log(req.session.user)
         // maintenant que l'user est loggé, on renvoie vers la page d'accueil
         if (searchedUser.is_admin === true) {
