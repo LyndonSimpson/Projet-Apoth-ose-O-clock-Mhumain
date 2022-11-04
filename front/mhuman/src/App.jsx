@@ -11,6 +11,7 @@ import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
+import UpdateProfile from './Components/UpdateProfile/UpdateProfile';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -57,6 +58,11 @@ function App() {
               <Footer />
             </>
   )}
+        />
+        <Route
+          path="/updateprofile"
+          element={<UpdateProfile />}
+          end
         />
       </Routes>
     </div>
