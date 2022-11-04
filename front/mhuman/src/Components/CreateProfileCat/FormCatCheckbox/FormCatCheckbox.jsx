@@ -1,7 +1,7 @@
 import './formcatcheckboxstyles.scss';
 import React, { useState } from 'react';
 import {
-  Checkbox, Form, Button, Icon, Dropdown,
+  Checkbox, Form, Button, Icon,
 } from 'semantic-ui-react';
 import propTypes from 'prop-types';
 import FormCatInformations from '../FormCatInformations/FormCatInformations';
@@ -14,12 +14,18 @@ function FormCatCheckbox({
   handlePseudoValue,
   ageValue,
   handleAgeValue,
-  hasPets,
-  handleHasPets,
-  hasKids,
-  handleHasKids,
-  hasGarden,
-  handleHasGarden,
+  colorValue,
+  handleColorValue,
+  catBreedsValue,
+  handleCatBreedsValue,
+  sexeValue,
+  handleSexeValue,
+  likesPets,
+  handleLikesPets,
+  likesKids,
+  handleLikesKids,
+  needsGarden,
+  handleNeedsGarden,
   contentValue,
   handleContentValue,
   handleSubmitForm,
@@ -84,12 +90,18 @@ function FormCatCheckbox({
             handlePseudoValue={handlePseudoValue}
             ageValue={ageValue}
             handleAgeValue={handleAgeValue}
-            hasPets={hasPets}
-            handleHasPets={handleHasPets}
-            hasKids={hasKids}
-            handleHasKids={handleHasKids}
-            hasGarden={hasGarden}
-            handleHasGarden={handleHasGarden}
+            colorValue={colorValue}
+            handleColorValue={handleColorValue}
+            sexeValue={sexeValue}
+            handleSexeValue={handleSexeValue}
+            catBreedsValue={catBreedsValue}
+            handleCatBreedsValue={handleCatBreedsValue}
+            likesPets={likesPets}
+            handleLikesPets={handleLikesPets}
+            likesKids={likesKids}
+            handleLikesKids={handleLikesKids}
+            needsGarden={needsGarden}
+            handleNeedsGarden={handleNeedsGarden}
             contentValue={contentValue}
             handleContentValue={handleContentValue}
             handleSubmitForm={handleSubmitForm}
@@ -109,12 +121,18 @@ FormCatCheckbox.propTypes = {
     propTypes.string,
   ]).isRequired,
   handleAgeValue: propTypes.func.isRequired,
-  hasPets: propTypes.string.isRequired,
-  handleHasPets: propTypes.func.isRequired,
-  hasKids: propTypes.string.isRequired,
-  handleHasKids: propTypes.func.isRequired,
-  hasGarden: propTypes.string.isRequired,
-  handleHasGarden: propTypes.func.isRequired,
+  colorValue: propTypes.string.isRequired,
+  handleColorValue: propTypes.func.isRequired,
+  catBreedsValue: propTypes.string.isRequired,
+  handleCatBreedsValue: propTypes.func.isRequired,
+  sexeValue: propTypes.string.isRequired,
+  handleSexeValue: propTypes.func.isRequired,
+  likesPets: propTypes.string.isRequired,
+  handleLikesPets: propTypes.func.isRequired,
+  likesKids: propTypes.string.isRequired,
+  handleLikesKids: propTypes.func.isRequired,
+  needsGarden: propTypes.string.isRequired,
+  handleNeedsGarden: propTypes.func.isRequired,
   contentValue: propTypes.string.isRequired,
   handleContentValue: propTypes.func.isRequired,
   handleSubmitForm: propTypes.func.isRequired,

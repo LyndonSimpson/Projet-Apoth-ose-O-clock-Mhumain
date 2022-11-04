@@ -121,7 +121,6 @@ function FormHumanDesc({
           <Button
             className="form-desc-human-button"
             onClick={handleReturnClick}
-            size="big"
             animated="fade"
           >
             <Button.Content visible>Retour</Button.Content>
