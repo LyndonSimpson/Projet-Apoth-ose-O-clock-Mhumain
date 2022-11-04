@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import './App.scss';
@@ -13,28 +13,41 @@ import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHum
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 
 function App() {
+  const [connectedUser, setConnectedUser] = useState('');
+
+  const handleConnectedUser = (obj) => {
+    setConnectedUser(obj);
+  };
+
   return (
     <div className="App">
       <Routes>
         <Route
           path="/"
-          element={
-            <LandingPage />
-          }
+          element={(
+            <LandingPage
+              handleConnectedUser={handleConnectedUser}
+            />
+          )}
         />
         <Route
           path="/createprofilehuman"
           element={<CreateProfileHuman />}
+          end
         />
         <Route
           path="/createprofilecat"
           element={<CreateProfileCat />}
+          end
         />
         <Route
           path="/profileselect"
-          element={
-            <ProfileSelect />
-          }
+          element={(
+            <ProfileSelect
+              connectedUser={connectedUser}
+            />
+          )}
+          end
         />
         <Route
           path="/home"

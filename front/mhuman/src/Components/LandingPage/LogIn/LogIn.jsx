@@ -10,19 +10,25 @@ import Logo from '../logo.png';
 
 function LogIn({
   handleReturnClick,
+  handleConnectedUser,
 }) {
-  const [emailValue, SetEmailValue] = useState('');
-  const [passwordValue, SetPasswordValue] = useState('');
+  const [emailValue, SetEmailValue] = useState('romain@street.fr');
+  const [passwordValue, SetPasswordValue] = useState('Wesh_1');
   const [errorMessage, setErrorMessage] = useState('');
   const [isConnected, setIsConnected] = useState('');
 
-  const fetchData = async () => {
+  const fetchData = async (email, password) => {
     try {
-      const response = await axios.get('http://localhost:3001/user');
-      return response.data;
+      const response = await axios.post('http://localhost:3001/user/login', {
+        email,
+        password,
+      });
+      if (response.status === 200) {
+        handleConnectedUser(response.data);
+        setIsConnected(true);
+      }
     } catch (err) {
-      setErrorMessage(err.message);
-      return null;
+      setErrorMessage(err.response.data);
     }
   };
 
@@ -38,23 +44,7 @@ function LogIn({
       setErrorMessage('Le mot de passe est obligatoire');
     }
     // Je récupere les données de la base de donnée pour les comparer aux entrés de l'utilisateur
-    const users = await fetchData();
-    if (!users) {
-      return;
-    }
-    const found = users.find((user) => user.email === emailValue);
-    // Si aucun mail ne correspond je renvoi une erreur à l'utilisateur
-    if (!found) {
-      setErrorMessage("Il n'existe aucun compte lié à cette email");
-      return;
-    }
-    if (found.password === passwordValue) {
-      // TODO redirect vers le sass d'accueil
-      setIsConnected(true);
-    } else {
-      // Si le mot de passe ne correspond pas je renvoi une erreur à l'utilisateur
-      setErrorMessage('Le mot de passe est incorrecte');
-    }
+    fetchData(emailValue, passwordValue);
   };
 
   const handleDismiss = () => {
@@ -122,6 +112,7 @@ function LogIn({
 
 LogIn.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
+  handleConnectedUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(LogIn);
