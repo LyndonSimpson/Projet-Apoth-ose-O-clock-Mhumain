@@ -15,10 +15,15 @@ function ProfileSelect({
 
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
     async function getUserProfile() {
+      console.log(connectedUser);
       try {
         const [userCats, userHumans] = await Promise.all([
-          axios.get('http://localhost:3001/usercats'),
-          axios.get('http://localhost:3001/userhumans'),
+          axios.get('http://localhost:3001/usercats', {
+            withCredentials: true,
+          }),
+          axios.get('http://localhost:3001/userhumans', {
+            withCredentials: true,
+          }),
         ]);
         setCatsProfile(userCats);
         setHumansProfile(userHumans);
