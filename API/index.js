@@ -81,10 +81,9 @@ app.use((req, res, next) => {
     next();
   }
 });
-//app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
+app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
-//app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ?
-// found this all over internet : app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ? found this all over internet : app.use(cors({origin: true, credentials: true}));
 
 app.use(express.urlencoded({extended: true}));
 
