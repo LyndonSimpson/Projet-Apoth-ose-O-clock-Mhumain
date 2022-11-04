@@ -15,7 +15,12 @@ const userController = {
     }
   },
   getMyHumanProfiles: async (req, res) => {
-    const id = req.session.user.id;
+    //TODO ici récupérer le token pour récupérer l'id/ ou récupérer la session avec le id
+
+    // console.log(req.headers.authorization); -- ici on récupère le token crypté
+    
+    // console.log(req.auth.userId); -- ici on récupère le id du user dans le token
+    const id = req.auth.userId;
     try {
       const result = await humanDataMapper.getMyhumans(id);
       res.json(result);
@@ -25,7 +30,7 @@ const userController = {
     }
   },
   getMyCatProfiles: async (req, res) => {
-    const id = req.session.user.id;
+    const id = req.auth.userId;
     try {
       const result = await catDataMapper.getMyCats(id);
       res.json(result);

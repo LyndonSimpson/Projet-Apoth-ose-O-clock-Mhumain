@@ -3,6 +3,8 @@ const dataMapper = require("../datamapper/user");
 // on récupère ce package afin de vérifier le format de l'email passé par l'utilisateur lors de l'inscription
 const emailValidator = require('email-validator');
 
+const jsonwebtoken = require('jsonwebtoken');
+
 // on récupère bcrypt pour hasher le mdp
 const bcrypt = require('bcrypt');
 
@@ -44,6 +46,7 @@ const userController = {
           }
     },
     async loginAction(req, res) {
+        const jwtSecret = process.env.JWT_SECRET;
         // On tente de récupérer l'utilisateur
         try {
             const searchedUser = await dataMapper.getOneUserByEmail(req.body.email);
@@ -55,21 +58,45 @@ const userController = {
         const pass = req.body.password; 
         //console.log(pass);
         const hash = searchedUser.map(x => x.password);
-        const hash3 = typeof(pass);
         const hash2 = hash[0];
         const sessionUser = searchedUser[0];
         //console.log(hash);
         //console.log(hash2);
         //console.log(hash3);
-        //console.log(sessionUser);
+        console.log(sessionUser);
+        console.log(sessionUser.id);
         const validPwd = await bcrypt.compare(pass, hash2);
         if (!validPwd) {
             throw new Error("Login does not work, email or password invalid");
         }
-        // si tout va bien, rajoute l'utilisateur dans la session
+        
+        //TODO JWT -------------------------------------
+        if(sessionUser) {
+            // si tout va bien, rajoute l'utilisateur dans la session
         req.session.user = sessionUser;
         // pour éviter tout problème, on va supprimer le mdp de la session
         delete req.session.user.password;
+        delete req.session.user.is_damin;
+        //delete req.session.user.email
+        console.log(sessionUser);
+        const jwtContent = { userId: sessionUser.id };
+        const jwtOptions = { 
+        algorithm: 'HS256', 
+        expiresIn: '3h' 
+        };
+        console.log('<< 200', sessionUser.email);
+        res.json({ 
+            logged: true, 
+            pseudo: sessionUser.email,
+            token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
+        });
+        }
+        else {
+            console.log('<< 401 UNAUTHORIZED');
+            res.sendStatus(401);
+        }
+
+        
         //console.log(req.session.user)
         // maintenant que l'user est loggé, on renvoie vers la page d'accueil
         if (searchedUser.is_admin === true) {
