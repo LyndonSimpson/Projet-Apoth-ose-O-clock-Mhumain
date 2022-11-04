@@ -1,9 +1,16 @@
 import React from 'react';
+import { Route, Routes } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import './App.scss';
-import { Routes, Route } from 'react-router-dom';
+
+import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
+
 import LandingPage from './Components/LandingPage/LandingPage';
-import CreateProfile from './Components/CreateProfile/CreateProfile';
+import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
+
+import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
+import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 
 function App() {
   return (
@@ -11,11 +18,32 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<LandingPage />}
+          element={
+            <LandingPage />
+          }
         />
         <Route
-          path="/createprofile"
-          element={<CreateProfile />}
+          path="/createprofilehuman"
+          element={<CreateProfileHuman />}
+        />
+        <Route
+          path="/createprofilecat"
+          element={<CreateProfileCat />}
+        />
+        <Route
+          path="/profileselect"
+          element={
+            <ProfileSelect />
+          }
+        />
+        <Route
+          path="/home"
+          element={(
+            <>
+              <Header />
+              <Footer />
+            </>
+  )}
         />
       </Routes>
     </div>
