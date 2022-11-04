@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 import PropTypes from 'prop-types';
-
 import './landingpagestyles.scss';
 
 import Buttons from './Buttons/Buttons';
@@ -13,9 +12,7 @@ import LogIn from './LogIn/LogIn';
 import SignUp from './SignUp/SignUp';
 
 function LandingPage({
-
   handleConnectedUser,
-
 }) {
   const [choice, setChoice] = useState('');
 
@@ -78,7 +75,6 @@ function LandingPage({
         <LogIn
           handleReturnClick={handleReturnButton}
           handleConnectedUser={handleConnectedUser}
-
         />
 
       )}
@@ -89,7 +85,6 @@ function LandingPage({
 }
 
 LandingPage.propTypes = {
-
   handleConnectedUser: PropTypes.func.isRequired,
 
 };

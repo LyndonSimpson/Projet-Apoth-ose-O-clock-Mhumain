@@ -7,38 +7,25 @@ import {
 
 import propTypes from 'prop-types';
 import FormHumanDesc from '../FormHumanDesc/FormHumanDesc';
+import useHumanProfileReducer, { getActionSetValue } from '../../../hooks/useHumanProfileReducer';
 
 function FormHumanInformations({
   handleReturnClick,
-  nameValue,
-  handleNameValue,
-  pseudoValue,
-  handlePseudoValue,
-  ageValue,
-  handleAgeValue,
-  hasPets,
-  handleHasPets,
-  hasKids,
-  handleHasKids,
-  hasGarden,
-  handleHasGarden,
-  contentValue,
-  handleContentValue,
-  handleSubmitForm,
 }) {
+  const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [next, setNext] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (!nameValue.trim()) {
+    if (!humanProfileState.name.trim()) {
       setErrorMessage('Le nom est obligatoire');
       return;
     }
-    if (!pseudoValue.trim()) {
+    if (!humanProfileState.pseudo.trim()) {
       setErrorMessage('Le pseudo est obligatoire');
       return;
     }
-    if (!ageValue.trim()) {
+    if (!humanProfileState.age.trim()) {
       setErrorMessage('L\'age est obligatoire');
       return;
     }
@@ -46,6 +33,14 @@ function FormHumanInformations({
   };
   const handleDismiss = () => {
     setErrorMessage('');
+  };
+
+  const handleTextFieldChange = (e) => {
+    humanProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+  };
+
+  const handleRadioFieldChange = (e, { name, value }) => {
+    humanProfileDispatch(getActionSetValue(name, value));
   };
 
   const handleReturnButton = () => {
@@ -72,88 +67,91 @@ function FormHumanInformations({
                 className="form-informations-input"
                 id="form-input-control-first-name"
                 placeholder="Name"
-                value={nameValue}
-                onChange={(e) => { handleNameValue(e.target.value); }}
+                name="name"
+                value={humanProfileState.name}
+                onChange={handleTextFieldChange}
               />
               <Input
                 className="form-informations-input"
                 id="form-input-control-last-name"
                 placeholder="Pseudo"
-                value={pseudoValue}
-                onChange={(e) => { handlePseudoValue(e.target.value); }}
+                name="pseudo"
+                value={humanProfileState.pseudo}
+                onChange={handleTextFieldChange}
               />
               <Input
                 className="form-informations-input"
                 label={{ basic: true, content: 'ans' }}
                 labelPosition="right"
                 placeholder="Entrez votre âge"
+                name="age"
                 type="number"
-                value={ageValue}
-                onChange={(e) => { handleAgeValue(e.target.value); }}
+                value={humanProfileState.age}
+                onChange={handleTextFieldChange}
               />
             </Form.Group>
 
             <div className="form-informations-radios">
               <Form.Group grouped>
-                <label htmlFor="has_pets">Avez-vous des animaux ?</label>
+                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="has_pets"
+                    name="hasPets"
                     value="true"
-                    checked={hasPets === 'true'}
-                    onChange={handleHasPets}
+                    checked={humanProfileState.hasPets === 'true'}
+                    onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="has_pets"
+                    name="hasPets"
                     value="false"
-                    checked={hasPets === 'false'}
-                    onChange={handleHasPets}
+                    checked={humanProfileState.hasPets === 'false'}
+                    onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="has_kids">Avez-vous des enfants ?</label>
+                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="has_kids"
+                    name="hasKids"
                     value="true"
-                    checked={hasKids === 'true'}
-                    onChange={handleHasKids}
+                    checked={humanProfileState.hasKids === 'true'}
+                    onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="has_kids"
+                    name="hasKids"
                     value="false"
-                    checked={hasKids === 'false'}
-                    onChange={handleHasKids}
+                    checked={humanProfileState.hasKids === 'false'}
+                    onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="has_garden">Avez-vous un jardin ?</label>
+                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="has_garden"
+                    name="hasGarden"
                     value="true"
-                    checked={hasGarden === 'true'}
-                    onChange={handleHasGarden}
+                    checked={humanProfileState.hasGarden === 'true'}
+                    onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="has_garden"
+                    name="hasGarden"
                     value="false"
-                    checked={hasGarden === 'false'}
-                    onChange={handleHasGarden}
+                    checked={humanProfileState.hasGarden === 'false'}
+                    onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
@@ -188,9 +186,6 @@ function FormHumanInformations({
         && (
           <FormHumanDesc
             handleReturnClick={handleReturnButton}
-            contentValue={contentValue}
-            handleContentValue={handleContentValue}
-            handleSubmitForm={handleSubmitForm}
           />
         )}
     </>
@@ -199,24 +194,6 @@ function FormHumanInformations({
 
 FormHumanInformations.propTypes = {
   handleReturnClick: propTypes.func.isRequired,
-  nameValue: propTypes.string.isRequired,
-  handleNameValue: propTypes.func.isRequired,
-  pseudoValue: propTypes.string.isRequired,
-  handlePseudoValue: propTypes.func.isRequired,
-  ageValue: propTypes.oneOfType([
-    propTypes.number,
-    propTypes.string,
-  ]).isRequired,
-  handleAgeValue: propTypes.func.isRequired,
-  hasPets: propTypes.string.isRequired,
-  handleHasPets: propTypes.func.isRequired,
-  hasKids: propTypes.string.isRequired,
-  handleHasKids: propTypes.func.isRequired,
-  hasGarden: propTypes.string.isRequired,
-  handleHasGarden: propTypes.func.isRequired,
-  contentValue: propTypes.string.isRequired,
-  handleContentValue: propTypes.func.isRequired,
-  handleSubmitForm: propTypes.func.isRequired,
 };
 
 export default React.memo(FormHumanInformations);
