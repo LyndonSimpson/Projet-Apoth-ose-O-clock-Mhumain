@@ -7,7 +7,7 @@ import './headerstyles.scss';
 function Header() {
   return (
     <header className="header">
-      <Link to="/search"><img className="logo" src="logocouleur.png" alt="logo adopte ton mhumains" /></Link>
+      <Link to="/search"><img className="logo" src="logo.png" alt="logo adopte ton mhumains" /></Link>
       <div className="nav-icon">
         <Link to="/search"><Icon name="search" size="big" /></Link>
         <Link to="/fav"><Icon name="heart outline" size="big" /></Link>
@@ -16,5 +16,4 @@ function Header() {
     </header>
   );
 }
-
 export default React.memo(Header);
