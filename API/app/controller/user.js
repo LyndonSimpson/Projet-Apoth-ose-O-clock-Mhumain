@@ -20,6 +20,7 @@ const userController = {
     // console.log(req.headers.authorization); -- ici on récupère le token crypté
     
     // console.log(req.auth.userId); -- ici on récupère le id du user dans le token
+    // on peut directement utiliser ce userId 
     const id = req.auth.userId;
     try {
       const result = await humanDataMapper.getMyhumans(id);
