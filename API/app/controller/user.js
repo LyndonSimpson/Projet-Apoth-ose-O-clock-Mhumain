@@ -21,6 +21,7 @@ const userController = {
     
     // console.log(req.auth.userId); -- ici on récupère le id du user dans le token
     // on peut directement utiliser ce userId 
+    //console.log(req); pour voir ce qu'il faut require dans le req pour recup le token
     const id = req.auth.userId;
     try {
       const result = await humanDataMapper.getMyhumans(id);

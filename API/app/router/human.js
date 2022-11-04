@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const humanController = require('../controller/human');
 const humanLoginController = require('../controller/humanLogin');
+const authorizationMiddleware = require('../middlewares/jwt');
 
 const router = Router();
 

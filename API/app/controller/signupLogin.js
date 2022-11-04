@@ -1,10 +1,7 @@
 const dataMapper = require("../datamapper/user");
-
 // on récupère ce package afin de vérifier le format de l'email passé par l'utilisateur lors de l'inscription
 const emailValidator = require('email-validator');
-
 const jsonwebtoken = require('jsonwebtoken');
-
 // on récupère bcrypt pour hasher le mdp
 const bcrypt = require('bcrypt');
 

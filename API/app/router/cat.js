@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const catController = require('../controller/cat');
 const catLoginController = require('../controller/catLogin.js');
+const authorizationMiddleware = require('../middlewares/jwt');
 
 const router = Router();
 
