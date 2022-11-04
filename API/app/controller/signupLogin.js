@@ -95,16 +95,6 @@ const userController = {
             console.log('<< 401 UNAUTHORIZED');
             res.sendStatus(401);
         }
-
-        //todo surement plus besoin de ce code maintnant!
-        //console.log(req.session.user)
-        // maintenant que l'user est loggé, on renvoie vers la page d'accueil
-        if (searchedUser.is_admin === true) {
-        req.session.user.role = 'admin';
-            res.json(searchedUser);
-        } else {
-            res.json(sessionUser);  
-        }
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
