@@ -19,9 +19,10 @@ function SignUp({
 
   const fetchData = async (emailvalue, passwordvalue) => {
     try {
-      const response = await axios.post('http://localhost:3001/user', {
+      const response = await axios.post('http://localhost:3001/user/signup', {
         email: emailvalue,
         password: passwordvalue,
+        passwordConfirm: confirmPasswordValue,
       });
       if (response.status === 200) {
         handleSucceededCreateUser();

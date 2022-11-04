@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import './updateprofilestyles.scss';
 import {
@@ -5,15 +6,14 @@ import {
 } from 'semantic-ui-react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
+import cat from '../../styles/cat.jpg';
 
 function UpdateProfile() {
   return (
     <>
       <Header />
 
-      <Image src="/images/wireframe/square-image.png" size="big" circular />
       <div className="update-profile">
-
         {/* {errorMessage
               && (
               <Message
@@ -27,7 +27,9 @@ function UpdateProfile() {
         <form
           className="form-update-human"
         >
-          <form>
+          <Image className="update-image" src={cat} circular />
+
+          <div className="form-update-input">
             <Form.Group className="form-informations">
               <Input
                 className="form-informations-input"
@@ -47,78 +49,65 @@ function UpdateProfile() {
                 type="number"
               />
             </Form.Group>
-
-            {/* <div className="form-informations-radios">
-            <Form.Group grouped>
-              <label htmlFor="has_pets">Avez-vous des animaux ?</label>
-              <Form.Field>
-                <Radio
-                  label="Oui"
-                  name="has_pets"
-                  value="true"
-                //   checked={hasPets === 'true'}
-                //   onChange={handleHasPets}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Non"
-                  name="has_pets"
-                  value="false"
-                //   checked={hasPets === 'false'}
-                //   onChange={handleHasPets}
-                />
-              </Form.Field>
-            </Form.Group>
-            <Form.Group grouped>
-              <label htmlFor="has_kids">Avez-vous des enfants ?</label>
-              <Form.Field>
-                <Radio
-                  label="Oui"
-                  name="has_kids"
-                  value="true"
-                //   checked={hasKids === 'true'}
-                //   onChange={handleHasKids}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Non"
-                  name="has_kids"
-                  value="false"
-                //   checked={hasKids === 'false'}
-                //   onChange={handleHasKids}
-                />
-              </Form.Field>
-            </Form.Group>
-            <Form.Group grouped>
-              <label htmlFor="has_garden">Avez-vous un jardin ?</label>
-              <Form.Field>
-                <Radio
-                  label="Oui"
-                  name="has_garden"
-                  value="true"
-                //   checked={hasGarden === 'true'}
-                //   onChange={handleHasGarden}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Non"
-                  name="has_garden"
-                  value="false"
-                //   checked={hasGarden === 'false'}
-                //   onChange={handleHasGarden}
-                />
-              </Form.Field>
-            </Form.Group>
-          </div> */}
-          </form>
-          <TextArea
-            className="form-update-human-area"
-            rows={2}
-            placeholder="Dites-nous en plus sur vous..."
-          />
+          </div>
+          <Form.Group grouped>
+            <label htmlFor="has_pets">Avez-vous des animaux ?</label>
+            <Form.Field>
+              <Radio
+                label="Oui"
+                name="has_pets"
+                value="true"
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                label="Non"
+                name="has_pets"
+                value="false"
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group grouped>
+            <label htmlFor="has_kids">Avez-vous des enfants ?</label>
+            <Form.Field>
+              <Radio
+                label="Oui"
+                name="has_kids"
+                value="true"
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                label="Non"
+                name="has_kids"
+                value="false"
+              />
+            </Form.Field>
+          </Form.Group>
+          <Form.Group grouped>
+            <label htmlFor="has_garden">Avez-vous un jardin ?</label>
+            <Form.Field>
+              <Radio
+                label="Oui"
+                name="has_garden"
+                value="true"
+              />
+            </Form.Field>
+            <Form.Field>
+              <Radio
+                label="Non"
+                name="has_garden"
+                value="false"
+              />
+            </Form.Field>
+          </Form.Group>
+          <div className="form-update-area">
+            <TextArea
+              className="form-update-human-area"
+              rows={7}
+              placeholder="Dites-nous en plus sur vous..."
+            />
+          </div>
 
           <div className="form-update-human-buttons">
             <Button
