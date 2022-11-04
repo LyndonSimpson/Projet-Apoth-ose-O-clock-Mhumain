@@ -1,8 +1,9 @@
 const dataMapper = require("../datamapper/human");
+const jsonwebtoken = require('jsonwebtoken');
 
 const humanLoginController = {
     async signupAction (req, res) {
-        const id = req.session.user.id;
+        const id = req.auth.userId; //todo mettre le req.auth
         const fakeObject = {};
         try {
             const AlreadyExists = await dataMapper.getMyhumans(id);
@@ -20,7 +21,7 @@ const humanLoginController = {
             const newHuman =  await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             req.body.description, req.body.age,
             req.body.has_pets, req.body.has_kids, req.body.has_garden,
-            req.session.user.id);
+            req.auth.userId);
 
            res.json(newHuman);}
         } catch (error) {
@@ -29,6 +30,7 @@ const humanLoginController = {
           }
     },
     async loginAction(req, res) {
+        const jwtSecret = process.env.JWT_SECRET;
         // On tente de récupérer le cat
         try {
             const searchedHuman = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
@@ -38,11 +40,33 @@ const humanLoginController = {
             }
         // si tout va bien, rajoute le cat dans la session
         const sessionUser = searchedHuman[0];
-        req.session.human = sessionUser; 
-        //console.log(req.session.user);
-        //console.log(req.session.human)
-        // maintenant que le cat est loggé, on renvoie vers la page d'accueil
-            res.json(sessionUser);  
+         
+        //TODO JWT -------------------------------------
+        if(sessionUser) {
+            // si tout va bien, rajoute l'utilisateur dans la session
+        //req.session.user = sessionUser; //TODO voir si on a vraiment plus besoin des sessions ic - ça semble foncitonner sans!
+        // pour éviter tout problème, on va supprimer le mdp de la session
+        //delete req.session.user.password;
+        //delete req.session.user.is_damin;
+        //delete req.session.user.email
+        console.log(sessionUser);
+        const jwtContent = { humanId: sessionUser.id };
+        const jwtOptions = { 
+        algorithm: 'HS256', 
+        expiresIn: '3h' 
+        };
+        console.log('<< 200', sessionUser.name);
+        res.json({ 
+            logged: true, 
+            pseudo: sessionUser.name,
+            token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
+        });
+        }
+        else {
+            console.log('<< 401 UNAUTHORIZED');
+            res.sendStatus(401);
+        }
+              
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);

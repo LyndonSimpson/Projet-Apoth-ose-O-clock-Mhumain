@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
-const loggedMiddleware = require('../middlewares/logged');
+const authorizationMiddleware = require('../middlewares/jwt');
  
 const router = Router();
 
@@ -27,7 +27,7 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", loggedMiddleware, signupLoginController.disconnect);
+    router.get("/user/logout", signupLoginController.disconnect);
 
     /**
     * GET /user
@@ -58,7 +58,7 @@ const router = Router();
     * @description gets all the owned human profiles of the logged in user. 
     *  - category identifier
     */
-    router.get("/userhumans", userController.getMyHumanProfiles);
+    router.get("/userhumans", authorizationMiddleware, userController.getMyHumanProfiles);
 
     /**
     * GET /user/cats
@@ -66,7 +66,7 @@ const router = Router();
     * @description gets all the owned cat profiles of the logged in user. 
     *  - category identifier
     */
-    router.get("/usercats", userController.getMyCatProfiles);
+    router.get("/usercats", authorizationMiddleware, userController.getMyCatProfiles);
 
     /**
     * DELETE /user

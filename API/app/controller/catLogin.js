@@ -1,4 +1,5 @@
 const dataMapper = require("../datamapper/cat");
+const jsonwebtoken = require('jsonwebtoken');
 
 const catLoginController = {
     async signupAction (req, res) {
@@ -19,7 +20,7 @@ const catLoginController = {
             req.body.color,
             req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
             req.body.siblings_id,
-            req.session.user.id);
+            req.auth.userId);
 
            res.json(newCat);
         } catch (error) {
@@ -28,6 +29,7 @@ const catLoginController = {
           }
     },
     async loginAction(req, res) {
+        const jwtSecret = process.env.JWT_SECRET;
         // On tente de récupérer le cat
         try {
             const searchedCat = await dataMapper.getOneCatByPseudo(req.body.pseudo);
@@ -37,11 +39,32 @@ const catLoginController = {
             }
         // si tout va bien, rajoute le cat dans la session
         const sessionUser = searchedCat[0];
-        req.session.cat = sessionUser; 
-        //console.log(req.session.user);
-        //console.log(req.session.cat)
-        // maintenant que le cat est loggé, on renvoie vers la page d'accueil
-            res.json(sessionUser);  
+         
+        //TODO JWT -------------------------------------
+        if(sessionUser) {
+            // si tout va bien, rajoute l'utilisateur dans la session
+        //req.session.user = sessionUser; //TODO voir si on a vraiment plus besoin des sessions ic - ça semble foncitonner sans!
+        // pour éviter tout problème, on va supprimer le mdp de la session
+        //delete req.session.user.password;
+        //delete req.session.user.is_damin;
+        //delete req.session.user.email
+        console.log(sessionUser);
+        const jwtContent = { catId: sessionUser.id };
+        const jwtOptions = { 
+        algorithm: 'HS256', 
+        expiresIn: '3h' 
+        };
+        console.log('<< 200', sessionUser.name);
+        res.json({ 
+            logged: true, 
+            pseudo: sessionUser.name,
+            token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
+        });
+        }
+        else {
+            console.log('<< 401 UNAUTHORIZED');
+            res.sendStatus(401);
+        }
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
