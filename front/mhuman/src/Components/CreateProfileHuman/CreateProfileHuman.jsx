@@ -1,17 +1,17 @@
 import React from 'react';
-import './createprofile.scss';
-import FormHuman from './FormHumanCheckbox/FormHumanCheckbox';
-import FormAPI from './FormAPI/FormAPI';
+import './createprofilehumanstyles.scss';
+import FormHumanCheckbox from './FormHumanCheckbox/FormHumanCheckbox';
+import FormAPI from '../FormAPI/FormAPI';
 import Logo from '../../styles/logo.png';
 
-function CreateProfile() {
+function CreateProfileHuman() {
   return (
     <div className="profile">
       <div className="profile-form">
         <div className="create-title">
           <img src={Logo} alt="logo" />
         </div>
-        <FormHuman />
+        <FormHumanCheckbox />
       </div>
       <div className="profile-API">
         <FormAPI />
@@ -20,4 +20,4 @@ function CreateProfile() {
   );
 }
 
-export default React.memo(CreateProfile);
+export default React.memo(CreateProfileHuman);

@@ -4,6 +4,7 @@ import {
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import useUserReducer, { getActionReset, getActionSetValue } from '../../../hooks/useUserReducer';
 
 import Logo from '../logo.png';
 import './signupstyles.scss';
@@ -12,49 +13,50 @@ function SignUp({
   handleReturnClick,
   handleSucceededCreateUser,
 }) {
-  const [emailValue, SetEmailValue] = useState('');
-  const [passwordValue, SetPasswordValue] = useState('');
-  const [confirmPasswordValue, SetConfirmPasswordValue] = useState('');
+  const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchData = async (emailvalue, passwordvalue) => {
+  const fetchData = async ({ email, password, passwordConfirm }) => {
     try {
-      const response = await axios.post('http://localhost:3001/user', {
+      const response = await axios.post('http://localhost:3001/user/signup', {
         email: emailvalue,
         password: passwordvalue,
+        passwordConfirm: confirmPasswordValue,
+
       });
       if (response.status === 200) {
         handleSucceededCreateUser();
       }
     } catch (err) {
-      setErrorMessage(err.message);
+      setErrorMessage(err.response.data);
     }
   };
 
-  const handleReset = () => { // reset all input
-    SetEmailValue('');
-    SetPasswordValue('');
-    SetConfirmPasswordValue('');
+  const handleTextFieldChange = (e) => {
+    userDispatch(getActionSetValue(e.target.name, e.target.value));
   };
+
+  const handleReset = () => userDispatch(getActionReset());
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // Je verifie que l'utilisateur à entré un email
-    if (!emailValue.trim()) {
+    if (!userState.email.trim()) {
       setErrorMessage("L'email est obligatoire");
       return;
     }
     // Je verifie que l'utilisateur à entré un mot de passe
-    if (!passwordValue.trim()) {
+    if (!userState.password.trim()) {
       setErrorMessage('Le mot de passe est obligatoire');
       return;
     }
     // Je verifie si l'utilisateur à bien confirmer son mot de passe
-    if (passwordValue !== confirmPasswordValue) {
+    if (userState.password !== userState.passwordConfirm) {
       setErrorMessage('Votre confirmation de mot de passe est incorrect');
       return;
     }
     // TODO : use emailValue and passwordValue for add new user in db
-    fetchData(emailValue, passwordValue);
+    fetchData(userState);
     handleReset();
   };
   const handleDismiss = () => { // Gere la fermeture du message
@@ -80,26 +82,29 @@ function SignUp({
         <h3> Créer un compte </h3>
         <Form.Field>
           <input
+            name="email"
             placeholder="Email"
             type="email"
-            value={emailValue}
-            onChange={(e) => { SetEmailValue(e.target.value); }}
+            value={userState.email}
+            onChange={handleTextFieldChange}
           />
         </Form.Field>
         <Form.Field>
           <input
+            name="password"
             placeholder="Mot de passe"
             type="password"
-            value={passwordValue}
-            onChange={(e) => { SetPasswordValue(e.target.value); }}
+            value={userState.password}
+            onChange={handleTextFieldChange}
           />
         </Form.Field>
         <Form.Field>
           <input
+            name="passwordConfirm"
             placeholder="Confirmer le mot de passe"
             type="password"
-            value={confirmPasswordValue}
-            onChange={(e) => { SetConfirmPasswordValue(e.target.value); }}
+            value={userState.passwordConfirm}
+            onChange={handleTextFieldChange}
           />
         </Form.Field>
         <div className="signup-buttons">
