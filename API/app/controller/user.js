@@ -51,7 +51,7 @@ const userController = {
     }
   },
   update: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.userId;
     try {
       const result = await dataMapper.updateUser(id, req.body.email, req.body.password); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
       res.json(result);
@@ -61,7 +61,7 @@ const userController = {
     }
   },
   delete: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.userId;
     try {
       const result = await dataMapper.deleteUser(id);
       res.json(result);

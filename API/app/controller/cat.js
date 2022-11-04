@@ -47,7 +47,7 @@ const catController = {
     }
   },
   update: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.catId;
     try {
       const result = await dataMapper.updateCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                 req.body.description, req.body.race, req.body.age, req.body.sexe,
@@ -72,7 +72,7 @@ const catController = {
     }
   },
   delete: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.catId;
     try {
       const result = await dataMapper.deleteCat(id);
       res.json(result);

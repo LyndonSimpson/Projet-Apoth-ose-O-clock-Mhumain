@@ -3,7 +3,7 @@ const dataMapper = require("../datamapper/human");
 
 const humanController = {
   newHuman: async (req, res) => {
-    const id = req.session.user.id;
+    const id = req.auth.userId;
     const fakeObject = {};
     //todo ajouter une condition avec une requête qui bloque la création d'un nouvel humain
     //todo si il y a un humain avec le account_id situé dans req.session.user.id !, "select * from human where account_id = req.session.user.id"
@@ -46,7 +46,7 @@ const humanController = {
     }
   },
   update: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.humanId;
     try {
       const result = await dataMapper.updateHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
@@ -59,7 +59,7 @@ const humanController = {
     }
   },
   delete: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.humanId;
     try {
       const result = await dataMapper.deleteHuman(id);
       res.json(result);
