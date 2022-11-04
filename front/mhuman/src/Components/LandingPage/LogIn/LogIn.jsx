@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
 import './LogIn.scss';
 import {
   Button, Form, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Logo from '../logo.png';
+import loginRequest from '../../../requests/loginRequest';
+import { setToken } from '../../../requests/instance';
 
 function LogIn({
   handleReturnClick,
-  handleConnectedUser,
 }) {
   const [emailValue, SetEmailValue] = useState('romain@street.fr');
   const [passwordValue, SetPasswordValue] = useState('Wesh_1');
@@ -19,12 +19,10 @@ function LogIn({
 
   const fetchData = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3001/user/login', {
-        email,
-        password,
-      });
-      if (response.status === 200) {
-        handleConnectedUser(response.data);
+      const response = await loginRequest(email, password);
+      console.log(response);
+      setToken(response.token);
+      if (response.logged) {
         setIsConnected(true);
       }
     } catch (err) {
@@ -112,7 +110,6 @@ function LogIn({
 
 LogIn.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
-  handleConnectedUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(LogIn);

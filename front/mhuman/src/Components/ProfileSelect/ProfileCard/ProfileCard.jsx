@@ -1,14 +1,22 @@
 import React from 'react';
+import propTypes from 'prop-types';
 import './profilecard.scss';
-import chat1 from '../fakeData/pexels-cat-1.jpg';
 
-function ProfileCard() {
+function ProfileCard({
+  pseudo,
+  image,
+}) {
   return (
     <div className="ProfileCard">
-      <img src={chat1} className="ProfilePicture" alt="profils" />
-      <p className="ProfileName">Minou</p>
+      <img src={image} className="ProfilePicture" alt="profils" />
+      <p className="ProfileName">{pseudo}</p>
     </div>
   );
 }
+
+ProfileCard.propTypes = {
+  pseudo: propTypes.string.isRequired,
+  image: propTypes.string.isRequired,
+};
 
 export default React.memo(ProfileCard);
