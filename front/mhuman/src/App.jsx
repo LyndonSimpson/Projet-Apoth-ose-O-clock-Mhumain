@@ -3,13 +3,11 @@ import { Route, Routes } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import './App.scss';
 
-import Header from './Components/Header/Header';
-import Footer from './Components/Footer/Footer';
-
 import LandingPage from './Components/LandingPage/LandingPage';
 import CreateProfile from './Components/CreateProfile/CreateProfile';
 import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 import HomePage from './Components/HomePage/HomePage';
+import ListeProfile from './Components/ListeProfile/ListeProfile';
 
 function App() {
   return (
@@ -40,12 +38,9 @@ function App() {
           }
         />
         <Route
-          path="/home"
+          path="/listeprofile"
           element={(
-            <>
-              <Header />
-              <Footer />
-            </>
+            <ListeProfile />
   )}
         />
       </Routes>
