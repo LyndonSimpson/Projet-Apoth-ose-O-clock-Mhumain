@@ -20,7 +20,6 @@ function LogIn({
   const fetchData = async (email, password) => {
     try {
       const response = await loginRequest(email, password);
-      console.log(response);
       setToken(response.token);
       if (response.logged) {
         setIsConnected(true);
