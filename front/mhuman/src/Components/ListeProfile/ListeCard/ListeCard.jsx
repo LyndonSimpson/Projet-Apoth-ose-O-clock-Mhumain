@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import cat2 from '../../ProfileSelect/fakeData/pexels-cat-2.jpg';
 import './listecard.scss';
@@ -11,25 +12,29 @@ import {
   IconPet,
 } from '../Icons/Icons';
 
-function ListeCard() {
+function ListeCard({
+  hasGarden, hasPet, hasKid, name, age,
+}) {
   return (
     <Card className="listeCard">
       <Image src={cat2} wrapped ui={false} />
       <Card.Content className="card-content">
-        <Card.Header className="card-header">Minou</Card.Header>
+        <Card.Header className="card-header">{name}</Card.Header>
         <Card.Meta>
-          <span> 1 ans et 6 mois</span>
+          <span>
+            {age}
+          </span>
         </Card.Meta>
         <Card.Description className="card-icon">
-          <IconNoGarden />
-          <IconNoPet />
-          <IconKid />
+          {hasGarden ? <IconGarden /> : <IconNoGarden />}
+          {hasPet ? <IconPet /> : <IconNoPet />}
+          {hasKid ? <IconKid /> : <IconNoKid />}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <div className="card-icon-link">
           <Icon name="heart outline" color="black" size="big" />
-          <Icon name="heart outline" color="black" size="big" />
+          <Icon name="expand" color="black" size="big" />
         </div>
       </Card.Content>
     </Card>
@@ -37,3 +42,11 @@ function ListeCard() {
 }
 
 export default React.memo(ListeCard);
+
+ListeCard.propTypes = {
+  hasGarden: PropTypes.bool.isRequired,
+  hasKid: PropTypes.bool.isRequired,
+  hasPet: PropTypes.bool.isRequired,
+  age: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+};
