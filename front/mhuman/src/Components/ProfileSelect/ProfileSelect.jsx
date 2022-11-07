@@ -8,13 +8,11 @@ import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
 
 function ProfileSelect() {
-
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
 
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
     async function getUserProfile() {
-
       try {
         const [userCats, userHumans] = await Promise.all([
           catProfilesRequest(),
@@ -70,20 +68,11 @@ function ProfileSelect() {
                 </Link>
               )}
 
-
           </div>
         </div>
       </section>
     </div>
   );
 }
-
-ProfileSelect.propTypes = {
-  connectedUser: PropTypes.shape({
-    email: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    isAdmin: PropTypes.bool,
-  }).isRequired,
-};
 
 export default React.memo(ProfileSelect);

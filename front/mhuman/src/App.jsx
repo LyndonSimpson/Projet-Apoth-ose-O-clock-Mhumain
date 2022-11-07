@@ -68,7 +68,7 @@ function App() {
           element={(
             <ListeProfile fav />
   )}
-  />
+        />
         <Route
           path="/updateprofile"
           element={<UpdateProfile />}

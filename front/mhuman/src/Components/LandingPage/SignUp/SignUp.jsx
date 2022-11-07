@@ -24,7 +24,6 @@ function SignUp({
         password,
         passwordConfirm,
 
-
       });
       if (response.status === 200) {
         handleSucceededCreateUser();

@@ -21,11 +21,9 @@ function LogIn({
 
   const fetchData = async (email, password) => {
     try {
-
       const response = await loginRequest(email, password);
       setToken(response.token);
       if (response.logged) {
-
         setIsConnected(true);
       }
     } catch (err) {
