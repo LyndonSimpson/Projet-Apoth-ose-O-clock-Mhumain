@@ -10,7 +10,8 @@ import ListeProfile from './Components/ListeProfile/ListeProfile';
 
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
-import UpdateProfile from './Components/UpdateProfile/UpdateProfile';
+import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
+import UpdateProfileCat from './Components/UpdateProfileCat/UpdateProfileCat';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -70,8 +71,14 @@ function App() {
   )}
         />
         <Route
-          path="/updateprofile"
-          element={<UpdateProfile />}
+          path="/updateprofilehuman"
+          element={<UpdateProfileHuman />}
+          end
+
+        />
+        <Route
+          path="/updateprofilecat"
+          element={<UpdateProfileCat />}
           end
 
         />
