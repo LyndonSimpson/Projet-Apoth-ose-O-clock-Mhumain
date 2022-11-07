@@ -19,9 +19,9 @@ function SignUp({
   const fetchData = async ({ email, password, passwordConfirm }) => {
     try {
       const response = await axios.post('http://localhost:3001/user/signup', {
-        email: emailvalue,
-        password: passwordvalue,
-        passwordConfirm: confirmPasswordValue,
+        email,
+        password,
+        passwordConfirm,
 
       });
       if (response.status === 200) {
