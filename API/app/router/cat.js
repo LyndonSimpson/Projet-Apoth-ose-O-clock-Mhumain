@@ -10,6 +10,7 @@ const router = Router();
 
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
 /*--------------------------------- cat router (create, read, update, delete) : */
+    //todo = pour les tests, à supprimer après
     /**
     * POST /cat/signup
     * @summary create cat

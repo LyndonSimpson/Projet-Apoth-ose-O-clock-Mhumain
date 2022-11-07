@@ -10,6 +10,7 @@ const catController = {
    */
   newCat: async (req, res) => {
     //todo insert multer code here
+    const id = req.auth.userId || 1;
     try {
     const upload = multer({storage: storage});
     console.log(req.file.filename);
@@ -20,7 +21,7 @@ const catController = {
                                                   req.body.color,
                                                   req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
                                                   req.body.siblings_id,
-                                                  req.auth.userId); // no "is_adopted" and no "owner_id" because the cat cannot be adopted already when just created.
+                                                  id); // no "is_adopted" and no "owner_id" because the cat cannot be adopted already when just created.
       res.json(result);
     } catch (error) {
       console.error(error);
