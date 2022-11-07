@@ -4,7 +4,7 @@ const storage = require('../middlewares/storage')
 
 const humanController = {
   newHuman: async (req, res) => {
-    const id = req.auth.userId || 1;
+    const id = re.auht.userId;
     const fakeObject = {};
     //todo ajouter une condition avec une requête qui bloque la création d'un nouvel humain
     //todo si il y a un humain avec le account_id situé dans req.session.user.id !, "select * from human where account_id = req.session.user.id"
@@ -17,8 +17,7 @@ const humanController = {
         res.status(500).send('You already have a human profile on this account')
       } else {
         const upload = multer({storage: storage});
-        console.log(req.file.filename);
-        const image_name = req.file.filename;
+        const image_name = 'example.jpeg'; //TODO récupérer le filename qui a été créé par multer pour le stocker en BDD surement dans un req / faire un log du req encore!
         upload.single("fileUpload");
       const result = await dataMapper.createHuman(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
