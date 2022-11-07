@@ -1,5 +1,5 @@
 
-// fix semantic cards--
+// fix semantic cards
 .ui.card:first-child{
     margin-top:1em;
 }
@@ -19,5 +19,8 @@
 .card-icon-link{
     display:flex;
     justify-content: space-evenly;
+    &:hover{
+        cursor: pointer;
+    }
 }
 

@@ -13,7 +13,7 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  hasGarden, hasPet, hasKid, name, age,
+  hasGarden, hasPet, hasKid, name, age, toggleProfile,
 }) {
   return (
     <Card className="listeCard">
@@ -34,7 +34,7 @@ function ListeCard({
       <Card.Content extra>
         <div className="card-icon-link">
           <Icon name="heart outline" color="black" size="big" />
-          <Icon name="expand" color="black" size="big" />
+          <Icon name="expand" color="black" size="big" onClick={toggleProfile} />
         </div>
       </Card.Content>
     </Card>
@@ -44,6 +44,7 @@ function ListeCard({
 export default React.memo(ListeCard);
 
 ListeCard.propTypes = {
+  toggleProfile: PropTypes.func.isRequired,
   hasGarden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
