@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
+
 import './LogIn.scss';
 import {
   Button, Form, Icon, Message,
@@ -11,6 +12,7 @@ import { setToken } from '../../../requests/instance';
 
 function LogIn({
   handleReturnClick,
+  handleConnectedUser,
 }) {
   const [emailValue, SetEmailValue] = useState('romain@street.fr');
   const [passwordValue, SetPasswordValue] = useState('Wesh_1');
@@ -19,10 +21,12 @@ function LogIn({
 
   const fetchData = async (email, password) => {
     try {
+
       const response = await loginRequest(email, password);
       console.log(response);
       setToken(response.token);
       if (response.logged) {
+
         setIsConnected(true);
       }
     } catch (err) {
@@ -110,6 +114,7 @@ function LogIn({
 
 LogIn.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
+  handleConnectedUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(LogIn);

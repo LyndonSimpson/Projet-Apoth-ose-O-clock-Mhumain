@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+
 import './profileselect.scss';
 import { Link } from 'react-router-dom';
 import logo from './fakeData/Logo-Mhumain-Colored.png';
@@ -7,15 +8,18 @@ import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
 
 function ProfileSelect() {
+
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
 
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
     async function getUserProfile() {
+
       try {
         const [userCats, userHumans] = await Promise.all([
           catProfilesRequest(),
           humanProfilesRequest(),
+
         ]);
         setCatsProfile(userCats);
         setHumansProfile(userHumans);
@@ -33,6 +37,7 @@ function ProfileSelect() {
         <div className="CatProfile">
           <h1 className="ProfileSubtitle"> Profils Chats</h1>
           <div className="DisplayProfile">
+
             {catsProfile
               && catsProfile.map(({ pseudo, image, id }) => (
                 <ProfileCard
@@ -41,6 +46,7 @@ function ProfileSelect() {
                   image={image}
                 />
               ))}
+
             <Link to="/createprofilecat">
               <AddProfile />
             </Link>
@@ -49,6 +55,7 @@ function ProfileSelect() {
         <div className="HumainProfile">
           <h1 className="ProfileSubtitle"> Profils Humain</h1>
           <div className="DisplayProfile">
+
             {humansProfile.length > 0
               ? humansProfile.map(({ pseudo, image, id }) => (
                 <ProfileCard
@@ -63,11 +70,20 @@ function ProfileSelect() {
                 </Link>
               )}
 
+
           </div>
         </div>
       </section>
     </div>
   );
 }
+
+ProfileSelect.propTypes = {
+  connectedUser: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    isAdmin: PropTypes.bool,
+  }).isRequired,
+};
 
 export default React.memo(ProfileSelect);
