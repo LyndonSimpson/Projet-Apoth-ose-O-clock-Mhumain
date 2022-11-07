@@ -30,6 +30,7 @@ const catLoginController = {
     },
     async loginAction(req, res) {
         const jwtSecret = process.env.JWT_SECRET;
+        console.log(req);
         const accountId = req.auth.userId;
         // On tente de récupérer le cat
         try {
