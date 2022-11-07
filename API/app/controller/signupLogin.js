@@ -69,12 +69,7 @@ const userController = {
         
         //TODO JWT -------------------------------------
         if(sessionUser) {
-            // si tout va bien, rajoute l'utilisateur dans la session
-        //req.session.user = sessionUser; //TODO voir si on a vraiment plus besoin des sessions ic - ça semble foncitonner sans!
-        // pour éviter tout problème, on va supprimer le mdp de la session
-        //delete req.session.user.password;
-        //delete req.session.user.is_damin;
-        //delete req.session.user.email
+        
         console.log(sessionUser);
         const jwtContent = { userId: sessionUser.id };
         const jwtOptions = { 
