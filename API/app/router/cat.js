@@ -2,6 +2,7 @@ const { Router } = require('express');
 const catController = require('../controller/cat');
 const catLoginController = require('../controller/catLogin.js');
 const authorizationMiddleware = require('../middlewares/jwt');
+const catSearchController = require('../controller/catSearch');
 
 const router = Router();
 
@@ -77,6 +78,14 @@ const router = Router();
     * @param {number} id.path.required - category identifier
     */
     router.delete("/cat", authorizationMiddleware, catController.delete);
+
+    /**
+    * POST /catsearch
+    * @summary delete cat profile
+    * @description delete an existing cat profile into the database with id passed in params
+    * @param {number} id.path.required - category identifier
+    */
+     router.post("/catsearch", catSearchController.search);
  
  
 module.exports = router;
