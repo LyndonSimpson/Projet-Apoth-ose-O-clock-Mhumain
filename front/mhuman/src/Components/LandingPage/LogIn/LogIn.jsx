@@ -23,7 +23,6 @@ function LogIn({
     try {
 
       const response = await loginRequest(email, password);
-      console.log(response);
       setToken(response.token);
       if (response.logged) {
 

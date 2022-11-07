@@ -1,23 +1,54 @@
 import './formcatdescstyles.scss';
 import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import {
   Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { addCatProfileRequest } from '../../../requests/profilesRequest';
+import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
 
 function FormCatDesc({
   handleReturnClick,
-  contentValue,
-  handleContentValue,
-  handleSubmitForm,
 }) {
-  const [image, setImage] = useState([]);
+  const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
+  const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
 
-  const handleSubmitContent = () => {
-    if (!contentValue.trim()) {
+  const fetchData = async (payload) => {
+    try {
+      const response = await addCatProfileRequest(payload);
+      console.log(response);
+      if (response.status === 200) {
+        setSucceededCreateCatProfil(true);
+      }
+    } catch (error) {
+      // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur
+      console.log(error.message);
+    }
+  };
+
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    console.log(catProfileState);
+    if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
     }
+    fetchData({
+      image: catProfileState.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
+      pseudo: catProfileState.pseudo,
+      name: catProfileState.name,
+      description: catProfileState.description,
+      age: Number(catProfileState.age),
+      race: catProfileState.breed,
+      sexe: catProfileState.sexe,
+      likes_pets: catProfileState.likesPets,
+      likes_kids: catProfileState.likesKids,
+      needs_garden: catProfileState.needsGarden,
+    });
+  };
+  const handleTextFieldChange = (e) => {
+    catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
   };
 
   const handleDismiss = () => {
@@ -38,19 +69,20 @@ function FormCatDesc({
           )}
       <form
         className="form-desc-cat"
-        onSubmit={(e) => { handleSubmitForm(e); }}
+        onSubmit={handleSubmit}
       >
         <TextArea
           className="form-desc-cat-area"
           rows={2}
           placeholder="A propos du chat..."
-          value={contentValue}
-          onChange={(e) => { handleContentValue(e.target.value); }}
+          name="description"
+          value={catProfileState.description}
+          onChange={handleTextFieldChange}
         />
 
         <div>
           {
-          Array.from(image).map((item) => (
+          Array.from(catProfileState.image).map((item) => (
             <span>
               <img
                 style={{ padding: '10px' }}
@@ -64,8 +96,9 @@ function FormCatDesc({
         }
           <input
             className="form-desc-cat-input"
+            name="image"
             onChange={(e) => {
-              setImage(e.target.files);
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
             }}
             multiple
             type="file"
@@ -89,7 +122,6 @@ function FormCatDesc({
 
           <Button
             className="form-desc-cat-button"
-            onClick={handleSubmitContent}
             animated="fade"
             type="submit"
           >
@@ -100,7 +132,9 @@ function FormCatDesc({
           </Button>
         </div>
       </form>
-
+      {SucceededCreateCatProfil && (
+        <Navigate to="/profileselect" />
+      )}
     </div>
 
   );
@@ -108,9 +142,6 @@ function FormCatDesc({
 
 FormCatDesc.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
-  contentValue: PropTypes.string.isRequired,
-  handleContentValue: PropTypes.func.isRequired,
-  handleSubmitForm: PropTypes.func.isRequired,
 };
 
 export default React.memo(FormCatDesc);

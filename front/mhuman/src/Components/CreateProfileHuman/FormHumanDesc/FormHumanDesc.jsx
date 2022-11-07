@@ -46,7 +46,6 @@ function FormHumanDesc({
     }
     fetchData({
       image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      account_id: 1, // TODO : Gérer l'id de l'utilisateur en cours
       pseudo: humanProfileState.pseudo,
       name: humanProfileState.name,
       description: humanProfileState.description,
