@@ -1,13 +1,14 @@
 const axios = require('axios');
-const { translate } = require('free-translate');
+const translate = require('google-translate-free');
 
 const frenchCatFact = {
     frenchFact: async (req, res) => {
         try {
           const result = await axios.get('https://catfact.ninja/fact'); 
-          console.log(result.data.fact) 
-          const translatedText = await translate(result, { from: 'en', to: 'fr' }); 
-          //console.log(translatedText);
+          const fact = result.data.fact; 
+          console.log(`fact here : ${fact}`);
+          const translatedText = await translate('hello', {from: 'en', to: 'fr'}); 
+          console.log(translatedText);
           res.json(translatedText);
         } catch (error) {
           console.error(error);
