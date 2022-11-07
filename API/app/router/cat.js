@@ -4,6 +4,8 @@ const catLoginController = require('../controller/catLogin.js');
 const authorizationMiddleware = require('../middlewares/jwt');
 const catSearchController = require('../controller/catSearch');
 const factController = require('../controller/frenchCatFact');
+const multer = require('multer');
+const storage = require('../middlewares/storage')
 
 const router = Router();
 
@@ -11,7 +13,9 @@ const router = Router();
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
 /*--------------------------------- cat router (create, read, update, delete) : */
     
-
+var upload = multer({
+    storage: storage,
+})
 //todo = pour les tests, à supprimer après
     /**
     * POST /cat/signup
@@ -19,7 +23,7 @@ const router = Router();
     * @description inserts a new cat profile into the database
     * @param {string} request.body
     */
-    router.post("/cat", authorizationMiddleware, catController.newCat); //TODO ne pas utiliser cette route. pour le tests de multer.
+    router.post("/cat", authorizationMiddleware, upload.single("fileUpload"), catController.newCat); //TODO ne pas utiliser cette route. pour le tests de multer.
     
     /**
     * POST /cat/signup
