@@ -2,6 +2,11 @@ const dataMapper = require("../datamapper/cat");
 
 
 const catController = {
+  /**
+   * 
+   * @param {*} req 
+   * @param {*} res 
+   */
   newCat: async (req, res) => {
     
     try {
