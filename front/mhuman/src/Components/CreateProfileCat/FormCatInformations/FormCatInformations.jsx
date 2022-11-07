@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './formcatinformationstyles.scss';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import {
   Button, Icon, Form, Input, Message, Radio, Dropdown,
@@ -9,10 +9,12 @@ import {
 import propTypes from 'prop-types';
 import FormCatDesc from '../FormCatDesc/FormCatDesc';
 import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
+import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
 
 function FormCatInformations({
   handleReturnClick,
 }) {
+  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [next, setNext] = useState('');
   const [listOption, setListOption] = useState([]);
@@ -36,6 +38,9 @@ function FormCatInformations({
       setErrorMessage('La couleur est obligatoire');
       return;
     }
+    console.log(catProfileState);
+    addCatInformation(catProfileState);
+    console.log(catInformation);
     setNext('FormCatDesc');
   };
   const handleDismiss = () => {

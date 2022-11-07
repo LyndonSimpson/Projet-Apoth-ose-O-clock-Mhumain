@@ -1,5 +1,5 @@
 import './formcatdescstyles.scss';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import {
   Button, TextArea, Icon, Message,
@@ -7,10 +7,12 @@ import {
 import PropTypes from 'prop-types';
 import { addCatProfileRequest } from '../../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
+import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
 
 function FormCatDesc({
   handleReturnClick,
 }) {
+  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
@@ -30,7 +32,8 @@ function FormCatDesc({
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(catProfileState);
+    addCatInformation(catProfileState);
+    console.log(catInformation);
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
     }
