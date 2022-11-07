@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+
 import './LogIn.scss';
 import {
   Button, Form, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Logo from '../logo.png';
+import loginRequest from '../../../requests/loginRequest';
+import { setToken } from '../../../requests/instance';
 
 function LogIn({
   handleReturnClick,
@@ -19,12 +21,12 @@ function LogIn({
 
   const fetchData = async (email, password) => {
     try {
-      const response = await axios.post('http://localhost:3001/user/login', {
-        email,
-        password,
-      });
-      if (response.status === 200) {
-        handleConnectedUser(response.data);
+
+      const response = await loginRequest(email, password);
+      console.log(response);
+      setToken(response.token);
+      if (response.logged) {
+
         setIsConnected(true);
       }
     } catch (err) {

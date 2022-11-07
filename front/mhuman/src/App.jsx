@@ -61,19 +61,19 @@ function App() {
             <ListeProfile />
   )}
         />
-<<<<<<< HEAD
+
         {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
         <Route
           path="/favprofile"
           element={(
             <ListeProfile fav />
   )}
-=======
+  />
         <Route
           path="/updateprofile"
           element={<UpdateProfile />}
           end
->>>>>>> f5277b843fe35e3e6823d5dc44b8da0c52d302e2
+
         />
       </Routes>
     </div>
