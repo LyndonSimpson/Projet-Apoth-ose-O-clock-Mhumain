@@ -16,6 +16,14 @@ const router = Router();
     * @description inserts a new cat profile into the database
     * @param {string} request.body
     */
+    router.post("/cat", authorizationMiddleware, catController.newCat);
+    
+    /**
+    * POST /cat/signup
+    * @summary create cat
+    * @description inserts a new cat profile into the database
+    * @param {string} request.body
+    */
     router.post("/cat/signup", authorizationMiddleware, catLoginController.signupAction); 
 
     /**
