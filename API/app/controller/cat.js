@@ -8,7 +8,7 @@ const catController = {
    * @param {*} res 
    */
   newCat: async (req, res) => {
-    
+    //todo insert multer code here
     try {
       const result = await dataMapper.createCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.race, req.body.age, req.body.sexe,
