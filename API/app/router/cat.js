@@ -16,7 +16,7 @@ const router = Router();
     * @description inserts a new cat profile into the database
     * @param {string} request.body
     */
-    router.post("/cat", authorizationMiddleware, catController.newCat);
+    router.post("/cat", catController.newCat); //TODO ne pas utiliser cette route. pour le tests de multer.
     
     /**
     * POST /cat/signup
