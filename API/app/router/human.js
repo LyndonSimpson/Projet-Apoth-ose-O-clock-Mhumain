@@ -15,21 +15,21 @@ const router = Router();
     * @description inserts a new human profile into the database
     * @param {string} request.body
     */
-    router.post("/human/signup", humanLoginController.signupAction); 
+    router.post("/human/signup", authorizationMiddleware, humanLoginController.signupAction); 
 
     /**
     * POST /human login
     * @summary human login
     * @description login as a human
     */
-    router.post("/human/login", humanLoginController.loginAction);
+    router.post("/human/login", authorizationMiddleware, humanLoginController.loginAction);
 
     /**
     * get /human logout
     * @summary human logout
     * @description disconnect a human from the session
     */
-     router.get("/human/logout", humanLoginController.disconnect);
+     router.get("/human/logout", authorizationMiddleware, humanLoginController.disconnect);
 
     /**
     * GET /human
@@ -52,7 +52,7 @@ const router = Router();
     * @description update an existing human profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/human/:id", humanController.update); 
+    router.patch("/human", authorizationMiddleware, humanController.update); 
  
     /**
     * DELETE /human
@@ -60,7 +60,7 @@ const router = Router();
     * @description delete an existing human profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/human/:id", humanController.delete);
+    router.delete("/human", authorizationMiddleware, humanController.delete);
  
  
 module.exports = router;
