@@ -2,6 +2,7 @@ const { Router } = require('express');
 const humanController = require('../controller/human');
 const humanLoginController = require('../controller/humanLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
+const humanSearchController = require('../controller/humanSearch');
 
 const router = Router();
 
@@ -61,6 +62,14 @@ const router = Router();
     * @param {number} id.path.required - category identifier
     */
     router.delete("/human", authorizationMiddleware, humanController.delete);
+
+    /**
+    * POST /humansearch
+    * @summary search human profiles
+    * @description delete an existing cat profile into the database with id passed in params
+    * @param {number} id.path.required - category identifier
+    */
+    router.post("/humansearch", authorizationMiddleware, humanSearchController.search);
  
  
 module.exports = router;

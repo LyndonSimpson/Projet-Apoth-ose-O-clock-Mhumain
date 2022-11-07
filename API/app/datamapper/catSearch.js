@@ -4,7 +4,7 @@ const catSearchDattaMapper = {
   
   async find(sexe, needs_garden) {       
     const filter1 = sexe || "femelle";
-    const filter2 = needs_garden || new Boolean(true);
+    const filter2 = needs_garden;
     const query = {
       text: `SELECT *
     FROM cat

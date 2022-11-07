@@ -85,7 +85,7 @@ const router = Router();
     * @description delete an existing cat profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-     router.post("/catsearch", catSearchController.search);
+     router.post("/catsearch", authorizationMiddleware, catSearchController.search);
  
  
 module.exports = router;
