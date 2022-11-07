@@ -63,7 +63,7 @@ const catController = {
   adoptCat: async (req, res) => {
     const id = req.params.id;
     try {
-      const result = await dataMapper.adopt(req.body.human_id, // this is going to become the owner_id in.
+      const result = await dataMapper.adopt(req.auth.humanId, // this is going to become the owner_id in.
                                                   id);
       res.json(result);
     } catch (error) {

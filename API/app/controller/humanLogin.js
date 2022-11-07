@@ -30,6 +30,7 @@ const humanLoginController = {
           }
     },
     async loginAction(req, res) {
+        const accountId = req.auth.userId;
         const jwtSecret = process.env.JWT_SECRET;
         // On tente de récupérer le cat
         try {
@@ -50,7 +51,8 @@ const humanLoginController = {
         //delete req.session.user.is_damin;
         //delete req.session.user.email
         console.log(sessionUser);
-        const jwtContent = { humanId: sessionUser.id };
+        const jwtContent = { userId: accountId,
+                             humanId: sessionUser.id };
         const jwtOptions = { 
         algorithm: 'HS256', 
         expiresIn: '3h' 
