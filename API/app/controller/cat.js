@@ -1,5 +1,6 @@
 const dataMapper = require("../datamapper/cat");
-
+const multer = require('multer');
+const storage = require('../middlewares/storage')
 
 const catController = {
   /**
@@ -10,7 +11,11 @@ const catController = {
   newCat: async (req, res) => {
     //todo insert multer code here
     try {
-      const result = await dataMapper.createCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+    const upload = multer({storage: storage});
+    console.log(req.file.filename);
+    const image_name = req.file.filename;
+    upload.single("fileUpload");
+      const result = await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.race, req.body.age, req.body.sexe,
                                                   req.body.color,
                                                   req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
