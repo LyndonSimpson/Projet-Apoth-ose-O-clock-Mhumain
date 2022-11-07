@@ -1,35 +1,23 @@
 import './formcatdescstyles.scss';
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
 import {
   Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import { addCatProfileRequest } from '../../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
 
 function FormCatDesc({
   handleReturnClick,
 }) {
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
-  const [image, setImage] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
 
   const fetchData = async (payload) => {
     try {
-      const response = await axios.post('http://localhost:3001/human', {
-        image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-        pseudo: payload.pseudo,
-        name: payload.name,
-        description: payload.description,
-        age: payload.age,
-        race: payload.breed,
-        sexe: payload.sexe,
-        likes_pets: payload.likesPets,
-        likes_kids: payload.likesKids,
-        needs_garden: payload.needsGarden,
-      });
+      const response = await addCatProfileRequest(payload);
       console.log(response);
       if (response.status === 200) {
         setSucceededCreateCatProfil(true);
@@ -42,15 +30,16 @@ function FormCatDesc({
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    console.log(catProfileState);
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
     }
     fetchData({
-      image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
+      image: catProfileState.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
       pseudo: catProfileState.pseudo,
       name: catProfileState.name,
       description: catProfileState.description,
-      age: catProfileState.age,
+      age: Number(catProfileState.age),
       race: catProfileState.breed,
       sexe: catProfileState.sexe,
       likes_pets: catProfileState.likesPets,
@@ -93,7 +82,7 @@ function FormCatDesc({
 
         <div>
           {
-          Array.from(image).map((item) => (
+          Array.from(catProfileState.image).map((item) => (
             <span>
               <img
                 style={{ padding: '10px' }}
@@ -107,8 +96,9 @@ function FormCatDesc({
         }
           <input
             className="form-desc-cat-input"
+            name="image"
             onChange={(e) => {
-              setImage(e.target.files);
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
             }}
             multiple
             type="file"

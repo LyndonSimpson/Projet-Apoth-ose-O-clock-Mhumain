@@ -11,6 +11,7 @@ const catProfileInitialState = {
   likesPets: 'false',
   likesKids: 'false',
   needsGarden: 'false',
+  image: [],
 };
 
 function catProfileReducer(oldState, action) {
