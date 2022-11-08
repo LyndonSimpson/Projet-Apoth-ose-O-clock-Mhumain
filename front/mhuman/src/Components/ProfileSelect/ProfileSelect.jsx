@@ -6,12 +6,14 @@ import logo from './fakeData/Logo-Mhumain-Colored.png';
 import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
+import { setToken } from '../../requests/instance';
 
 function ProfileSelect() {
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
 
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
+    setToken(localStorage.getItem('Token'));
     async function getUserProfile() {
       try {
         const [userCats, userHumans] = await Promise.all([

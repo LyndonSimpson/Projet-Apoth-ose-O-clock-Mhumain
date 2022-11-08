@@ -22,7 +22,7 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response === 200) {
+      if (response) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
@@ -40,7 +40,7 @@ function FormCatDesc({
     evt.preventDefault();
 
     const data = new FormData();
-    data.append('fileUpload', catProfileState.fileUpload);
+    data.append('fileUpload', catProfileState.fileUpload[0]);
     data.append('pseudo', catProfileState.pseudo);
     data.append('name', catProfileState.name);
     data.append('description', catProfileState.description);
@@ -93,20 +93,24 @@ function FormCatDesc({
         />
 
         <div>
-          <span>
-            <img
-              style={{ padding: '10px' }}
-              width={150}
-              height={150}
-              src={catProfileState.fileUpload}
-              alt="Photos"
-            />
-          </span>
+          {
+          Array.from(catProfileState.fileUpload).map((item) => (
+            <span>
+              <img
+                style={{ padding: '10px' }}
+                width={150}
+                height={150}
+                src={item ? URL.createObjectURL(item) : null}
+                alt="Photos"
+              />
+            </span>
+          ))
+        }
           <input
             className="form-desc-cat-input"
             name="fileUpload"
             onChange={(e) => {
-              catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
             }}
             type="file"
             accept="image/*"
