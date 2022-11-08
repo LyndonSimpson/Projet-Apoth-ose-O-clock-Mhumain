@@ -18,7 +18,10 @@ const humanLoginController = {
             } if(!isEmpty) {
                 res.status(500).send('You already have a human profile on this account')
             } else { // Préparer une instance de human
-            const newHuman =  await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+                console.log(`nouvel humain créé : ${req.body.pseudo}`);
+                console.log(`nom de sa photo : ${req.file.filename}`);
+            const image_name = req.file.filename;
+            const newHuman =  await dataMapper.createHuman(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             req.body.description, req.body.age,
             req.body.has_pets, req.body.has_kids, req.body.has_garden,
             req.auth.userId);

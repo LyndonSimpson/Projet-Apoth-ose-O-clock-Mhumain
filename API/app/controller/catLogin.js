@@ -14,8 +14,11 @@ const catLoginController = {
             if (pseudo.pseudo == req.body.pseudo) {
                 throw new Error("cat pseudonyme already exists");
             }
+            console.log(`nouveau chat créé : ${req.body.pseudo}`);
+            console.log(`nom de sa photo : ${req.file.filename}`);
+            const image_name = req.file.filename;
             // Préparer une instance de cat
-            const newCat =  await dataMapper.createCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            const newCat =  await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             req.body.description, req.body.race, req.body.age, req.body.sexe,
             req.body.color,
             req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,

@@ -5,7 +5,7 @@ const authorizationMiddleware = require('../middlewares/jwt');
 const catSearchController = require('../controller/catSearch');
 const factController = require('../controller/frenchCatFact');
 const multer = require('multer');
-const storage = require('../middlewares/storage')
+const storage = require('../middlewares/storage');
 
 const router = Router();
 
@@ -31,7 +31,7 @@ var upload = multer({
     * @description inserts a new cat profile into the database
     * @param {string} request.body
     */
-    router.post("/cat/signup", authorizationMiddleware, catLoginController.signupAction); 
+    router.post("/cat/signup", authorizationMiddleware, upload.single("fileUpload"), catLoginController.signupAction); 
 
     /**
     * POST /cat/login

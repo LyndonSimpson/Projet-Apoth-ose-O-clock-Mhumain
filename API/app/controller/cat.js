@@ -14,8 +14,8 @@ const catController = {
     try {
     
     //console.log(req);
-    console.log(req.body.pseudo);
-    console.log(req.file.filename);
+    console.log(`nouveau chat créé : ${req.body.pseudo}`);
+    console.log(`nom de sa photo : ${req.file.filename}`);
     const image_name = req.file.filename; // todo trouver comment récupérer le filename que multer vient de créer!
     
       const result = await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
