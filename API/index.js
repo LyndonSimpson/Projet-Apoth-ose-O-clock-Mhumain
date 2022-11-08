@@ -23,6 +23,7 @@ const PORT = process.env.PORT;
 
 const expressJSDocSwagger = require('express-jsdoc-swagger');
 
+
 const options = {
 	info: {
 		version: '1.0.0',
@@ -51,6 +52,8 @@ const options = {
 };
 
 const app = express();
+
+app.use(express.static(__dirname))
 
 expressJSDocSwagger(app)(options);
 

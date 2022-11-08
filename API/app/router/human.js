@@ -3,6 +3,8 @@ const humanController = require('../controller/human');
 const humanLoginController = require('../controller/humanLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
 const humanSearchController = require('../controller/humanSearch');
+const multer = require('multer');
+const storage = require('../middlewares/storage');
 
 const router = Router();
 
@@ -10,8 +12,9 @@ const router = Router();
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
 /*--------------------------------- human router (create, read, update, delete) : */
     
-    
-
+var upload = multer({
+    storage: storage,
+})  
 //todo = pour les tests, à supprimer après
     /**
     * POST /human create
@@ -19,7 +22,7 @@ const router = Router();
     * @description inserts a new human profile into the database
     * @param {string} request.body
     */
-     router.post("/human", authorizationMiddleware, humanController.newHuman);    
+     router.post("/human", authorizationMiddleware, upload.single("fileUpload"), humanController.newHuman);    
 
     /**
     * POST /human create
@@ -27,7 +30,7 @@ const router = Router();
     * @description inserts a new human profile into the database
     * @param {string} request.body
     */
-    router.post("/human/signup", authorizationMiddleware, humanLoginController.signupAction); 
+    router.post("/human/signup", authorizationMiddleware, upload.single("fileUpload"), humanLoginController.signupAction); 
 
     /**
     * POST /human login
@@ -64,7 +67,7 @@ const router = Router();
     * @description update an existing human profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/human", authorizationMiddleware, humanController.update); 
+    router.patch("/human", authorizationMiddleware, upload.single("fileUpload"), humanController.update); 
  
     /**
     * DELETE /human
