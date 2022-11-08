@@ -5,18 +5,9 @@ export async function catProfilesRequest() {
   return response.data;
 }
 
-export async function addCatProfileRequest(payload) {
-  const response = await apiInstance.post('/cat/signup', {
-    image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-    pseudo: payload.pseudo,
-    name: payload.name,
-    description: payload.description,
-    age: payload.age,
-    race: payload.breed,
-    sexe: payload.sexe,
-    likes_pets: payload.likesPets,
-    likes_kids: payload.likesKids,
-    needs_garden: payload.needsGarden,
+export async function addCatProfileRequest(data) {
+  const response = await apiInstance.post('/cat/signup', data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response.data;
 }

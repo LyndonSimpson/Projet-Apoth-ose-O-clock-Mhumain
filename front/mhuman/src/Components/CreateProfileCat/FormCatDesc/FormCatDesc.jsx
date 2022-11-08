@@ -1,23 +1,25 @@
 import './formcatdescstyles.scss';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import {
   Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { addCatProfileRequest } from '../../../requests/profilesRequest';
-import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
+import useCatProfileReducer, { getActionInitValue, getActionSetValue } from '../../../hooks/useCatProfileReducer';
+import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
 
 function FormCatDesc({
   handleReturnClick,
 }) {
+  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
 
-  const fetchData = async (payload) => {
+  const fetchData = async (data) => {
     try {
-      const response = await addCatProfileRequest(payload);
+      const response = await addCatProfileRequest(data);
       console.log(response);
       if (response.status === 200) {
         setSucceededCreateCatProfil(true);
@@ -28,24 +30,33 @@ function FormCatDesc({
     }
   };
 
+  React.useEffect(() => {
+    catProfileDispatch(getActionInitValue(catInformation));
+  }, []);
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(catProfileState);
+
+    const data = new FormData();
+    console.log('fileUpload >>>', catProfileState.fileUpload);
+    data.append('fileUpload', catProfileState.fileUpload);
+    data.append('pseudo', catProfileState.pseudo);
+    data.append('name', catProfileState.name);
+    data.append('description', catProfileState.description);
+    data.append('age', catProfileState.age);
+    data.append('race', catProfileState.race);
+    data.append('sexe', catProfileState.sexe);
+    data.append('color', catProfileState.color);
+    data.append('likes_pets', catProfileState.likesPets);
+    data.append('likes_kids', catProfileState.likesKids);
+    data.append('needs_garden', catProfileState.needsGarden);
+    console.log('data >>>', data);
+
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
     }
-    fetchData({
-      image: catProfileState.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      pseudo: catProfileState.pseudo,
-      name: catProfileState.name,
-      description: catProfileState.description,
-      age: Number(catProfileState.age),
-      race: catProfileState.breed,
-      sexe: catProfileState.sexe,
-      likes_pets: catProfileState.likesPets,
-      likes_kids: catProfileState.likesKids,
-      needs_garden: catProfileState.needsGarden,
-    });
+
+    fetchData(data);
   };
   const handleTextFieldChange = (e) => {
     catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
@@ -70,6 +81,7 @@ function FormCatDesc({
       <form
         className="form-desc-cat"
         onSubmit={handleSubmit}
+        // encType="multipart/form-data"
       >
         <TextArea
           className="form-desc-cat-area"
@@ -82,7 +94,7 @@ function FormCatDesc({
 
         <div>
           {
-          Array.from(catProfileState.image).map((item) => (
+          Array.from(catProfileState.fileUpload).map((item) => (
             <span>
               <img
                 style={{ padding: '10px' }}
@@ -96,11 +108,10 @@ function FormCatDesc({
         }
           <input
             className="form-desc-cat-input"
-            name="image"
+            name="fileUpload"
             onChange={(e) => {
-              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
             }}
-            multiple
             type="file"
             accept="image/*"
             id="fileUpload"
