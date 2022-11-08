@@ -12,13 +12,15 @@ function FormHumanDesc({
   handleReturnClick,
 }) {
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateHumanProfil, setSucceededCreateHumanProfil] = useState(false);
 
   const fetchData = async (payload) => {
     try {
-      const response = await axios.post('http://localhost:3001/human', {
+      const data = new FormData();
+      data.append('image', images);
+      const response = await axios.post('http://localhost:3001/human', data, {
         image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
         account_id: payload.account_id, // TODO : Gérer l'id de l'utilisateur en cours
         pseudo: payload.pseudo,
@@ -64,6 +66,27 @@ function FormHumanDesc({
     setErrorMessage('');
   };
 
+  const onInputChange = (e) => {
+    setImages(e.target.files);
+  };
+
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   const data = new FormData();
+
+  //  for let (i = 0; i < images.length; i++) {
+  //  data.append('images', images[i])
+  // }
+
+  //   axios.post('http://localhost:3001/human', data)
+  //     .then((e) => {
+  //       console.log('Success');
+  //     })
+  //     .catch((e) => {
+  //       console.log('Error', e);
+  //     });
+  // };
+
   return (
     <div>
       {errorMessage
@@ -90,7 +113,7 @@ function FormHumanDesc({
         />
 
         <div>
-          {
+          {/* {
           Array.from(image).map((item) => (
             <span>
               <img
@@ -102,12 +125,10 @@ function FormHumanDesc({
               />
             </span>
           ))
-        }
+        } */}
           <input
             className="form-desc-human-input"
-            onChange={(e) => {
-              setImage(e.target.files);
-            }}
+            onChange={onInputChange}
             multiple
             type="file"
             accept="image/*"
