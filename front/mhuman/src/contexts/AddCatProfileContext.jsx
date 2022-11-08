@@ -12,7 +12,7 @@ const dataCatProfile = {
   likesPets: 'false',
   likesKids: 'false',
   needsGarden: 'false',
-  image: [],
+  fileUpload: [],
 };
 
 /** **** CONTEXT ***** */

@@ -11,7 +11,7 @@ const catProfileInitialState = {
   likesPets: 'false',
   likesKids: 'false',
   needsGarden: 'false',
-  image: [],
+  fileUpload: [],
 };
 
 function catProfileReducer(oldState, action) {
@@ -22,7 +22,6 @@ function catProfileReducer(oldState, action) {
         [action.payload.name]: action.payload.value,
       };
     case 'INIT_VALUE':
-      console.log('actiontypepayload>>', action.payload);
       return action.payload;
     case 'RESET': {
       return catProfileInitialState;
