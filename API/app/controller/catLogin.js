@@ -7,15 +7,17 @@ const catLoginController = {
         // chercher si l'utilisateur peut créer ce compte (via la méthode findOne )
         try {
             const searchedCat = await dataMapper.getOneCatByPseudo(req.body.pseudo);
-            //console.log(searchedCat);
+            console.log(searchedCat);
             const fakeObject = {};
             const check = searchedCat[0];
             const pseudo = check || fakeObject;
+            console.log(req.body.pseudo);
             if (pseudo.pseudo == req.body.pseudo) {
                 throw new Error("cat pseudonyme already exists");
             }
             console.log(`nouveau chat créé : ${req.body.pseudo}`);
             console.log(`nom de sa photo : ${req.file.filename}`);
+
             const image_name = req.file.filename;
             // Préparer une instance de cat
             const newCat =  await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
@@ -24,7 +26,10 @@ const catLoginController = {
             req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
             req.body.siblings_id,
             req.auth.userId);
-           res.json(newCat);
+
+            const searchedCat1 = await dataMapper.getOneCatByPseudo(req.body.pseudo);
+           res.json(searchedCat1);
+
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
