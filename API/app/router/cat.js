@@ -13,7 +13,7 @@ const router = Router();
 //TODO this router needs to have a "connected_user" middleware to filter connected user to have access :
 /*--------------------------------- cat router (create, read, update, delete) : */
     
-var upload = multer({
+const upload = multer({ 
     storage: storage,
 })
 //todo = pour les tests, à supprimer après
