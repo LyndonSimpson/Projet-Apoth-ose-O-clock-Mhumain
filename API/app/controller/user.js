@@ -3,7 +3,7 @@ const humanDataMapper = require("../datamapper/human");
 const catDataMapper = require("../datamapper/cat");
 
 const userController = {
-  
+
   oneUser: async (req, res) => {
     const id = req.params.id;
     try {
@@ -18,7 +18,7 @@ const userController = {
     //TODO ici récupérer le token pour récupérer l'id/ ou récupérer la session avec le id
 
     // console.log(req.headers.authorization); -- ici on récupère le token crypté
-    
+
     // console.log(req.auth.userId); -- ici on récupère le id du user dans le token
     // on peut directement utiliser ce userId 
     //console.log(req); pour voir ce qu'il faut require dans le req pour recup le token
