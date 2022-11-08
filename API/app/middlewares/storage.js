@@ -1,8 +1,8 @@
 const path = require('path');
 const multer = require('multer');
 
-//../../projet-04-adopte-ton-mhumain/front/mhuman/public  --- pour ranger en front
-//../../projet-04-adopte-ton-mhumain/API/public ----- pour ranger en back
+//../../projet-04-adopte-ton-mhumain/front/mhuman/public  --- pour ranger en front!
+//../../projet-04-adopte-ton-mhumain/API/public ----- pour ranger en back!
 
 
 const storage = multer.diskStorage({
