@@ -27,7 +27,7 @@ const catLoginController = {
             req.body.siblings_id,
             req.auth.userId);
             const searchedCat1 = await dataMapper.getOneCatByPseudo(req.body.pseudo);
-           res.status(200).json(searchedCat1);
+           res.json(searchedCat1);
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
