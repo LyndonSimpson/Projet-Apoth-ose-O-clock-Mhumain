@@ -1,17 +1,27 @@
 const axios = require('axios');
-const translate = require('google-translate-free');
-//trouver un module qui focntionne !!!!!!!!!!
-
-const frenchCatFact = {
+const fetch = require('node-fetch');
+const frenchCatFact = { // tout est payant...
     frenchFact: async (req, res) => {
         try {
           const result = await axios.get('https://catfact.ninja/fact'); 
           const fact = result.data.fact; 
           console.log(`fact here : ${fact}`);
-          const translatedText = await translate('hello', {from: 'en', to: 'fr'}); 
-          console.log(translatedText);
-          res.json(translatedText);
-        } catch (error) { 
+          const options = {
+            method: 'GET',
+            url: 'https://nlp-translation.p.rapidapi.com/v1/translate',
+            params: {text: 'Hello, world!!', to: 'fr', from: 'en'},
+            headers: {
+              'X-RapidAPI-Key': 'SIGN-UP-FOR-KEY',
+              'X-RapidAPI-Host': 'nlp-translation.p.rapidapi.com'
+            }
+          };
+          
+          axios.request(options).then(function (response) {
+            console.log(response.data);
+          })
+          .catch(function (error) {
+            console.error(error);
+          });} catch (error) { 
           console.error(error);
           res.status(500).send(`An error occured with the database :\n${error.message}`);
         }
@@ -19,3 +29,5 @@ const frenchCatFact = {
 }
 
 module.exports = frenchCatFact;
+
+
