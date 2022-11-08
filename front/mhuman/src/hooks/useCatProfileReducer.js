@@ -21,6 +21,9 @@ function catProfileReducer(oldState, action) {
         ...oldState,
         [action.payload.name]: action.payload.value,
       };
+    case 'INIT_VALUE':
+      console.log('actiontypepayload>>', action.payload);
+      return action.payload;
     case 'RESET': {
       return catProfileInitialState;
     }
@@ -35,6 +38,13 @@ export function getActionSetValue(name, value) {
     payload: {
       name, value,
     },
+  };
+}
+
+export function getActionInitValue(obj) {
+  return {
+    type: 'INIT_VALUE',
+    payload: obj,
   };
 }
 

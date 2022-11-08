@@ -6,7 +6,7 @@ import {
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { addCatProfileRequest } from '../../../requests/profilesRequest';
-import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
+import useCatProfileReducer, { getActionInitValue, getActionSetValue } from '../../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
 
 function FormCatDesc({
@@ -30,10 +30,18 @@ function FormCatDesc({
     }
   };
 
+  React.useEffect(() => {
+    catProfileDispatch(getActionInitValue(catInformation));
+    console.log('catInfo dans le useEffect >>', catInformation);
+    console.log('catProfileState dans le useEffect >>', catProfileState);
+  }, []);
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    addCatInformation(catProfileState);
-    console.log(catInformation);
+    console.log(catProfileState);
+
+    // const data = new FormData();
+
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
     }
@@ -45,9 +53,10 @@ function FormCatDesc({
       age: Number(catProfileState.age),
       race: catProfileState.breed,
       sexe: catProfileState.sexe,
-      likes_pets: catProfileState.likesPets,
-      likes_kids: catProfileState.likesKids,
-      needs_garden: catProfileState.needsGarden,
+      color: catProfileState.color,
+      likesPets: catProfileState.likesPets,
+      likesKids: catProfileState.likesKids,
+      needsGarden: catProfileState.needsGarden,
     });
   };
   const handleTextFieldChange = (e) => {

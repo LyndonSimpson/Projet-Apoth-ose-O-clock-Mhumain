@@ -18,7 +18,7 @@ const dataCatProfile = {
 /** **** CONTEXT ***** */
 const AddCatProfileContext = React.createContext({
   addCatInformation: () => {},
-  catInformation: {},
+  catInformation: [],
 });
 export default AddCatProfileContext;
 
@@ -26,26 +26,18 @@ export default AddCatProfileContext;
 export function AddCatProfileContextProvider({ children }) {
   const [catInformation, setCatInformation] = useState(dataCatProfile);
 
-  const addCatInformation = (newCatInformation) => {
-    setCatInformation(...catInformation, {
-      name: newCatInformation.name,
-      pseudo: newCatInformation.pseudo,
-      age: newCatInformation.age,
-      color: newCatInformation.color,
-      sexe: newCatInformation.sexe,
-      breed: newCatInformation.breed,
-      likesPets: newCatInformation.likesPets,
-      likesKids: newCatInformation.likesKids,
-      needsGarden: newCatInformation.needsGarden,
-      description: newCatInformation.description,
-      image: newCatInformation.image,
-    });
+  const addCatInformation = (newCatValue) => {
+    setCatInformation((oldState) => ({
+      ...oldState,
+      ...newCatValue,
+    }));
+    console.log('catInfo', catInformation);
   };
 
   const memoizedValue = useMemo(() => ({
     catInformation,
     addCatInformation,
-  }), []);
+  }), [catInformation]);
 
   return (
     <AddCatProfileContext.Provider value={memoizedValue}>
