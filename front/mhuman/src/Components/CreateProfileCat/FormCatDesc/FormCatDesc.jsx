@@ -22,7 +22,7 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response) {
+      if (response[0].pseudo === catProfileState.pseudo) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
