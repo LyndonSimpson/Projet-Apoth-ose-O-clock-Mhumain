@@ -12,7 +12,6 @@ import { setToken } from '../../../requests/instance';
 
 function LogIn({
   handleReturnClick,
-  handleConnectedUser,
 }) {
   const [emailValue, SetEmailValue] = useState('romain@street.fr');
   const [passwordValue, SetPasswordValue] = useState('Wesh_1');
@@ -23,6 +22,7 @@ function LogIn({
     try {
       const response = await loginRequest(email, password);
       setToken(response.token);
+      localStorage.setItem('Token', response.token);
       if (response.logged) {
         setIsConnected(true);
       }
@@ -111,7 +111,6 @@ function LogIn({
 
 LogIn.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
-  handleConnectedUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(LogIn);
