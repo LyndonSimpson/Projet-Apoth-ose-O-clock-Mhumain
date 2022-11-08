@@ -14,8 +14,12 @@ const catLoginController = {
             if (pseudo.pseudo == req.body.pseudo) {
                 throw new Error("cat pseudonyme already exists");
             }
+            console.log(`nouveau chat créé : ${req.body.pseudo}`);
+            console.log(`nom de sa photo : ${req.file.filename}`);
+            console.log(req);
+            const image_name = req.file.filename;
             // Préparer une instance de cat
-            const newCat =  await dataMapper.createCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            const newCat =  await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             req.body.description, req.body.race, req.body.age, req.body.sexe,
             req.body.color,
             req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
@@ -30,6 +34,8 @@ const catLoginController = {
     },
     async loginAction(req, res) {
         const jwtSecret = process.env.JWT_SECRET;
+        console.log(req);
+        const accountId = req.auth.userId;
         // On tente de récupérer le cat
         try {
             const searchedCat = await dataMapper.getOneCatByPseudo(req.body.pseudo);
@@ -49,7 +55,8 @@ const catLoginController = {
         //delete req.session.user.is_damin;
         //delete req.session.user.email
         console.log(sessionUser);
-        const jwtContent = { catId: sessionUser.id };
+        const jwtContent = { userId: accountId,
+                             catId: sessionUser.id };
         const jwtOptions = { 
         algorithm: 'HS256', 
         expiresIn: '3h' 

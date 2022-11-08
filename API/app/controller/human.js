@@ -1,9 +1,10 @@
 const dataMapper = require("../datamapper/human");
+const multer = require('multer');
 
 
 const humanController = {
   newHuman: async (req, res) => {
-    const id = req.session.user.id;
+    const id = re.auht.userId;
     const fakeObject = {};
     //todo ajouter une condition avec une requête qui bloque la création d'un nouvel humain
     //todo si il y a un humain avec le account_id situé dans req.session.user.id !, "select * from human where account_id = req.session.user.id"
@@ -15,10 +16,13 @@ const humanController = {
       if(!isEmpty) {
         res.status(500).send('You already have a human profile on this account')
       } else {
-      const result = await dataMapper.createHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+        console.log(`nouvel humain créé : ${req.body.pseudo}`);
+        console.log(`nom de sa photo : ${req.file.filename}`); 
+      const image_name = req.file.filename; //TODO récupérer le filename qui a été créé par multer pour le stocker en BDD surement dans un req / faire un log du req encore!
+      const result = await dataMapper.createHuman(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
-                                                  req.auth.userId); 
+                                                  id); 
       res.json(result); }
     } catch (error) {
       console.error(error);
@@ -46,9 +50,12 @@ const humanController = {
     }
   },
   update: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.humanId;
     try {
-      const result = await dataMapper.updateHuman(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            console.log(`nouveau pseudo human modifié : ${req.body.pseudo}`);
+            console.log(`nom de sa nouvelle photo : ${req.file.filename}`);
+            const image_name = req.file.filename;
+      const result = await dataMapper.updateHuman(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
                                                   id); // no "account_id" because the user that create the profil cannot change!
@@ -59,7 +66,7 @@ const humanController = {
     }
   },
   delete: async (req, res) => {
-    const id = req.params.id;
+    const id = req.auth.humanId;
     try {
       const result = await dataMapper.deleteHuman(id);
       res.json(result);
