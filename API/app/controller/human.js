@@ -23,7 +23,8 @@ const humanController = {
                                                   req.body.description, req.body.age,
                                                   req.body.has_pets, req.body.has_kids, req.body.has_garden,
                                                   id); 
-      res.json(result); }
+      const searchedUser = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
+      res.json(searchedUser);}
     } catch (error) {
       console.error(error);
       res.status(500).send(`An error occured with the database :\n${error.message}`);

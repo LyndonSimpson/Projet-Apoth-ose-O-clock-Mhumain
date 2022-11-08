@@ -24,7 +24,8 @@ const catController = {
                                                   req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
                                                   req.body.siblings_id,
                                                   id); // no "is_adopted" and no "owner_id" because the cat cannot be adopted already when just created.
-      res.json(result);
+      const searchedUser = await dataMapper.getOneCatByPseudo(req.body.pseudo);                                        
+      res.json(searchedUser);
     } catch (error) {
       console.error(error);
       res.status(500).send(`An error occured with the database :\n${error.message}`);

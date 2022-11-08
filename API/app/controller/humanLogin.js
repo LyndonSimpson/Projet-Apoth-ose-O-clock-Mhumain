@@ -25,8 +25,8 @@ const humanLoginController = {
             req.body.description, req.body.age,
             req.body.has_pets, req.body.has_kids, req.body.has_garden,
             req.auth.userId);
-
-           res.json(newHuman);}
+            const searchedHuman1 = await dataMapper.getOneHumanByPseudo(req.body.pseudo);
+           res.json(searchedHuman1);}
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);

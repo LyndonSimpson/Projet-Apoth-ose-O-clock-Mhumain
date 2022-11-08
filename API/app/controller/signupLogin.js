@@ -33,9 +33,9 @@ const userController = {
             // Préparer une instance de user
             const newUser =  await dataMapper.createUser(req.body.email, encryptedMsg);
             // sauvegarder l'user
-            
+            const searchedUser1 = await dataMapper.getOneUserByEmail(req.body.email);
            // renvoyer l'utilisateur vers la page de connexion
-           res.json(newUser);
+           res.json(searchedUser1);
 
         } catch (error) {
             console.error(error);
