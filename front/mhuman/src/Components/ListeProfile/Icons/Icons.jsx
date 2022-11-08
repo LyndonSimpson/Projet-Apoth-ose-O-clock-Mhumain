@@ -81,3 +81,29 @@ export function IconNoPet() {
     </div>
   );
 }
+
+export function IconMale() {
+  return (
+    <div>
+      <Icon.Group size="large">
+        <div className="fixIcon">
+          <Icon size="large" color="blue" name="circle outline" />
+        </div>
+        <Icon size="small" color="blue" name="mars" />
+      </Icon.Group>
+    </div>
+  );
+}
+
+export function IconFemale() {
+  return (
+    <div>
+      <Icon.Group size="large">
+        <div className="fixIcon">
+          <Icon size="large" color="pink" name="circle outline" />
+        </div>
+        <Icon size="small" color="pink" name="venus" />
+      </Icon.Group>
+    </div>
+  );
+}

@@ -19,8 +19,14 @@
 .card-icon-link{
     display:flex;
     justify-content: space-evenly;
-    &:hover{
-        cursor: pointer;
+    
+
+    &-item{
+        color: black;
+        &:hover{
+            cursor: pointer;
+            color: blueviolet;
+        }
     }
 }
 

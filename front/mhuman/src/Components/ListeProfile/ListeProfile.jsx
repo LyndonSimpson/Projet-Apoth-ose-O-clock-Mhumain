@@ -39,7 +39,7 @@ function ListeProfile({ fav }) {
           />
         </div>
       </section>
-      {openProfile && <ConsultProfile toggleProfile={toggleProfile} />}
+      {openProfile && <ConsultProfile isCat toggleProfile={toggleProfile} />}
       <Footer />
       <MobileNav />
     </div>
