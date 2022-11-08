@@ -62,7 +62,10 @@ const catController = {
   update: async (req, res) => {
     const id = req.auth.catId;
     try {
-      const result = await dataMapper.updateCat(req.body.pseudo, req.body.image, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            console.log(`nouveau pseudo chat modifié : ${req.body.pseudo}`);
+            console.log(`nom de sa nouvelle photo : ${req.file.filename}`);
+            const image_name = req.file.filename;
+      const result = await dataMapper.updateCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                                                 req.body.description, req.body.race, req.body.age, req.body.sexe,
                                                 req.body.color,
                                                 req.body.likes_pets, req.body.likes_kids, req.body.needs_garden, req.body.siblings_id, // no "account_id" because the user that create the profil cannot change!
