@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { addCatProfileRequest } from '../../../requests/profilesRequest';
 import useCatProfileReducer, { getActionInitValue, getActionSetValue } from '../../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
+import { setToken } from '../../../requests/instance';
 
 function FormCatDesc({
   handleReturnClick,
@@ -21,7 +22,7 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response.status === 200) {
+      if (response === 200) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
@@ -32,13 +33,13 @@ function FormCatDesc({
 
   React.useEffect(() => {
     catProfileDispatch(getActionInitValue(catInformation));
+    setToken(localStorage.getItem('Token'));
   }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     const data = new FormData();
-    console.log('fileUpload >>>', catProfileState.fileUpload);
     data.append('fileUpload', catProfileState.fileUpload);
     data.append('pseudo', catProfileState.pseudo);
     data.append('name', catProfileState.name);
@@ -50,7 +51,6 @@ function FormCatDesc({
     data.append('likes_pets', catProfileState.likesPets);
     data.append('likes_kids', catProfileState.likesKids);
     data.append('needs_garden', catProfileState.needsGarden);
-    console.log('data >>>', data);
 
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -93,19 +93,15 @@ function FormCatDesc({
         />
 
         <div>
-          {
-          Array.from(catProfileState.fileUpload).map((item) => (
-            <span>
-              <img
-                style={{ padding: '10px' }}
-                width={150}
-                height={150}
-                src={item ? URL.createObjectURL(item) : null}
-                alt="Photos"
-              />
-            </span>
-          ))
-        }
+          <span>
+            <img
+              style={{ padding: '10px' }}
+              width={150}
+              height={150}
+              src={catProfileState.fileUpload}
+              alt="Photos"
+            />
+          </span>
           <input
             className="form-desc-cat-input"
             name="fileUpload"

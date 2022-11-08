@@ -38,9 +38,7 @@ function FormCatInformations({
       setErrorMessage('La couleur est obligatoire');
       return;
     }
-    console.log(catProfileState);
     addCatInformation(catProfileState);
-    console.log(catInformation);
     setNext('FormCatDesc');
   };
   const handleDismiss = () => {

@@ -16,7 +16,6 @@ const catLoginController = {
             }
             console.log(`nouveau chat créé : ${req.body.pseudo}`);
             console.log(`nom de sa photo : ${req.file.filename}`);
-            console.log(req);
             const image_name = req.file.filename;
             // Préparer une instance de cat
             const newCat =  await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
@@ -25,7 +24,6 @@ const catLoginController = {
             req.body.likes_pets, req.body.likes_kids, req.body.needs_garden,
             req.body.siblings_id,
             req.auth.userId);
-
            res.json(newCat);
         } catch (error) {
             console.error(error);

@@ -31,7 +31,6 @@ export function AddCatProfileContextProvider({ children }) {
       ...oldState,
       ...newCatValue,
     }));
-    console.log('catInfo', catInformation);
   };
 
   const memoizedValue = useMemo(() => ({
