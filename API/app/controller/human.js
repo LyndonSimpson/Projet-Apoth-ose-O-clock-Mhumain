@@ -51,6 +51,16 @@ const humanController = {
       res.status(500).send(`An error occured with the database :\n${error.message}`);
     }
   },
+  Humans5: async (req, res) => {
+
+    try {
+      const result = await dataMapper.get5RandomHumans();
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
   update: async (req, res) => {
     const id = req.auth.humanId;
     try {
