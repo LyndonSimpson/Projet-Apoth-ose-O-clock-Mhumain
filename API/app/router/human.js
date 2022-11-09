@@ -84,6 +84,12 @@ const upload = multer({
     * @param {number} id.path.required - category identifier
     */
     router.post("/humansearch", authorizationMiddleware, humanSearchController.search);
- 
+    
+    /**
+    * GET /human random 5
+    * @summary ranom 5 human profile
+    * @description get 5 random human profiles
+    */
+     router.patch("/humanRandom", authorizationMiddleware, humanController.Humans5);
  
 module.exports = router;
