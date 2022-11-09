@@ -24,7 +24,7 @@ const humanDataMapper = {
     async get5RandomHumans() { 
 
         const query =`SELECT * FROM human
-        ORDER BY RAND()
+        ORDER BY RANDOM()
         LIMIT 5;`;
             
         const result = await database.query(query);
