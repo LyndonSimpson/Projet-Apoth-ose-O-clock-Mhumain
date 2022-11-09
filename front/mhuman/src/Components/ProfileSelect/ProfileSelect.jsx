@@ -42,6 +42,7 @@ function ProfileSelect() {
     }
   };
 
+  // fonction afin de récupérer le pseudo, et le type lors du click sur le profil
   const handleHumanProfileClick = async (pseudo) => {
     try {
       const response = await humanLoginRequest(pseudo);
