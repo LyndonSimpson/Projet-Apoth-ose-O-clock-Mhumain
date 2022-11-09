@@ -40,7 +40,7 @@ function HomePage() {
       <section className="homeContent">
         <h1 className="homeTitle"> Hello *username* !</h1>
         <section className="leftContent">
-          <h3 className="homecontentSubtitle"> Mes favoris</h3>
+          <h3 className="homecontentSubtitle">Des chats ! / Des humains !</h3>
           <Miniprofile />
           <Miniprofile />
           <Miniprofile />
@@ -49,7 +49,7 @@ function HomePage() {
         </section>
         <section className="rightContent">
           <div className="randomProfil">
-            <h3 className="homecontentSubtitle"> Des chats !</h3>
+            <h3 className="homecontentSubtitle">Mes favoris</h3>
             <Miniprofile />
             <Miniprofile />
             <Miniprofile />
