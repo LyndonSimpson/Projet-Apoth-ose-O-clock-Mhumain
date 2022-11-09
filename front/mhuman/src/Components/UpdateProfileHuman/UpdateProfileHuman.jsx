@@ -22,9 +22,7 @@ function UpdateProfileHuman() {
     try {
       const response = await updateHumanProfileRequest(data);
       console.log(response);
-      if (response[0].pseudo === humanProfileState.pseudo) {
-        setUpdateCreateHumanProfil(true);
-      }
+      setUpdateCreateHumanProfil(true);
     } catch (error) {
       // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur
       console.log(error.message);

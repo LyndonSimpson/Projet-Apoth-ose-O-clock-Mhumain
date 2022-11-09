@@ -15,7 +15,7 @@ import { setToken } from '../../requests/instance';
 function UpdateProfileCat() {
   const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
-  const [UpdateCatProfil, setUpdateCreateCatProfil] = useState(false);
+  const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -24,7 +24,7 @@ function UpdateProfileCat() {
       const response = await updateCatProfileRequest(data);
       console.log(response);
       if (response[0].pseudo === catProfileState.pseudo) {
-        setUpdateCreateCatProfil(true);
+        setUpdateUpdateCatProfil(true);
       }
     } catch (error) {
       // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur

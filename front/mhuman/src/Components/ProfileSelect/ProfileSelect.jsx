@@ -7,7 +7,7 @@ import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
 import { setToken } from '../../requests/instance';
-import { catLoginRequest } from '../../requests/loginRequest';
+import { catLoginRequest, humanLoginRequest } from '../../requests/loginRequest';
 import LoginContext from '../../contexts/LoginContext';
 
 function ProfileSelect() {
@@ -37,6 +37,15 @@ function ProfileSelect() {
     try {
       const response = await catLoginRequest(pseudo);
       addLoginInformation({ isLogged: response.logged, profilePseudo: response.pseudo, type: 'cat' });
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleHumanProfileClick = async (pseudo) => {
+    try {
+      const response = await humanLoginRequest(pseudo);
+      addLoginInformation({ isLogged: response.logged, profilePseudo: response.pseudo, type: 'human' });
     } catch (err) {
       console.log(err.response.data);
     }
@@ -75,7 +84,10 @@ function ProfileSelect() {
 
             {humansProfile.length > 0
               ? humansProfile.map(({ pseudo, image, id }) => (
-                <Link to="/homepage">
+                <Link
+                  to="/homepage"
+                  onClick={() => handleHumanProfileClick(pseudo)}
+                >
                   <ProfileCard
                     key={id}
                     pseudo={pseudo}
