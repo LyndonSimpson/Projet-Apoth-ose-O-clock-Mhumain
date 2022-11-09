@@ -1,0 +1,48 @@
+.ui.button{
+    margin-top: 1rem;
+}
+
+.signup-form {
+    position: absolute;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+
+    .ui.form{
+        width: 100%;
+    }
+}
+
+.error-msg {
+    max-height: 100px;
+}
+
+.signup-buttons {
+    display: flex;
+    justify-content: space-around;
+
+    button {
+        width: 130px;
+    }
+}
+
+
+.return-button {
+    margin-top: 150px;
+  }
+  
+
+@media only screen and (max-width: 768px) {
+    .signup-form {
+        width: 280px;
+    }
+
+    .return-button {
+        margin-top: 50px;
+      }
+
+    .signup-buttons {
+        display: flex;
+        justify-content: space-around;
+    }
+}
