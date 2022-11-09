@@ -21,6 +21,19 @@ const catDataMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    /**
+     * 
+     * @returns 
+     */
+    async get5RandomCats() { 
+
+        const query =`SELECT * FROM cat
+        ORDER BY RANDOM()
+        LIMIT 5;`;
+            
+        const result = await database.query(query);
+        return result.rows;
+    },
     async adoptedCats() { 
 
         const query =`SELECT * FROM cat WHERE is_adopted = true;`; // or "1" for true bolean - must do some tests here!
