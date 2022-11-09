@@ -12,6 +12,13 @@ export async function addCatProfileRequest(data) {
   return response.data;
 }
 
+export async function updateCatProfileRequest(data) {
+  const response = await apiInstance.patch('/cat/update', data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+}
+
 export async function humanProfilesRequest() {
   const response = await apiInstance.get('/userhumans');
   return response.data;
