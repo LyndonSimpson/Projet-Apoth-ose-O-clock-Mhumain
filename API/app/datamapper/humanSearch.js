@@ -1,8 +1,8 @@
 const database = require('../../data/database');
 
 const catSearchDattaMapper = {
-  
-  async find(has_pets, has_kids, has_garden) {       
+
+  async find(has_pets, has_kids, has_garden) {
     const filter1 = has_pets;
     const filter2 = has_kids;
     const filter3 = has_garden;
