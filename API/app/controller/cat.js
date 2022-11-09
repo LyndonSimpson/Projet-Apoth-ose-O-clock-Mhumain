@@ -3,16 +3,7 @@ const multer = require('multer');
 const storage = require('../middlewares/storage')
 
 const catController = {
-  /**
- * creates a new cat in, requires a cat JWT
- *
- * @param {string} n - A string param
- * @param {string} [o] - A optional string param
- *
- * @example
- *
- *     foo('hello')
- */
+  
   newCat: async (req, res) => {
     //todo insert multer code here
     const id = req.auth.userId;
@@ -36,11 +27,7 @@ const catController = {
       res.status(500).send(`An error occured with the database :\n${error.message}`);
     }
   },
-  /**
-   * 
-   * @param {*} req 
-   * @param {*} res 
-   */
+  
   oneCat: async (req, res) => {
     const id = req.params.id;
     try {
