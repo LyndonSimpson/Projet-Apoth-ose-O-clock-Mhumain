@@ -12,8 +12,6 @@ import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHum
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
 import UpdateProfileCat from './Components/UpdateProfileCat/UpdateProfileCat';
-import { LoginContextProvider } from './contexts/LoginContext';
-import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -23,71 +21,69 @@ function App() {
   };
 
   return (
-    <AddCatProfileContextProvider>
-      <LoginContextProvider>
-        <div className="App">
-          <Routes>
-            <Route
-              path="/"
-              element={(
-                <LandingPage
-                  handleConnectedUser={handleConnectedUser}
-                />
-          )}
+    <div className="App">
+      <Routes>
+        <Route
+          path="/"
+          element={(
+            <LandingPage
+              handleConnectedUser={handleConnectedUser}
             />
-            <Route
-              path="/homepage"
-              element={
-                <HomePage />
+          )}
+        />
+        <Route
+          path="/homepage"
+          element={
+            <HomePage />
           }
+        />
+        <Route
+          path="/createprofilehuman"
+          element={<CreateProfileHuman />}
+          end
+        />
+        <Route
+          path="/createprofilecat"
+          element={<CreateProfileCat />}
+          end
+        />
+        <Route
+          path="/profileselect"
+          element={(
+            <ProfileSelect
+              connectedUser={connectedUser}
             />
-            <Route
-              path="/createprofilehuman"
-              element={<CreateProfileHuman />}
-              end
-            />
-            <Route
-              path="/createprofilecat"
-              element={<CreateProfileCat />}
-              end
-            />
-            <Route
-              path="/profileselect"
-              element={(
-                <ProfileSelect
-                  connectedUser={connectedUser}
-                />
           )}
-              end
-            />
-            <Route
-              path="/listeprofile"
-              element={(
-                <ListeProfile />
+          end
+        />
+        <Route
+          path="/listeprofile"
+          element={(
+            <ListeProfile />
   )}
-            />
+        />
 
-            {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
-            <Route
-              path="/favprofile"
-              element={(
-                <ListeProfile fav />
+        {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
+        <Route
+          path="/favprofile"
+          element={(
+            <ListeProfile fav />
   )}
-            />
-            <Route
-              path="/updateprofilehuman"
-              element={<UpdateProfileHuman />}
-              end
-            />
-            <Route
-              path="/updateprofilecat"
-              element={<UpdateProfileCat />}
-              end
-            />
-          </Routes>
-        </div>
-      </LoginContextProvider>
-    </AddCatProfileContextProvider>
+        />
+        <Route
+          path="/updateprofilehuman"
+          element={<UpdateProfileHuman />}
+          end
+
+        />
+        <Route
+          path="/updateprofilecat"
+          element={<UpdateProfileCat />}
+          end
+
+        />
+      </Routes>
+    </div>
   );
 }
 

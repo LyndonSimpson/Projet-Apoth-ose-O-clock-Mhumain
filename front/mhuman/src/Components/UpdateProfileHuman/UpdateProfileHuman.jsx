@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './updateprofilehumanstyles.scss';
 import {
@@ -7,13 +7,11 @@ import {
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
-import LoginContext from '../../contexts/LoginContext';
 import useHumanProfileReducer, { getActionSetValue } from '../../hooks/useHumanProfileReducer';
 
 function UpdateProfileHuman() {
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
-  const { loginInformation } = useContext(LoginContext);
 
   const fetchData = async (payload) => {
     try {
@@ -210,7 +208,7 @@ function UpdateProfileHuman() {
         </Button>
       </div>
       { UpdateHumanProfil && (
-        <Navigate to="/homepage" />
+      <Navigate to="/homepage" />
       )}
     </div>
   );
