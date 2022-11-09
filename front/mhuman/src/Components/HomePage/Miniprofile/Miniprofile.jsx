@@ -1,20 +1,24 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 import './miniprofile.scss';
 import { Icon } from 'semantic-ui-react';
-import cat2 from '../../ProfileSelect/fakeData/pexels-cat-1.jpg';
 
-function Miniprofile() {
+function Miniprofile({ pseudo, image }) {
   return (
     <div className="miniprofile">
       <div className="align-left">
         <div className="imgRounded">
-          <img className="profilePic" src={cat2} alt="profile" />
+          <img className="profilePic" src={image} alt="profile" />
         </div>
-        <p className="profileName">Minou Le Chat</p>
+        <p className="profileName">{pseudo}</p>
       </div>
       <Icon className="heartIcon" name="heart outline" size="big" />
     </div>
   );
 }
+Miniprofile.propTypes = {
+  pseudo: Proptypes.string.isRequired,
+  image: Proptypes.string.isRequired,
+};
 
 export default React.memo(Miniprofile);

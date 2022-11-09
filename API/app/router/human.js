@@ -90,6 +90,6 @@ const upload = multer({
     * @summary ranom 5 human profile
     * @description get 5 random human profiles
     */
-     router.patch("/humanRandom", authorizationMiddleware, humanController.Humans5);
+     router.get("/humanRandom", authorizationMiddleware, humanController.Humans5);
  
 module.exports = router;
