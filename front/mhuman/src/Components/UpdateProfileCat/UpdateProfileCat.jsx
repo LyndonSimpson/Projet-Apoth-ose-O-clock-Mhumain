@@ -7,8 +7,7 @@ import {
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
-import LoginContext from '../../contexts/LoginContext';
-import { addCatProfileRequest } from '../../requests/profilesRequest';
+import { updateCatProfileRequest } from '../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../contexts/AddCatProfileContext';
 import { setToken } from '../../requests/instance';
@@ -22,7 +21,7 @@ function UpdateProfileCat() {
 
   const fetchData = async (data) => {
     try {
-      const response = await addCatProfileRequest(data);
+      const response = await updateCatProfileRequest(data);
       console.log(response);
       if (response[0].pseudo === catProfileState.pseudo) {
         setUpdateCreateCatProfil(true);
@@ -71,9 +70,6 @@ function UpdateProfileCat() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (!catProfileState.description.trim()) {
-    //   setErrorMessage('Une description est obligatoire');
-    // }
     const data = new FormData();
     data.append('fileUpload', catProfileState.fileUpload[0]);
     data.append('pseudo', catProfileState.pseudo);
@@ -148,6 +144,16 @@ function UpdateProfileCat() {
             <Image.Group size="small">
               <Image rounded src={cat} />
             </Image.Group>
+            <input
+              className="form-desc-cat-input"
+              name="fileUpload"
+              onChange={(e) => {
+                catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              }}
+              type="file"
+              accept="image/*"
+              id="fileUpload"
+            />
           </div>
           <div className="form-update-all-informations">
             <div className="form-update-informations">
@@ -291,19 +297,20 @@ function UpdateProfileCat() {
               </Form.Group>
             </div>
           </div>
+          <div className="form-update-cat-buttons">
+            <Button
+              className="form-update-cat-button"
+              animated="fade"
+              type="submit"
+            >
+              <Button.Content visible>Enregistrer</Button.Content>
+              <Button.Content hidden>
+                <Icon name="check" />
+              </Button.Content>
+            </Button>
+          </div>
         </form>
-        <div className="form-update-cat-buttons">
-          <Button
-            className="form-update-cat-button"
-            animated="fade"
-            type="submit"
-          >
-            <Button.Content visible>Enregistrer</Button.Content>
-            <Button.Content hidden>
-              <Icon name="check" />
-            </Button.Content>
-          </Button>
-        </div>
+
         { UpdateCatProfil && (
         <Navigate to="/homepage" />
         )}

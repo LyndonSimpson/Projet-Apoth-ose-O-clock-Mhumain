@@ -34,6 +34,13 @@ export function getActionSetValue(name, value) {
   };
 }
 
+export function getActionInitValue(obj) {
+  return {
+    type: 'INIT_VALUE',
+    payload: obj,
+  };
+}
+
 function useHumanProfileReducer() {
   const [humanProfileState, humanProfileDispatch] = useReducer(humanProfileReducer, humanProfileInitialState);
   return {
