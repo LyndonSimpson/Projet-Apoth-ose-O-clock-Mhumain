@@ -1,22 +1,28 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
+
 import React, { useState, useContext } from 'react';
+
 import './updateprofilehumanstyles.scss';
 import {
   Button, Icon, TextArea, Input, Form, Radio, Image, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
+
 import { updateHumanProfileRequest } from '../../requests/profilesRequest';
 
 import useHumanProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useHumanProfileReducer';
 import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
 import { setToken } from '../../requests/instance';
 
+
 function UpdateProfileHuman() {
   const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
+
   const [errorMessage, setErrorMessage] = useState('');
+
 
   const fetchData = async (data) => {
     try {
@@ -236,7 +242,7 @@ function UpdateProfileHuman() {
       </form>
 
       { UpdateHumanProfil && (
-        <Navigate to="/homepage" />
+      <Navigate to="/homepage" />
       )}
     </div>
   );

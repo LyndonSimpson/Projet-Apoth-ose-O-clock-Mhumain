@@ -1,30 +1,32 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
-  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown, Message,
+  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
+
 import { updateCatProfileRequest } from '../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../contexts/AddCatProfileContext';
 import { setToken } from '../../requests/instance';
 
+
 function UpdateProfileCat() {
-  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchData = async (data) => {
+  const fetchData = async (payload) => {
     try {
+
       const response = await updateCatProfileRequest(data);
       console.log(response);
       if (response[0].pseudo === catProfileState.pseudo) {
         setUpdateUpdateCatProfil(true);
+
       }
     } catch (error) {
       // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur
@@ -38,9 +40,6 @@ function UpdateProfileCat() {
   ];
 
   React.useEffect(() => {
-    // get API selon pseudo cat
-    catProfileDispatch(getActionInitValue(catInformation));
-    setToken(localStorage.getItem('Token'));
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -70,6 +69,7 @@ function UpdateProfileCat() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
     const data = new FormData();
     data.append('fileUpload', catProfileState.fileUpload[0]);
     data.append('pseudo', catProfileState.pseudo);
@@ -105,6 +105,7 @@ function UpdateProfileCat() {
     }
 
     fetchData(data);
+
   };
 
   const handleTextFieldChange = (e) => {
@@ -119,14 +120,10 @@ function UpdateProfileCat() {
     catProfileDispatch(getActionSetValue(data.name, data.value));
   };
 
-  const handleDismiss = () => {
-    setErrorMessage('');
-  };
-
   return (
     <>
       <div className="update-profile">
-        {errorMessage
+        {/* {errorMessage
               && (
               <Message
                 negative
@@ -135,7 +132,7 @@ function UpdateProfileCat() {
                 onDismiss={handleDismiss}
                 content={errorMessage}
               />
-              )}
+              )} */}
         <form
           onSubmit={handleSubmit}
           className="form-update-cat"
@@ -316,8 +313,8 @@ function UpdateProfileCat() {
         )}
 
       </div>
-      {/* <MobileNav className="mobile-nav" /> */}
 
+      {/* <MobileNav className="mobile-nav" /> */}
     </>
   );
 }

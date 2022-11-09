@@ -13,7 +13,7 @@ import { setToken } from '../../../requests/instance';
 function FormCatDesc({
   handleReturnClick,
 }) {
-  const { catInformation } = useContext(AddCatProfileContext);
+  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
@@ -22,7 +22,7 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response[0].pseudo === catProfileState.pseudo) {
+      if (response === 200) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
@@ -40,7 +40,7 @@ function FormCatDesc({
     evt.preventDefault();
 
     const data = new FormData();
-    data.append('fileUpload', catProfileState.fileUpload[0]);
+    data.append('fileUpload', catProfileState.fileUpload);
     data.append('pseudo', catProfileState.pseudo);
     data.append('name', catProfileState.name);
     data.append('description', catProfileState.description);
@@ -93,24 +93,20 @@ function FormCatDesc({
         />
 
         <div>
-          {
-          Array.from(catProfileState.fileUpload).map((item) => (
-            <span>
-              <img
-                style={{ padding: '10px' }}
-                width={150}
-                height={150}
-                src={item ? URL.createObjectURL(item) : null}
-                alt="Photos"
-              />
-            </span>
-          ))
-        }
+          <span>
+            <img
+              style={{ padding: '10px' }}
+              width={150}
+              height={150}
+              src={catProfileState.fileUpload}
+              alt="Photos"
+            />
+          </span>
           <input
             className="form-desc-cat-input"
             name="fileUpload"
             onChange={(e) => {
-              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
             }}
             type="file"
             accept="image/*"
