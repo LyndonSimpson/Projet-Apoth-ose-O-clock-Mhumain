@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import './profileselect.scss';
 import { Link } from 'react-router-dom';
@@ -6,12 +6,17 @@ import logo from './fakeData/Logo-Mhumain-Colored.png';
 import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
+import { setToken } from '../../requests/instance';
+import { catLoginRequest } from '../../requests/loginRequest';
+import LoginContext from '../../contexts/LoginContext';
 
 function ProfileSelect() {
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
+  const { addLoginInformation } = useContext(LoginContext);
 
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
+    setToken(localStorage.getItem('Token'));
     async function getUserProfile() {
       try {
         const [userCats, userHumans] = await Promise.all([
@@ -28,6 +33,15 @@ function ProfileSelect() {
     getUserProfile();
   }, []);
 
+  const handleCatProfileClick = async (pseudo) => {
+    try {
+      const response = await catLoginRequest(pseudo);
+      addLoginInformation({ isLogged: response.logged, profilePseudo: response.pseudo, type: 'cat' });
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
   return (
     <div className="ProfileSelect">
       <img src={logo} className="ProfileTitle" alt="logo" />
@@ -38,11 +52,16 @@ function ProfileSelect() {
 
             {catsProfile
               && catsProfile.map(({ pseudo, image, id }) => (
-                <ProfileCard
-                  key={id}
-                  pseudo={pseudo}
-                  image={image}
-                />
+                <Link
+                  to="/homepage"
+                  onClick={() => handleCatProfileClick(pseudo)}
+                >
+                  <ProfileCard
+                    key={id}
+                    pseudo={pseudo}
+                    image={image}
+                  />
+                </Link>
               ))}
 
             <Link to="/createprofilecat">
@@ -56,11 +75,13 @@ function ProfileSelect() {
 
             {humansProfile.length > 0
               ? humansProfile.map(({ pseudo, image, id }) => (
-                <ProfileCard
-                  key={id}
-                  pseudo={pseudo}
-                  image={image}
-                />
+                <Link to="/homepage">
+                  <ProfileCard
+                    key={id}
+                    pseudo={pseudo}
+                    image={image}
+                  />
+                </Link>
               ))
               : (
                 <Link to="/createprofilehuman">

@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-
 import './LogIn.scss';
 import {
   Button, Form, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Logo from '../logo.png';
-import loginRequest from '../../../requests/loginRequest';
-import { setToken } from '../../../requests/instance';
+import { loginRequest } from '../../../requests/loginRequest';
 
 function LogIn({
   handleReturnClick,
-  handleConnectedUser,
 }) {
   const [emailValue, SetEmailValue] = useState('romain@street.fr');
   const [passwordValue, SetPasswordValue] = useState('Wesh_1');
@@ -22,7 +19,6 @@ function LogIn({
   const fetchData = async (email, password) => {
     try {
       const response = await loginRequest(email, password);
-      setToken(response.token);
       if (response.logged) {
         setIsConnected(true);
       }
@@ -111,7 +107,6 @@ function LogIn({
 
 LogIn.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
-  handleConnectedUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(LogIn);

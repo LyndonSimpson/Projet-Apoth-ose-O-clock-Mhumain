@@ -17,9 +17,10 @@ const catLoginController = {
             }
             console.log(`nouveau chat créé : ${req.body.pseudo}`);
             console.log(`nom de sa photo : ${req.file.filename}`);
-            //console.log(req);
+
             const image_name = req.file.filename;
             // Préparer une instance de cat
+
             const newCat = await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
                 req.body.description, req.body.race, req.body.age, req.body.sexe,
                 req.body.color,
@@ -28,6 +29,7 @@ const catLoginController = {
                 req.auth.userId);
             const searchedCat1 = await dataMapper.getOneCatByPseudo(req.body.pseudo);
             res.json(searchedCat1);
+
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
