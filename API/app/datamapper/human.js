@@ -21,6 +21,15 @@ const humanDataMapper = {
         const result = await database.query(query);
         return result.rows;
     },
+    async get5RandomHumans() { 
+
+        const query =`SELECT * FROM human
+        ORDER BY RANDOM()
+        LIMIT 5;`;
+            
+        const result = await database.query(query);
+        return result.rows;
+    },
     async getHumanById(id) { 
 
         const query = {
