@@ -1,6 +1,8 @@
 const axios = require('axios');
-const fetch = require('node-fetch');
-const frenchCatFact = { // tout est payant...
+const frenchCatFact = { 
+  /**
+   * not working / only works if we pay for an API key on any of the paying nodeJs translator modules 
+   */
   frenchFact: async (req, res) => {
     try {
       const result = await axios.get('https://catfact.ninja/fact');

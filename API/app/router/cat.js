@@ -111,6 +111,13 @@ const upload = multer({
     * @param {number} id.path.required - category identifier
     */
      router.get("/catfact", factController.frenchFact);
+    
+    /**
+    * GET /cat random 5
+    * @summary ranom 5 cat profile
+    * @description get 5 random cat profiles
+    */
+     router.get("/catRandom", authorizationMiddleware, catController.cats5);
  
  
 module.exports = router;
