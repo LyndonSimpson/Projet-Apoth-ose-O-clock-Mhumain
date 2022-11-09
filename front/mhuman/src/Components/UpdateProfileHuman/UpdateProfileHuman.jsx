@@ -32,6 +32,7 @@ function UpdateProfileHuman() {
   };
 
   React.useEffect(() => {
+    console.log('context>>>', humanInformation);
     humanProfileDispatch(getActionInitValue(humanInformation));
     setToken(localStorage.getItem('Token'));
   }, []);

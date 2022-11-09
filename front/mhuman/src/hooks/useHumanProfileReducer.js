@@ -8,6 +8,7 @@ const humanProfileInitialState = {
   hasPets: 'false',
   hasKids: 'false',
   hasGarden: 'false',
+  fileUpload: [],
 };
 
 function humanProfileReducer(oldState, action) {
@@ -17,6 +18,8 @@ function humanProfileReducer(oldState, action) {
         ...oldState,
         [action.payload.name]: action.payload.value,
       };
+    case 'INIT_VALUE':
+      return action.payload;
     case 'RESET': {
       return humanProfileInitialState;
     }
