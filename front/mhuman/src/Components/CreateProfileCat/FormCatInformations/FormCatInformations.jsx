@@ -14,7 +14,7 @@ import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
 function FormCatInformations({
   handleReturnClick,
 }) {
-  const { addCatInformation } = useContext(AddCatProfileContext);
+  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [next, setNext] = useState('');
   const [listOption, setListOption] = useState([]);
