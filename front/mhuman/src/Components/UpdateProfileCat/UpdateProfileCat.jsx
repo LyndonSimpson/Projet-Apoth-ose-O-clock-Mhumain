@@ -1,35 +1,30 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
-  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown,
+  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
-import useCatProfileReducer, { getActionSetValue } from '../../hooks/useCatProfileReducer';
-import MobileNav from '../HomePage/MobileNav/MobileNav';
+import LoginContext from '../../contexts/LoginContext';
+import { addCatProfileRequest } from '../../requests/profilesRequest';
+import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
+import AddCatProfileContext from '../../contexts/AddCatProfileContext';
+import { setToken } from '../../requests/instance';
 
 function UpdateProfileCat() {
+  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [UpdateCatProfil, setUpdateCreateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchData = async (payload) => {
+  const fetchData = async (data) => {
     try {
-      const response = await axios.patch('http://localhost:3001/cat', {
-        image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-        account_id: payload.account_id, // TODO : Gérer l'id de l'utilisateur en cours
-        pseudo: payload.pseudo,
-        name: payload.name,
-        description: payload.description,
-        age: payload.age,
-        has_pets: payload.has_pets,
-        has_kids: payload.has_kids,
-        has_garden: payload.has_garden,
-      });
+      const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response.status === 200) {
+      if (response[0].pseudo === catProfileState.pseudo) {
         setUpdateCreateCatProfil(true);
       }
     } catch (error) {
@@ -44,6 +39,9 @@ function UpdateProfileCat() {
   ];
 
   React.useEffect(() => {
+    // get API selon pseudo cat
+    catProfileDispatch(getActionInitValue(catInformation));
+    setToken(localStorage.getItem('Token'));
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -76,17 +74,41 @@ function UpdateProfileCat() {
     // if (!catProfileState.description.trim()) {
     //   setErrorMessage('Une description est obligatoire');
     // }
-    fetchData({
-      image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      account_id: 1, // TODO : Gérer l'id de l'utilisateur en cours
-      pseudo: catProfileState.pseudo,
-      name: catProfileState.name,
-      description: catProfileState.description,
-      age: catProfileState.age,
-      has_pets: catProfileState.hasPets,
-      has_kids: catProfileState.hasKids,
-      has_garden: catProfileState.hasGarden,
-    });
+    const data = new FormData();
+    data.append('fileUpload', catProfileState.fileUpload[0]);
+    data.append('pseudo', catProfileState.pseudo);
+    data.append('name', catProfileState.name);
+    data.append('description', catProfileState.description);
+    data.append('age', catProfileState.age);
+    data.append('race', catProfileState.race);
+    data.append('sexe', catProfileState.sexe);
+    data.append('color', catProfileState.color);
+    data.append('likes_pets', catProfileState.likesPets);
+    data.append('likes_kids', catProfileState.likesKids);
+    data.append('needs_garden', catProfileState.needsGarden);
+
+    if (!catProfileState.description.trim()) {
+      setErrorMessage('Une description est obligatoire');
+    }
+
+    if (!catProfileState.name.trim()) {
+      setErrorMessage('Le nom est obligatoire');
+      return;
+    }
+    if (!catProfileState.pseudo.trim()) {
+      setErrorMessage('Le pseudo est obligatoire');
+      return;
+    }
+    if (!catProfileState.age.trim()) {
+      setErrorMessage('L\'age est obligatoire');
+      return;
+    }
+    if (!catProfileState.color.trim()) {
+      setErrorMessage('La couleur est obligatoire');
+      return;
+    }
+
+    fetchData(data);
   };
 
   const handleTextFieldChange = (e) => {
@@ -101,10 +123,14 @@ function UpdateProfileCat() {
     catProfileDispatch(getActionSetValue(data.name, data.value));
   };
 
+  const handleDismiss = () => {
+    setErrorMessage('');
+  };
+
   return (
     <>
       <div className="update-profile">
-        {/* {errorMessage
+        {errorMessage
               && (
               <Message
                 negative
@@ -113,7 +139,7 @@ function UpdateProfileCat() {
                 onDismiss={handleDismiss}
                 content={errorMessage}
               />
-              )} */}
+              )}
         <form
           onSubmit={handleSubmit}
           className="form-update-cat"
@@ -283,8 +309,8 @@ function UpdateProfileCat() {
         )}
 
       </div>
-
       {/* <MobileNav className="mobile-nav" /> */}
+
     </>
   );
 }
