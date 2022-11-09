@@ -14,7 +14,7 @@ const catController = {
     try {
       //console.log(`nouveau chat créé : ${req.body.pseudo}`); - for testing
       //console.log(`nom de sa photo : ${req.file.filename}`); - for testing
-      const image_name = req.file.filename; 
+      const image_name = req.file.filename;
 
       const result = await dataMapper.createCat(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
         req.body.description, req.body.race, req.body.age, req.body.sexe,
@@ -79,6 +79,22 @@ const catController = {
     }
   },
   /**
+   * gets randomly 5 cats 
+   * 
+   * @param {*} req 
+   * @param {*} res 5 random cat profiles || errors
+   * @returns {JSON} array of 5 random cat profiles
+   */
+  cats5: async (req, res) => {
+    try {
+      const result = await dataMapper.get5RandomCats();
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  /**
    * updates the info of the cat in cat token
    * 
    * @param {*} req cat token / multipartForm - profile pic and cat info
@@ -112,7 +128,7 @@ const catController = {
   adoptCat: async (req, res) => {
     const id = req.params.id;
     try {
-      const result = await dataMapper.adopt(req.auth.humanId, 
+      const result = await dataMapper.adopt(req.auth.humanId,
         id);
       res.json(result);
     } catch (error) {
