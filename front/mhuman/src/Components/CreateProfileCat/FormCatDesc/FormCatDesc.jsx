@@ -13,7 +13,7 @@ import { setToken } from '../../../requests/instance';
 function FormCatDesc({
   handleReturnClick,
 }) {
-  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
+  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
@@ -22,7 +22,7 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response) {
+      if (response[0].pseudo === catProfileState.pseudo) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
