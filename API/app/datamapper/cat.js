@@ -1,23 +1,6 @@
 const database = require('../../data/database');
 
 const catDataMapper = {
-    /**
-     * 
-     * @param {*} pseudo 
-     * @param {*} image 
-     * @param {*} name 
-     * @param {*} description 
-     * @param {*} race 
-     * @param {*} age 
-     * @param {*} sexe 
-     * @param {*} color 
-     * @param {*} likes_pets 
-     * @param {*} likes_kids 
-     * @param {*} needs_garden 
-     * @param {*} siblings_id 
-     * @param {*} account_id 
-     * @returns 
-     */
     async createCat(pseudo, image, name, description, race, age, sexe, color, likes_pets, likes_kids,
         needs_garden, siblings_id, account_id) { 
 
