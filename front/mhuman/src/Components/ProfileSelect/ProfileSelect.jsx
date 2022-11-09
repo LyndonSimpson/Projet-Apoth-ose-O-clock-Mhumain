@@ -7,6 +7,11 @@ import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
 
+import { setToken } from '../../requests/instance';
+import { catLoginRequest, humanLoginRequest } from '../../requests/loginRequest';
+import LoginContext from '../../contexts/LoginContext';
+
+
 function ProfileSelect() {
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
@@ -27,6 +32,26 @@ function ProfileSelect() {
     }
     getUserProfile();
   }, []);
+
+
+  const handleCatProfileClick = async (pseudo) => {
+    try {
+      const response = await catLoginRequest(pseudo);
+      addLoginInformation({ isLogged: response.logged, profilePseudo: response.pseudo, type: 'cat' });
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleHumanProfileClick = async (pseudo) => {
+    try {
+      const response = await humanLoginRequest(pseudo);
+      addLoginInformation({ isLogged: response.logged, profilePseudo: response.pseudo, type: 'human' });
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
 
   return (
     <div className="ProfileSelect">
@@ -56,11 +81,18 @@ function ProfileSelect() {
 
             {humansProfile.length > 0
               ? humansProfile.map(({ pseudo, image, id }) => (
-                <ProfileCard
-                  key={id}
-                  pseudo={pseudo}
-                  image={image}
-                />
+
+                <Link
+                  to="/homepage"
+                  onClick={() => handleHumanProfileClick(pseudo)}
+                >
+                  <ProfileCard
+                    key={id}
+                    pseudo={pseudo}
+                    image={image}
+                  />
+                </Link>
+
               ))
               : (
                 <Link to="/createprofilehuman">

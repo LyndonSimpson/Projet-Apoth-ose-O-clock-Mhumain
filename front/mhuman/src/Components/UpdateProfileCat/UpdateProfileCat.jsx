@@ -7,30 +7,26 @@ import {
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
-import useCatProfileReducer, { getActionSetValue } from '../../hooks/useCatProfileReducer';
-import MobileNav from '../HomePage/MobileNav/MobileNav';
+
+import { updateCatProfileRequest } from '../../requests/profilesRequest';
+import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
+import AddCatProfileContext from '../../contexts/AddCatProfileContext';
+import { setToken } from '../../requests/instance';
+
 
 function UpdateProfileCat() {
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
-  const [UpdateCatProfil, setUpdateCreateCatProfil] = useState(false);
+  const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
 
   const fetchData = async (payload) => {
     try {
-      const response = await axios.patch('http://localhost:3001/cat', {
-        image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-        account_id: payload.account_id, // TODO : Gérer l'id de l'utilisateur en cours
-        pseudo: payload.pseudo,
-        name: payload.name,
-        description: payload.description,
-        age: payload.age,
-        has_pets: payload.has_pets,
-        has_kids: payload.has_kids,
-        has_garden: payload.has_garden,
-      });
+
+      const response = await updateCatProfileRequest(data);
       console.log(response);
-      if (response.status === 200) {
-        setUpdateCreateCatProfil(true);
+      if (response[0].pseudo === catProfileState.pseudo) {
+        setUpdateUpdateCatProfil(true);
+
       }
     } catch (error) {
       // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur
@@ -73,20 +69,43 @@ function UpdateProfileCat() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (!catProfileState.description.trim()) {
-    //   setErrorMessage('Une description est obligatoire');
-    // }
-    fetchData({
-      image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      account_id: 1, // TODO : Gérer l'id de l'utilisateur en cours
-      pseudo: catProfileState.pseudo,
-      name: catProfileState.name,
-      description: catProfileState.description,
-      age: catProfileState.age,
-      has_pets: catProfileState.hasPets,
-      has_kids: catProfileState.hasKids,
-      has_garden: catProfileState.hasGarden,
-    });
+
+    const data = new FormData();
+    data.append('fileUpload', catProfileState.fileUpload[0]);
+    data.append('pseudo', catProfileState.pseudo);
+    data.append('name', catProfileState.name);
+    data.append('description', catProfileState.description);
+    data.append('age', catProfileState.age);
+    data.append('race', catProfileState.race);
+    data.append('sexe', catProfileState.sexe);
+    data.append('color', catProfileState.color);
+    data.append('likes_pets', catProfileState.likesPets);
+    data.append('likes_kids', catProfileState.likesKids);
+    data.append('needs_garden', catProfileState.needsGarden);
+
+    if (!catProfileState.description.trim()) {
+      setErrorMessage('Une description est obligatoire');
+    }
+
+    if (!catProfileState.name.trim()) {
+      setErrorMessage('Le nom est obligatoire');
+      return;
+    }
+    if (!catProfileState.pseudo.trim()) {
+      setErrorMessage('Le pseudo est obligatoire');
+      return;
+    }
+    if (!catProfileState.age.trim()) {
+      setErrorMessage('L\'age est obligatoire');
+      return;
+    }
+    if (!catProfileState.color.trim()) {
+      setErrorMessage('La couleur est obligatoire');
+      return;
+    }
+
+    fetchData(data);
+
   };
 
   const handleTextFieldChange = (e) => {
@@ -122,6 +141,16 @@ function UpdateProfileCat() {
             <Image.Group size="small">
               <Image rounded src={cat} />
             </Image.Group>
+            <input
+              className="form-desc-cat-input"
+              name="fileUpload"
+              onChange={(e) => {
+                catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              }}
+              type="file"
+              accept="image/*"
+              id="fileUpload"
+            />
           </div>
           <div className="form-update-all-informations">
             <div className="form-update-informations">
@@ -265,19 +294,20 @@ function UpdateProfileCat() {
               </Form.Group>
             </div>
           </div>
+          <div className="form-update-cat-buttons">
+            <Button
+              className="form-update-cat-button"
+              animated="fade"
+              type="submit"
+            >
+              <Button.Content visible>Enregistrer</Button.Content>
+              <Button.Content hidden>
+                <Icon name="check" />
+              </Button.Content>
+            </Button>
+          </div>
         </form>
-        <div className="form-update-cat-buttons">
-          <Button
-            className="form-update-cat-button"
-            animated="fade"
-            type="submit"
-          >
-            <Button.Content visible>Enregistrer</Button.Content>
-            <Button.Content hidden>
-              <Icon name="check" />
-            </Button.Content>
-          </Button>
-        </div>
+
         { UpdateCatProfil && (
         <Navigate to="/homepage" />
         )}
