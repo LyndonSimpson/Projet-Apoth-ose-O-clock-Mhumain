@@ -12,9 +12,10 @@ const URL = 'https://catfact.ninja/fact';
 
 function HomePage() {
   const [catFact, setCatFact] = useState('');
+  const [favHuman, setFavHuman] = useState([]);
   const { loginInformation } = useContext(LoginContext);
 
-  useEffect(() => {
+  useEffect(() => { // J'apelle mes API pour avoir mes données
     console.log('loginInfo >>>', loginInformation);
     async function getFavorites() {
       let response;
@@ -24,6 +25,7 @@ function HomePage() {
         response = await humanFavoritesRequest();
       }
       console.log('Response >>>', response);
+      setFavHuman(response);
     }
     async function getCatFact() {
       const response = await axios.get(URL);
@@ -38,9 +40,16 @@ function HomePage() {
     <div className="homepage">
       <Header />
       <section className="homeContent">
-        <h1 className="homeTitle"> Hello *username* !</h1>
+        <h1 className="homeTitle">
+          {' '}
+          Hello
+          {' '}
+          {loginInformation.profilePseudo}
+          {' '}
+          !
+        </h1>
         <section className="leftContent">
-          <h3 className="homecontentSubtitle">Des chats ! / Des humains !</h3>
+          <h3 className="homecontentSubtitle">{loginInformation.type === 'cat' ? 'Des humains !' : 'Des chats'}</h3>
           <Miniprofile />
           <Miniprofile />
           <Miniprofile />
@@ -48,11 +57,15 @@ function HomePage() {
           <Miniprofile />
         </section>
         <section className="rightContent">
-          <div className="randomProfil">
+          <div className="favProfil">
             <h3 className="homecontentSubtitle">Mes favoris</h3>
-            <Miniprofile />
-            <Miniprofile />
-            <Miniprofile />
+            {favHuman.length === 0
+              && <p>Ajouter vos premiers favoris !</p>}
+            {favHuman.map((fav) => (
+              <Miniprofile
+                favInfo={fav}
+              />
+            ))}
           </div>
           <div className="factApi">
             <h2 className="factApi--title"> Le Cat Fact :</h2>
