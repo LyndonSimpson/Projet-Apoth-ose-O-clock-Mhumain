@@ -4,7 +4,7 @@ import './miniprofile.scss';
 import { Icon } from 'semantic-ui-react';
 
 function Miniprofile({
-  pseudo, image, id, handleClick,
+  pseudo, image, id, handleClick, email,
 }) {
   return (
     <div className="miniprofile">
@@ -14,12 +14,17 @@ function Miniprofile({
         </div>
         <p className="profileName">{pseudo}</p>
       </div>
-      <Icon
-        className="heartIcon"
-        name="heart outline"
-        size="big"
-        onClick={() => handleClick(id)}
-      />
+      <div className="bloc-icons">
+        <a href={`mailto:${email}`}>
+          <Icon className="mail" name="mail outline" size="big" />
+        </a>
+        <Icon
+          className="heartIcon"
+          name="heart outline"
+          size="big"
+          onClick={() => handleClick(id)}
+        />
+      </div>
     </div>
   );
 }
@@ -28,6 +33,7 @@ Miniprofile.propTypes = {
   image: Proptypes.string.isRequired,
   id: Proptypes.number.isRequired,
   handleClick: Proptypes.func.isRequired,
+  email: Proptypes.string.isRequired,
 };
 
 export default React.memo(Miniprofile);

@@ -42,6 +42,15 @@ function LogIn({
     fetchData(emailValue, passwordValue);
   };
 
+  const handleUserClick = async (email, password) => {
+    try {
+      const response = await loginRequest(email, password);
+      localStorage.setItem('userEmail', response.email);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
   const handleDismiss = () => {
     setErrorMessage('');
   };
@@ -84,7 +93,7 @@ function LogIn({
                 onChange={(e) => { SetPasswordValue(e.target.value); }}
               />
             </Form.Field>
-            <Button size="big" type="submit"> Se connecter </Button>
+            <Button size="big" type="submit" onClick={handleUserClick}> Se connecter </Button>
           </Form>
           <div className="return-button">
             <Button

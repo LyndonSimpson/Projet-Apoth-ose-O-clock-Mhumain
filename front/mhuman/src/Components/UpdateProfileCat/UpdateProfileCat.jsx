@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
@@ -8,13 +8,12 @@ import {
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
 import { updateCatProfileRequest } from '../../requests/profilesRequest';
-import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
-import AddCatProfileContext from '../../contexts/AddCatProfileContext';
+import useCatProfileReducer, { getActionSetValue } from '../../hooks/useCatProfileReducer';
 import { setToken } from '../../requests/instance';
-import { getOneCatRequest } from '../../requests/getCatRequest';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function UpdateProfileCat() {
-  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
@@ -38,16 +37,8 @@ function UpdateProfileCat() {
     { key: 'femelle', text: 'Femelle', value: 'femelle' },
   ];
 
-  async function getInitialCatInformations() {
-    const [initialCatInformations] = await Promise.all([
-      getOneCatRequest(),
-    ]);
-    catProfileDispatch(getActionInitValue(initialCatInformations));
-  }
-
   React.useEffect(() => {
     // get API selon pseudo cat
-    getInitialCatInformations();
     setToken(localStorage.getItem('Token'));
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
@@ -132,8 +123,9 @@ function UpdateProfileCat() {
   };
 
   return (
-    <>
-      <div className="update-profile">
+    <div className="update-page">
+      <Header />
+      <div className="update-profile-cat">
         {errorMessage
               && (
               <Message
@@ -322,11 +314,11 @@ function UpdateProfileCat() {
         { UpdateCatProfil && (
         <Navigate to="/homepage" />
         )}
-
       </div>
       {/* <MobileNav className="mobile-nav" /> */}
 
-    </>
+      <Footer />
+    </div>
   );
 }
 

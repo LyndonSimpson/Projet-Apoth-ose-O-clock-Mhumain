@@ -11,12 +11,15 @@ import { updateHumanProfileRequest } from '../../requests/profilesRequest';
 import useHumanProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useHumanProfileReducer';
 import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
 import { setToken } from '../../requests/instance';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function UpdateProfileHuman() {
   const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const pseudo = localStorage.getItem('profilePseudo');
 
   const fetchData = async (data) => {
     try {
@@ -80,8 +83,10 @@ function UpdateProfileHuman() {
   };
 
   return (
-    <div className="update-profile">
-      {errorMessage
+    <div className="update-page">
+      <Header className="update-header" />
+      <section className="update-profile">
+        {errorMessage
               && (
               <Message
                 negative
@@ -91,153 +96,155 @@ function UpdateProfileHuman() {
                 content={errorMessage}
               />
               )}
-      <form
-        onSubmit={handleSubmit}
-        className="form-update-human"
-      >
-        <div className="form-update-image">
-          <Image.Group size="small">
-            <Image src={cat} />
-          </Image.Group>
-          <input
-            className="form-desc-cat-input"
-            name="fileUpload"
-            onChange={(e) => {
-              humanProfileDispatch(getActionSetValue(e.target.name, e.target.files));
-            }}
-            type="file"
-            accept="image/*"
-            id="fileUpload"
-          />
-        </div>
-        <div className="form-update-all-informations">
-          <div className="form-update-informations">
-            <div className="form-update-input">
-              <Form.Group className="form-informations">
-                <Input
-                  className="form-informations-input"
-                  id="form-input-control-first-name"
-                  placeholder="Name"
-                  name="name"
-                  value={humanProfileState.name}
+        <form
+          onSubmit={handleSubmit}
+          className="form-update-human"
+        >
+          <section className="form-update-image">
+            <Image.Group size="small">
+              <Image src={cat} />
+            </Image.Group>
+            <input
+              className="form-desc-cat-input"
+              name="fileUpload"
+              onChange={(e) => {
+                humanProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              }}
+              type="file"
+              accept="image/*"
+              id="fileUpload"
+            />
+          </section>
+          <section className="form-update-all-informations">
+            <section className="form-update-informations">
+              <section className="form-update-input">
+                <Form.Group className="form-informations">
+                  <Input
+                    className="form-informations-input"
+                    id="form-input-control-first-name"
+                    placeholder="Name"
+                    name="name"
+                    value={humanProfileState.name}
+                    onChange={handleTextFieldChange}
+                  />
+                  <Input
+                    className="form-informations-input"
+                    id="form-input-control-last-name"
+                    placeholder="Pseudo"
+                    name="pseudo"
+                    value={humanProfileState.pseudo}
+                    onChange={handleTextFieldChange}
+                  />
+                  <Input
+                    className="form-informations-input"
+                    label={{ basic: true, content: 'ans' }}
+                    labelPosition="right"
+                    placeholder="Entrez votre âge"
+                    type="number"
+                    name="age"
+                    value={humanProfileState.age}
+                    onChange={handleTextFieldChange}
+                  />
+                </Form.Group>
+              </section>
+
+              <section className="form-update-area">
+                <TextArea
+                  className="form-update-human-area"
+                  rows={7}
+                  name="description"
+                  placeholder="Dites-nous en plus sur vous..."
+                  value={humanProfileState.description}
                   onChange={handleTextFieldChange}
                 />
-                <Input
-                  className="form-informations-input"
-                  id="form-input-control-last-name"
-                  placeholder="Pseudo"
-                  name="pseudo"
-                  value={humanProfileState.pseudo}
-                  onChange={handleTextFieldChange}
-                />
-                <Input
-                  className="form-informations-input"
-                  label={{ basic: true, content: 'ans' }}
-                  labelPosition="right"
-                  placeholder="Entrez votre âge"
-                  type="number"
-                  name="age"
-                  value={humanProfileState.age}
-                  onChange={handleTextFieldChange}
-                />
+              </section>
+            </section>
+
+            <section className="form-update-radios">
+              <Form.Group grouped>
+                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
+                <Form.Field>
+                  <Radio
+                    label="Oui"
+                    name="hasPets"
+                    value="true"
+                    checked={humanProfileState.hasPets === 'true'}
+                    onChange={handleRadioFieldChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Non"
+                    name="hasPets"
+                    value="false"
+                    checked={humanProfileState.hasPets === 'false'}
+                    onChange={handleRadioFieldChange}
+                  />
+                </Form.Field>
               </Form.Group>
-            </div>
+              <Form.Group grouped>
+                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
+                <Form.Field>
+                  <Radio
+                    label="Oui"
+                    name="hasKids"
+                    value="true"
+                    checked={humanProfileState.hasKids === 'true'}
+                    onChange={handleRadioFieldChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Non"
+                    name="hasKids"
+                    value="false"
+                    checked={humanProfileState.hasKids === 'false'}
+                    onChange={handleRadioFieldChange}
+                  />
+                </Form.Field>
+              </Form.Group>
+              <Form.Group grouped>
+                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
+                <Form.Field>
+                  <Radio
+                    label="Oui"
+                    name="hasGarden"
+                    value="true"
+                    checked={humanProfileState.hasGarden === 'true'}
+                    onChange={handleRadioFieldChange}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <Radio
+                    label="Non"
+                    name="hasGarden"
+                    value="false"
+                    checked={humanProfileState.hasGarden === 'false'}
+                    onChange={handleRadioFieldChange}
+                  />
+                </Form.Field>
+              </Form.Group>
+            </section>
+          </section>
+          <section className="form-update-human-buttons">
+            <Button
+              className="form-update-human-button"
+              animated="fade"
+              type="submit"
+            >
+              <Button.Content visible>Enregistrer</Button.Content>
+              <Button.Content hidden>
+                <Icon name="check" />
+              </Button.Content>
+            </Button>
+          </section>
+        </form>
 
-            <div className="form-update-area">
-              <TextArea
-                className="form-update-human-area"
-                rows={7}
-                name="description"
-                placeholder="Dites-nous en plus sur vous..."
-                value={humanProfileState.description}
-                onChange={handleTextFieldChange}
-              />
-            </div>
-          </div>
-
-          <div className="form-update-radios">
-            <Form.Group grouped>
-              <label htmlFor="hasPets">Avez-vous des animaux ?</label>
-              <Form.Field>
-                <Radio
-                  label="Oui"
-                  name="hasPets"
-                  value="true"
-                  checked={humanProfileState.hasPets === 'true'}
-                  onChange={handleRadioFieldChange}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Non"
-                  name="hasPets"
-                  value="false"
-                  checked={humanProfileState.hasPets === 'false'}
-                  onChange={handleRadioFieldChange}
-                />
-              </Form.Field>
-            </Form.Group>
-            <Form.Group grouped>
-              <label htmlFor="hasKids">Avez-vous des enfants ?</label>
-              <Form.Field>
-                <Radio
-                  label="Oui"
-                  name="hasKids"
-                  value="true"
-                  checked={humanProfileState.hasKids === 'true'}
-                  onChange={handleRadioFieldChange}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Non"
-                  name="hasKids"
-                  value="false"
-                  checked={humanProfileState.hasKids === 'false'}
-                  onChange={handleRadioFieldChange}
-                />
-              </Form.Field>
-            </Form.Group>
-            <Form.Group grouped>
-              <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
-              <Form.Field>
-                <Radio
-                  label="Oui"
-                  name="hasGarden"
-                  value="true"
-                  checked={humanProfileState.hasGarden === 'true'}
-                  onChange={handleRadioFieldChange}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="Non"
-                  name="hasGarden"
-                  value="false"
-                  checked={humanProfileState.hasGarden === 'false'}
-                  onChange={handleRadioFieldChange}
-                />
-              </Form.Field>
-            </Form.Group>
-          </div>
-        </div>
-        <div className="form-update-human-buttons">
-          <Button
-            className="form-update-human-button"
-            animated="fade"
-            type="submit"
-          >
-            <Button.Content visible>Enregistrer</Button.Content>
-            <Button.Content hidden>
-              <Icon name="check" />
-            </Button.Content>
-          </Button>
-        </div>
-      </form>
-
-      { UpdateHumanProfil && (
+        { UpdateHumanProfil && (
         <Navigate to="/homepage" />
-      )}
+        )}
+      </section>
+      <Footer />
     </div>
   );
 }

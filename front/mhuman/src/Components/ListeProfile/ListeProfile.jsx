@@ -8,7 +8,9 @@ import ConsultProfile from '../ConsultProfile/ConsultProfile';
 import { getAllCatRequest } from '../../requests/getCatRequest';
 import { getAllHumanRequest } from '../../requests/getHumanRequest';
 import { setToken } from '../../requests/instance';
-import { catFavoritesRequest, humanFavoritesRequest } from '../../requests/favoritesRequest';
+import {
+  catFavoritesRequest, humanFavoritesRequest, addCatFavoritesRequest, addHumanFavoritesRequest,
+} from '../../requests/favoritesRequest';
 
 import './listeprofile.scss';
 
@@ -20,6 +22,7 @@ function ListeProfile({ fav }) {
   const [humansProfile, setHumansProfile] = useState([]);
   const [modaleProfile, setModaleProfile] = useState({});
   const type = localStorage.getItem('type');
+  const email = localStorage.getItem('userEmail');
 
   const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color) => {
     setModaleProfile({
@@ -50,6 +53,18 @@ function ListeProfile({ fav }) {
       console.log(error);
     }
   }
+
+  const handleHumanAddCatToFavorite = async (likedId) => {
+    console.log(likedId);
+    const response = await addCatFavoritesRequest(likedId);
+    console.log(response);
+  };
+
+  const handleCatAddHumanToFavorite = async (likedId) => {
+    console.log(likedId);
+    const response = await addHumanFavoritesRequest(likedId);
+    console.log(response);
+  };
 
   async function getListProfiles() {
     const [listHumanFetch, listCatFetch] = await Promise.all([
@@ -86,6 +101,9 @@ function ListeProfile({ fav }) {
                     name={human.name}
                     age={human.age}
                     image={human.image}
+                    id={human.id}
+                    email={email}
+                    addFavorite={handleCatAddHumanToFavorite}
                   />
                 ))}
                 {openProfile && (
@@ -113,6 +131,9 @@ function ListeProfile({ fav }) {
                       name={cat.name}
                       age={cat.age}
                       image={cat.image}
+                      id={cat.id}
+                      email={email}
+                      addFavorite={handleHumanAddCatToFavorite}
                     />
                   ))}
                   {openProfile && (
