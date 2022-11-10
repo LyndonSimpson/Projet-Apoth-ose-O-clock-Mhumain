@@ -15,13 +15,17 @@ const dataHumanProfile = {
 /** **** CONTEXT ***** */
 const AddHumanProfileContext = React.createContext({
   addHumanInformation: () => {},
+
   humanInformation: [],
+
 });
 export default AddHumanProfileContext;
 
 /** **** PROVIDER ***** */
 export function AddHumanProfileContextProvider({ children }) {
+
   const [humanInformation, setHumanInformation] = useState(dataHumanProfile);
+
 
   const addHumanInformation = (newHumanValue) => {
     setHumanInformation((oldState) => ({
@@ -31,9 +35,11 @@ export function AddHumanProfileContextProvider({ children }) {
   };
 
   const memoizedValue = useMemo(() => ({
+
     humanInformation,
     addHumanInformation,
   }), [humanInformation]);
+
 
   return (
     <AddHumanProfileContext.Provider value={memoizedValue}>
