@@ -60,7 +60,6 @@ const humanLoginController = {
             const sessionUser = searchedHuman[0];
             //JWT -------------------------------------
             if (sessionUser) {
-                console.log(sessionUser);
                 const jwtContent = {
                     userId: accountId,
                     humanId: sessionUser.id
@@ -69,7 +68,7 @@ const humanLoginController = {
                     algorithm: 'HS256',
                     expiresIn: '3h'
                 };
-                console.log('<< 200', sessionUser.name);
+                console.log('<< 200 hooman logged in');
                 res.json({
                     logged: true,
                     pseudo: sessionUser.name,

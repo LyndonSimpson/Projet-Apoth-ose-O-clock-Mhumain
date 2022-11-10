@@ -20,10 +20,8 @@ const router = Router();
     */
     router.get("/catfavorites", authorizationMiddleware, catFavoritesController.allFavorites);
 
-
     // no route for getOnFavorite -- getHumanById and getCatById already do this in their respective routers.
 
-    
     /**
     * DELETE /favorite
     * @summary delete favorite

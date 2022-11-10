@@ -52,7 +52,6 @@ const catLoginController = {
             const sessionUser = searchedCat[0];
             //JWT -------------------------------------
             if (sessionUser) {
-                console.log(sessionUser);
                 const jwtContent = {
                     userId: accountId,
                     catId: sessionUser.id
@@ -61,7 +60,7 @@ const catLoginController = {
                     algorithm: 'HS256',
                     expiresIn: '3h'
                 };
-                console.log('<< 200', sessionUser.name);
+                console.log('<< 200 cat logged in');
                 res.json({
                     logged: true,
                     pseudo: sessionUser.name,
@@ -85,8 +84,7 @@ const catLoginController = {
      */
     disconnect(req, res) {
         req.session.cat = false;
-        res.send('cat succesfully disconnected')
-        // TODO ajouter ici le code qui va gérer l'action une fois que le user est déconnecté 
+        res.send('cat succesfully disconnected');
     }
 };
 module.exports = catLoginController;
