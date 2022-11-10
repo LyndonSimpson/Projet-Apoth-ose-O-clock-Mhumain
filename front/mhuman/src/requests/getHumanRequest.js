@@ -11,6 +11,6 @@ export async function getRandomHumanRequest() { // TODO : add route for random
 }
 
 export async function getOneHumanRequest() {
-  const response = await apiInstance.get('/human/:id');
+  const response = await apiInstance.get('/humanProfile');
   return response.data;
 }

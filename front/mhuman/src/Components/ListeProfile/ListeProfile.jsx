@@ -21,28 +21,38 @@ import './listeprofile.scss';
 // Props fav pour afficher les favoris au lieu des randoms profils
 function ListeProfile({ fav }) {
   const [openProfile, setOpenProfile] = useState(false);
-  const [catsProfile, setCatsProfile] = useState('');
-  const [humansProfile, setHumansProfile] = useState('');
+  const [catsProfile, setCatsProfile] = useState([]);
+  const [humansProfile, setHumansProfile] = useState([]);
+  const [modaleProfile, setModaleProfile] = useState({});
+  const type = localStorage.getItem('type');
 
-  const toggleProfile = () => {
+  const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color) => {
+    setModaleProfile({
+      hasGarden,
+      hasPet,
+      hasKid,
+      name,
+      age,
+      toggleProfile,
+      image,
+      race,
+      sexe,
+      color,
+    });
     setOpenProfile(!openProfile);
   };
 
-  useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
-    setToken(localStorage.getItem('Token'));
-    async function getListProfiles() {
-      try {
-        const [listCats, listHumans] = await Promise.all([
-          getAllCatRequest(),
-          getAllHumanRequest(),
+  async function getListProfiles() {
+    const [listHumanFetch, listCatFetch] = await Promise.all([
+      getAllCatRequest(),
+      getAllHumanRequest(),
+    ]);
+    setCatsProfile(listHumanFetch);
+    setHumansProfile(listCatFetch);
+  }
 
-        ]);
-        setCatsProfile(listCats);
-        setHumansProfile(listHumans);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  useEffect(() => {
+    setToken(localStorage.getItem('Token'));
     getListProfiles();
   }, []);
 
@@ -50,38 +60,70 @@ function ListeProfile({ fav }) {
     <div className="listeProfile">
       <Header />
       <section className="liste-content">
-        <h1 className="listeProfile-title">{fav ? 'Vos favoris:' : 'Oh des profils de chats !'}</h1>
+        <h1 className="listeProfile-title">
+          {fav ? 'Vos favoris' : '' }
+        </h1>
         <div className="list-card-container">
-          { localStorage.getItem('type') === 'cat' && catsProfile.map(({
-            age, pseudo, likesPets, likesKids, needsGarden, fileUpload,
-          }) => (
-            <ListeCard
-              toggleProfile={toggleProfile}
-              hasGarden={needsGarden}
-              hasKid={likesKids}
-              hasPet={likesPets}
-              name={pseudo}
-              age={age}
-              fileUpload={fileUpload}
-            />
-          ))}
-
-          { localStorage.getItem('type') === 'human' && humansProfile.map(({
-            age, pseudo, hasPets, hasKids, hasGarden, fileUpload,
-          }) => (
-            <ListeCard
-              toggleProfile={toggleProfile}
-              hasGarden={hasGarden}
-              hasKid={hasKids}
-              hasPet={hasPets}
-              name={pseudo}
-              age={age}
-              fileUpload={fileUpload}
-            />
-          ))}
+          {type === 'cat' ? (
+            <>
+              {humansProfile.map((human) => (
+                <ListeCard
+                  toggleProfile={toggleProfile}
+                  hasGarden={human.has_garden}
+                  hasKid={human.has_kids}
+                  hasPet={human.has_pets}
+                  name={human.name}
+                  age={human.age}
+                  image={human.image}
+                />
+              ))}
+              {openProfile && (
+              <ConsultProfile
+                toggleProfile={toggleProfile}
+                hasGarden={modaleProfile.has_garden}
+                hasKid={modaleProfile.has_kids}
+                hasPet={modaleProfile.has_pets}
+                name={modaleProfile.name}
+                age={modaleProfile.age}
+                description={modaleProfile.description}
+                image={modaleProfile.image}
+              />
+              )}
+            </>
+          )
+            : (
+              <>
+                {catsProfile.map((cat) => (
+                  <ListeCard
+                    toggleProfile={toggleProfile}
+                    hasGarden={cat.needs_garden}
+                    hasKid={cat.likes_kids}
+                    hasPet={cat.likes_pets}
+                    name={cat.name}
+                    age={cat.age}
+                    image={cat.image}
+                  />
+                ))}
+                {openProfile && (
+                <ConsultProfile
+                  isCat
+                  toggleProfile={toggleProfile}
+                  hasGarden={modaleProfile.needs_garden}
+                  hasKid={modaleProfile.likes_kids}
+                  hasPet={modaleProfile.likes_pets}
+                  name={modaleProfile.name}
+                  age={modaleProfile.age}
+                  description={modaleProfile.description}
+                  image={modaleProfile.image}
+                  race={modaleProfile.race}
+                  color={modaleProfile.color}
+                  sexe={modaleProfile.sexe}
+                />
+                )}
+              </>
+            )}
         </div>
       </section>
-      {openProfile && <ConsultProfile isCat toggleProfile={toggleProfile} />}
       <Footer />
       <MobileNav />
     </div>
