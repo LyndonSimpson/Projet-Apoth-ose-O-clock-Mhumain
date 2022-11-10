@@ -1,57 +1,72 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
-import axios from 'axios';
+
+import React, { useState, useContext } from 'react';
 import './updateprofilehumanstyles.scss';
 import {
-  Button, Icon, TextArea, Input, Form, Radio, Image,
+  Button, Icon, TextArea, Input, Form, Radio, Image, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
-import useHumanProfileReducer, { getActionSetValue } from '../../hooks/useHumanProfileReducer';
+import { updateHumanProfileRequest } from '../../requests/profilesRequest';
+
+import useHumanProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useHumanProfileReducer';
+import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
+import { setToken } from '../../requests/instance';
 
 function UpdateProfileHuman() {
+  const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchData = async (payload) => {
+  const fetchData = async (data) => {
     try {
-      const response = await axios.patch('http://localhost:3001/human', {
-        image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-        account_id: payload.account_id, // TODO : Gérer l'id de l'utilisateur en cours
-        pseudo: payload.pseudo,
-        name: payload.name,
-        description: payload.description,
-        age: payload.age,
-        has_pets: payload.has_pets,
-        has_kids: payload.has_kids,
-        has_garden: payload.has_garden,
-      });
+      const response = await updateHumanProfileRequest(data);
       console.log(response);
-      if (response.status === 200) {
-        setUpdateCreateHumanProfil(true);
-      }
+      setUpdateCreateHumanProfil(true);
     } catch (error) {
       // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur
       console.log(error.message);
     }
   };
 
+
+  React.useEffect(() => {
+    console.log('context>>>', humanInformation);
+    humanProfileDispatch(getActionInitValue(humanInformation));
+    setToken(localStorage.getItem('Token'));
+  }, []);
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (!humanProfileState.description.trim()) {
-    //   setErrorMessage('Une description est obligatoire');
-    // }
-    fetchData({
-      image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      account_id: 1, // TODO : Gérer l'id de l'utilisateur en cours
-      pseudo: humanProfileState.pseudo,
-      name: humanProfileState.name,
-      description: humanProfileState.description,
-      age: humanProfileState.age,
-      has_pets: humanProfileState.hasPets,
-      has_kids: humanProfileState.hasKids,
-      has_garden: humanProfileState.hasGarden,
-    });
+    const data = new FormData();
+    data.append('fileUpload', humanProfileState.fileUpload[0]);
+    data.append('pseudo', humanProfileState.pseudo);
+    data.append('name', humanProfileState.name);
+    data.append('description', humanProfileState.description);
+    data.append('age', humanProfileState.age);
+    data.append('has_pets', humanProfileState.hasPets);
+    data.append('has_kids', humanProfileState.hasKids);
+    data.append('has_garden', humanProfileState.hasGarden);
+
+    if (!humanProfileState.description.trim()) {
+      setErrorMessage('Une description est obligatoire');
+    }
+
+    if (!humanProfileState.name.trim()) {
+      setErrorMessage('Le nom est obligatoire');
+      return;
+    }
+    if (!humanProfileState.pseudo.trim()) {
+      setErrorMessage('Le pseudo est obligatoire');
+      return;
+    }
+    if (!humanProfileState.age.trim()) {
+      setErrorMessage('L\'age est obligatoire');
+      return;
+    }
+
+    fetchData(data);
   };
 
   const handleTextFieldChange = (e) => {
@@ -62,9 +77,15 @@ function UpdateProfileHuman() {
     humanProfileDispatch(getActionSetValue(name, value));
   };
 
+
+  const handleDismiss = () => {
+    setErrorMessage('');
+  };
+
   return (
     <div className="update-profile">
-      {/* {errorMessage
+      {errorMessage
+
               && (
               <Message
                 negative
@@ -73,7 +94,8 @@ function UpdateProfileHuman() {
                 onDismiss={handleDismiss}
                 content={errorMessage}
               />
-              )} */}
+              )}
+
       <form
         onSubmit={handleSubmit}
         className="form-update-human"
@@ -82,6 +104,18 @@ function UpdateProfileHuman() {
           <Image.Group size="small">
             <Image src={cat} />
           </Image.Group>
+
+          <input
+            className="form-desc-cat-input"
+            name="fileUpload"
+            onChange={(e) => {
+              humanProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+            }}
+            type="file"
+            accept="image/*"
+            id="fileUpload"
+          />
+
         </div>
         <div className="form-update-all-informations">
           <div className="form-update-informations">
@@ -194,21 +228,23 @@ function UpdateProfileHuman() {
             </Form.Group>
           </div>
         </div>
+        <div className="form-update-human-buttons">
+          <Button
+            className="form-update-human-button"
+            animated="fade"
+            type="submit"
+          >
+            <Button.Content visible>Enregistrer</Button.Content>
+            <Button.Content hidden>
+              <Icon name="check" />
+            </Button.Content>
+          </Button>
+        </div>
       </form>
-      <div className="form-update-human-buttons">
-        <Button
-          className="form-update-human-button"
-          animated="fade"
-          type="submit"
-        >
-          <Button.Content visible>Enregistrer</Button.Content>
-          <Button.Content hidden>
-            <Icon name="check" />
-          </Button.Content>
-        </Button>
-      </div>
+
       { UpdateHumanProfil && (
-      <Navigate to="/homepage" />
+        <Navigate to="/homepage" />
+
       )}
     </div>
   );

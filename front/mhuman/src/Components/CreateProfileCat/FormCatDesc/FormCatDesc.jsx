@@ -8,11 +8,14 @@ import PropTypes from 'prop-types';
 import { addCatProfileRequest } from '../../../requests/profilesRequest';
 import useCatProfileReducer, { getActionInitValue, getActionSetValue } from '../../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
+
 import { setToken } from '../../../requests/instance';
+
 
 function FormCatDesc({
   handleReturnClick,
 }) {
+
   const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,6 +25,7 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
+      
       if (response[0].pseudo === catProfileState.pseudo) {
         setSucceededCreateCatProfil(true);
       }
@@ -111,6 +115,7 @@ function FormCatDesc({
             name="fileUpload"
             onChange={(e) => {
               catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+
             }}
             type="file"
             accept="image/*"

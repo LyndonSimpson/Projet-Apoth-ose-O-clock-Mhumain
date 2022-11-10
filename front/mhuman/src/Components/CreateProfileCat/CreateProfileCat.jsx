@@ -18,8 +18,12 @@ function CreateProfileCat() {
         <div className="profile-API">
           <FormAPI />
         </div>
+        <FormCatCheckbox />
       </div>
-    </AddCatProfileContextProvider>
+      <div className="profile-API">
+        <FormAPI />
+      </div>
+    </div>
   );
 }
 
