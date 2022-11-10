@@ -18,7 +18,7 @@ const router = Router();
     * @summary get all favorites on a profile
     * @description retrieves all the favorites of a profile from the database / an ID (the connected PROFILE_ID, not account) needs to be passed (hidden) to know who the favorites belong to!
     */
-    router.get("/humanfavorites/:id", authorizationMiddleware, humanFavoritesController.allFavorites);
+    router.get("/humanfavorites", authorizationMiddleware, humanFavoritesController.allFavorites);
 
 
     // no route for getOnFavorite -- getHumanById and getCatById already do this in their respective routers.
