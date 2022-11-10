@@ -9,10 +9,14 @@ import { addCatProfileRequest } from '../../../requests/profilesRequest';
 import useCatProfileReducer, { getActionInitValue, getActionSetValue } from '../../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
 
+import { setToken } from '../../../requests/instance';
+
+
 function FormCatDesc({
   handleReturnClick,
 }) {
-  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
+
+  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
@@ -21,7 +25,8 @@ function FormCatDesc({
     try {
       const response = await addCatProfileRequest(data);
       console.log(response);
-      if (response.status === 200) {
+      
+      if (response[0].pseudo === catProfileState.pseudo) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
@@ -32,14 +37,14 @@ function FormCatDesc({
 
   React.useEffect(() => {
     catProfileDispatch(getActionInitValue(catInformation));
+    setToken(localStorage.getItem('Token'));
   }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     const data = new FormData();
-    console.log('fileUpload >>>', catProfileState.fileUpload);
-    data.append('fileUpload', catProfileState.fileUpload);
+    data.append('fileUpload', catProfileState.fileUpload[0]);
     data.append('pseudo', catProfileState.pseudo);
     data.append('name', catProfileState.name);
     data.append('description', catProfileState.description);
@@ -50,7 +55,6 @@ function FormCatDesc({
     data.append('likes_pets', catProfileState.likesPets);
     data.append('likes_kids', catProfileState.likesKids);
     data.append('needs_garden', catProfileState.needsGarden);
-    console.log('data >>>', data);
 
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -110,7 +114,8 @@ function FormCatDesc({
             className="form-desc-cat-input"
             name="fileUpload"
             onChange={(e) => {
-              catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+
             }}
             type="file"
             accept="image/*"
