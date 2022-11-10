@@ -21,28 +21,25 @@ import './listeprofile.scss';
 // Props fav pour afficher les favoris au lieu des randoms profils
 function ListeProfile({ fav }) {
   const [openProfile, setOpenProfile] = useState(false);
-  const [catsProfile, setCatsProfile] = useState('');
-  const [humansProfile, setHumansProfile] = useState('');
+  const [catsProfile, setCatsProfile] = useState([]);
+  const [humansProfile, setHumansProfile] = useState([]);
+  const type = localStorage.getItem('type');
 
   const toggleProfile = () => {
     setOpenProfile(!openProfile);
   };
 
-  useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
-    setToken(localStorage.getItem('Token'));
-    async function getListProfiles() {
-      try {
-        const [listCats, listHumans] = await Promise.all([
-          getAllCatRequest(),
-          getAllHumanRequest(),
+  async function getListProfiles() {
+    const [listHumanFetch, listCatFetch] = await Promise.all([
+      getAllCatRequest(),
+      getAllHumanRequest(),
+    ]);
+    setCatsProfile(listCatFetch);
+    setHumansProfile(listHumanFetch);
+  }
 
-        ]);
-        setCatsProfile(listCats);
-        setHumansProfile(listHumans);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+  useEffect(() => {
+    setToken(localStorage.getItem('Token'));
     getListProfiles();
   }, []);
 
@@ -50,36 +47,37 @@ function ListeProfile({ fav }) {
     <div className="listeProfile">
       <Header />
       <section className="liste-content">
-        <h1 className="listeProfile-title">{fav ? 'Vos favoris:' : 'Oh des profils de chats !'}</h1>
-        <div className="list-card-container">
-          { localStorage.getItem('type') === 'cat' && catsProfile.map(({
-            age, pseudo, likesPets, likesKids, needsGarden, fileUpload,
-          }) => (
-            <ListeCard
-              toggleProfile={toggleProfile}
-              hasGarden={needsGarden}
-              hasKid={likesKids}
-              hasPet={likesPets}
-              name={pseudo}
-              age={age}
-              fileUpload={fileUpload}
-            />
-          ))}
-
-          { localStorage.getItem('type') === 'human' && humansProfile.map(({
-            age, pseudo, hasPets, hasKids, hasGarden, fileUpload,
-          }) => (
-            <ListeCard
-              toggleProfile={toggleProfile}
-              hasGarden={hasGarden}
-              hasKid={hasKids}
-              hasPet={hasPets}
-              name={pseudo}
-              age={age}
-              fileUpload={fileUpload}
-            />
-          ))}
-        </div>
+        <h1 className="listeProfile-title">
+          {fav ? 'Vos favoris' : '' }
+        </h1>
+        {type === 'human' ? (
+          humansProfile.map((human) => (
+            <div className="list-card-container">
+              <ListeCard
+                toggleProfile={toggleProfile}
+                hasGarden={human.needsGarden}
+                hasKid={human.hasKids}
+                hasPet={human.hasPets}
+                name={human.pseudo}
+                age={human.age}
+                fileUpload={human.fileUpload}
+              />
+            </div>
+          )))
+          : (
+            catsProfile.map((cat) => (
+              <div className="list-card-container">
+                <ListeCard
+                  toggleProfile={toggleProfile}
+                  hasGarden={cat.needsGarden}
+                  hasKid={cat.likesKids}
+                  hasPet={cat.likesPets}
+                  name={cat.pseudo}
+                  age={cat.age}
+                  fileUpload={cat.fileUpload}
+                />
+              </div>
+            )))}
       </section>
       {openProfile && <ConsultProfile isCat toggleProfile={toggleProfile} />}
       <Footer />

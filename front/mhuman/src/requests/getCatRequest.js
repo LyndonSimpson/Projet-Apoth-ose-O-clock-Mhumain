@@ -11,6 +11,6 @@ export async function getRandomCatRequest() { // TODO : add route for random
 }
 
 export async function getOneCatRequest() {
-  const response = await apiInstance.get('/cat/:id');
+  const response = await apiInstance.get('/catProfile');
   return response.data;
 }
