@@ -4,24 +4,25 @@ import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
-  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown, Message,
+  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
+
 import { updateCatProfileRequest } from '../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../contexts/AddCatProfileContext';
 import { setToken } from '../../requests/instance';
 
+
 function UpdateProfileCat() {
-  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
 
-  const fetchData = async (data) => {
+  const fetchData = async (payload) => {
     try {
+
       const response = await updateCatProfileRequest(data);
       console.log(response);
       if (response[0].pseudo === catProfileState.pseudo) {
@@ -110,6 +111,7 @@ function UpdateProfileCat() {
     }
 
     fetchData(data);
+
   };
 
   const handleTextFieldChange = (e) => {

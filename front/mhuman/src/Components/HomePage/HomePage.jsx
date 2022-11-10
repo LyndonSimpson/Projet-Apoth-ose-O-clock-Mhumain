@@ -5,15 +5,18 @@ import Footer from '../Footer/Footer';
 import Miniprofile from './Miniprofile/Miniprofile';
 import './homepage.scss';
 import MobileNav from './MobileNav/MobileNav';
+
 import { catFavoritesRequest, humanFavoritesRequest } from '../../requests/favoritesRequest';
 import { getRandomHumanRequest } from '../../requests/getHumanRequest';
 import { getRandomCatRequest } from '../../requests/getCatRequest';
 import { setToken } from '../../requests/instance';
 
+
 const URL = 'https://catfact.ninja/fact';
 
 function HomePage() {
   const [catFact, setCatFact] = useState('');
+
   const [favorites, setFavorites] = useState([]);
   const [randomProfiles, setRandomProfiles] = useState([]);
   const pseudo = localStorage.getItem('profilePseudo');
@@ -39,16 +42,19 @@ function HomePage() {
 
   useEffect(() => { // J'apelle mes API pour avoir mes données
     setToken(localStorage.getItem('Token'));
+
     async function getCatFact() {
       const response = await axios.get(URL);
       setCatFact(response.data);
     }
+
     if (type === 'cat') {
       getCatRandomProfileAndFavorites();
     }
     if (type === 'human') {
       getHumanRandomProfileAndFavorites();
     }
+
     getCatFact();
     // setInterval(getCatFact, 15000);
   }, []);
@@ -57,6 +63,7 @@ function HomePage() {
     <div className="homepage">
       <Header />
       <section className="homeContent">
+
         <h1 className="homeTitle">
           {' '}
           Hello
@@ -89,6 +96,7 @@ function HomePage() {
                 image={fav.image}
               />
             ))}
+
           </div>
           <div className="factApi">
             <h2 className="factApi--title"> Le Cat Fact :</h2>
