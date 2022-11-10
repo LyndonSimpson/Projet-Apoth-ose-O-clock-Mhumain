@@ -34,8 +34,8 @@ function ListeProfile({ fav }) {
       getAllCatRequest(),
       getAllHumanRequest(),
     ]);
-    setCatsProfile(listCatFetch);
-    setHumansProfile(listHumanFetch);
+    setCatsProfile(listHumanFetch);
+    setHumansProfile(listCatFetch);
   }
 
   useEffect(() => {
@@ -50,34 +50,33 @@ function ListeProfile({ fav }) {
         <h1 className="listeProfile-title">
           {fav ? 'Vos favoris' : '' }
         </h1>
-        {type === 'human' ? (
-          humansProfile.map((human) => (
-            <div className="list-card-container">
+        <div className="list-card-container">
+          {type === 'cat' ? (
+            humansProfile.map((human) => (
               <ListeCard
                 toggleProfile={toggleProfile}
-                hasGarden={human.needsGarden}
-                hasKid={human.hasKids}
-                hasPet={human.hasPets}
+                hasGarden={human.has_garden}
+                hasKid={human.has_kids}
+                hasPet={human.has_pets}
                 name={human.pseudo}
                 age={human.age}
-                fileUpload={human.fileUpload}
+                fileUpload={human.image}
               />
-            </div>
-          )))
-          : (
-            catsProfile.map((cat) => (
-              <div className="list-card-container">
+            )))
+            : (
+              catsProfile.map((cat) => (
                 <ListeCard
                   toggleProfile={toggleProfile}
-                  hasGarden={cat.needsGarden}
-                  hasKid={cat.likesKids}
-                  hasPet={cat.likesPets}
+                  hasGarden={cat.needs_garden}
+                  hasKid={cat.likes_kids}
+                  hasPet={cat.likes_pets}
                   name={cat.pseudo}
                   age={cat.age}
-                  fileUpload={cat.fileUpload}
+                  fileUpload={cat.image}
                 />
-              </div>
-            )))}
+              )))}
+
+        </div>
       </section>
       {openProfile && <ConsultProfile isCat toggleProfile={toggleProfile} />}
       <Footer />
