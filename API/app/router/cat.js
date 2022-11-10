@@ -86,7 +86,7 @@ const upload = multer({
     * @description adopts the cat with the id passed in params from database. the cat now is adopted and has an owner.
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/catadopt/:id", authorizationMiddleware, catController.adoptCat);
+    router.patch("/catadopt", authorizationMiddleware, catController.adoptCat);
  
     /**
     * DELETE /cat

@@ -1,7 +1,13 @@
 const database = require('../../data/database');
 
 const catFavoritesDattaMapper = {
-  
+  /**
+   * creates a new favorite relashionship between profile that likes and liked_profile
+   * 
+   * @param {*} cat_id profiles that adds a favorite : from cat id in cat token
+   * @param {*} human_id liked human id : id retrieved in body.liked_profile_id
+   * @returns empty
+   */
   async createFavorite(cat_id, human_id) {
     const query = {
       text: `INSERT INTO cat_has_favorites(cat_id, human_id) 
@@ -11,8 +17,13 @@ const catFavoritesDattaMapper = {
     const result = await database.query(query);
     return result.rows;
   },
+  /**
+   * gets all the favorite human profiles of the cat profile with cat id passed in params
+   * 
+   * @param {*} id cat id retrieved in cat token
+   * @returns all the humans that this cat liked 
+   */
   async getFavorites(id) {
-
     const query ={
         text: `SELECT *
                FROM human hu
@@ -21,12 +32,15 @@ const catFavoritesDattaMapper = {
                )`,
                 values: [id]
                 };
-
     const result = await database.query(query);
     return result.rows;
   },
+  /**
+   * deletes the fav relashionship - to modify
+   * @param {*} id id of the relashionship - to modify
+   * @returns empty - to modify
+   */
   async deleteFavorite(id) {
-
     const query = {
       text: `DELETE FROM cat_has_favorites WHERE id = $1`,
       values: [id]
