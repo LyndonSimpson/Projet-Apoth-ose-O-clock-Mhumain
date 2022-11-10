@@ -18,6 +18,24 @@ const catFavoritesDattaMapper = {
     return result.rows;
   },
   /**
+   * checks in the DB if favorite relationship exists between cat in cat token and human id passed in body
+   * 
+   * @param {*} cat_id retrieved in cat token
+   * @param {*} human_id retrieved in body
+   * @returns the relationship (its id and both profiles ids)
+   */
+  async checkIfFavorite(cat_id, human_id) {
+    const query = {
+      text: `SELECT *
+             FROM cat_has_favorites
+             WHERE cat_id = $1
+             AND human_id = $2`,
+      values: [cat_id, human_id]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
+  /**
    * gets all the favorite human profiles of the cat profile with cat id passed in params
    * 
    * @param {*} id cat id retrieved in cat token

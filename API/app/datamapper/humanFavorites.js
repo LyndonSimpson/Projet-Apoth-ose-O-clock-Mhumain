@@ -16,6 +16,17 @@ const humanFavoritesDattaMapper = {
     const result = await database.query(query);
     return result.rows;
   },
+  async checkIfFavorite(human_id, cat_id) {
+    const query = {
+      text: `SELECT *
+             FROM human_has_favorites
+             WHERE human_id = $1
+             AND cat_id = $2`,
+      values: [human_id, cat_id]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
   async getFavorites(id) {
     const query = {
       text: `SELECT *

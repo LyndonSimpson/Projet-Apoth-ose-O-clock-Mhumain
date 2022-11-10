@@ -19,6 +19,25 @@ const catFavoritesController = {
     }
   },
   /**
+   * takes the cat id in token and human id in body and checks if cat has added that human to its favorites
+   * 
+   * @param {*} req cat id in cat token / body: (possible) liked_profile_id of the human to check
+   * @param {*} res boolean (is the human a favorite of this connected cat?)
+   * @returns {boolean} true or false
+   */
+  isHumanInFavorites: async (req, res) => {
+    const fakeObject = {};
+    try {
+      const result = await dataMapper.checkIfFavorite(req.auth.catId, req.body.liked_profile_id); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+      const getHuman = result[0];
+      const check = Object.keys(getHuman || fakeObject).length === 0;
+      res.json(!check);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  /**
    * gets the favorite human profiles of cat in client cat token
    * 
    * @param {*} req cat token
