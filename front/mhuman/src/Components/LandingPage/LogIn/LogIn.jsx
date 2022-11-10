@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-
 import './LogIn.scss';
 import {
   Button, Form, Icon, Message,
@@ -11,7 +10,6 @@ import { loginRequest } from '../../../requests/loginRequest';
 
 function LogIn({
   handleReturnClick,
-  handleConnectedUser,
 }) {
   const [emailValue, SetEmailValue] = useState('romain@street.fr');
   const [passwordValue, SetPasswordValue] = useState('Wesh_1');
@@ -109,7 +107,6 @@ function LogIn({
 
 LogIn.propTypes = {
   handleReturnClick: PropTypes.func.isRequired,
-  handleConnectedUser: PropTypes.func.isRequired,
 };
 
 export default React.memo(LogIn);

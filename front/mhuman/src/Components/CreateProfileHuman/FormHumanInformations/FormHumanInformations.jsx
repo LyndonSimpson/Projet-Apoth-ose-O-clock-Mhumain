@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './formhumaninformationstyles.scss';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   Button, Icon, Form, Input, Message, Radio,
 } from 'semantic-ui-react';
@@ -8,16 +8,13 @@ import {
 import propTypes from 'prop-types';
 import FormHumanDesc from '../FormHumanDesc/FormHumanDesc';
 import useHumanProfileReducer, { getActionSetValue } from '../../../hooks/useHumanProfileReducer';
-import AddHumanProfileContext from '../../../contexts/AddHumanProfileContext';
 
 function FormHumanInformations({
   handleReturnClick,
 }) {
-  const { HumanInformation, addHumanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [next, setNext] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!humanProfileState.name.trim()) {
@@ -32,9 +29,6 @@ function FormHumanInformations({
       setErrorMessage('L\'age est obligatoire');
       return;
     }
-    console.log(humanProfileState);
-    addHumanInformation(humanProfileState);
-    console.log(HumanInformation);
     setNext('FormHumanDesc');
   };
   const handleDismiss = () => {

@@ -12,23 +12,15 @@ export async function addCatProfileRequest(data) {
   return response.data;
 }
 
-
 export async function updateCatProfileRequest(data) {
   const response = await apiInstance.patch('/catupdate', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return response.data;
 }
+
 export async function humanProfilesRequest() {
   const response = await apiInstance.get('/userhumans');
-
-  return response.data;
-}
-
-export async function addHumanProfileRequest(data) {
-  const response = await apiInstance.post('/human/signup', data, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
   return response.data;
 }
 

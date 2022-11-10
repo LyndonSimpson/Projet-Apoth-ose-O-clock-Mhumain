@@ -1,28 +1,22 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-
 import React, { useState, useContext } from 'react';
-
 import './updateprofilehumanstyles.scss';
 import {
   Button, Icon, TextArea, Input, Form, Radio, Image, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
-
 import { updateHumanProfileRequest } from '../../requests/profilesRequest';
 
 import useHumanProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useHumanProfileReducer';
 import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
 import { setToken } from '../../requests/instance';
 
-
 function UpdateProfileHuman() {
   const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState('');
-
 
   const fetchData = async (data) => {
     try {
@@ -34,7 +28,6 @@ function UpdateProfileHuman() {
       console.log(error.message);
     }
   };
-
 
   React.useEffect(() => {
     console.log('context>>>', humanInformation);
@@ -82,7 +75,6 @@ function UpdateProfileHuman() {
     humanProfileDispatch(getActionSetValue(name, value));
   };
 
-
   const handleDismiss = () => {
     setErrorMessage('');
   };
@@ -90,7 +82,6 @@ function UpdateProfileHuman() {
   return (
     <div className="update-profile">
       {errorMessage
-
               && (
               <Message
                 negative
@@ -100,7 +91,6 @@ function UpdateProfileHuman() {
                 content={errorMessage}
               />
               )}
-
       <form
         onSubmit={handleSubmit}
         className="form-update-human"
@@ -109,7 +99,6 @@ function UpdateProfileHuman() {
           <Image.Group size="small">
             <Image src={cat} />
           </Image.Group>
-
           <input
             className="form-desc-cat-input"
             name="fileUpload"
@@ -120,7 +109,6 @@ function UpdateProfileHuman() {
             accept="image/*"
             id="fileUpload"
           />
-
         </div>
         <div className="form-update-all-informations">
           <div className="form-update-informations">
@@ -249,7 +237,6 @@ function UpdateProfileHuman() {
 
       { UpdateHumanProfil && (
         <Navigate to="/homepage" />
-
       )}
     </div>
   );

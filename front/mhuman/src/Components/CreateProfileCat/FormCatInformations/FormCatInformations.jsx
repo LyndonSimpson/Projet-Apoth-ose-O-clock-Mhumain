@@ -15,7 +15,6 @@ function FormCatInformations({
   handleReturnClick,
 }) {
   const { addCatInformation } = useContext(AddCatProfileContext);
-
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [next, setNext] = useState('');
   const [listOption, setListOption] = useState([]);
@@ -39,9 +38,7 @@ function FormCatInformations({
       setErrorMessage('La couleur est obligatoire');
       return;
     }
-
     addCatInformation(catProfileState);
-
     setNext('FormCatDesc');
   };
   const handleDismiss = () => {
