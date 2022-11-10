@@ -14,12 +14,22 @@ import {
   IconMale,
   IconFemale,
 } from '../ListeProfile/Icons/Icons';
-import cat2 from '../ProfileSelect/fakeData/pexels-cat-2.jpg';
 
 import './consultprofile.scss';
 
 function ConsultProfile({
-  toggleProfile, isCat, hasGarden, hasPet, hasKid,
+  toggleProfile,
+  isCat,
+  hasGarden,
+  hasPet,
+  hasKid,
+  name,
+  age,
+  description,
+  image,
+  race,
+  color,
+  sexe,
 }) {
   // FAKE DATA TODO:convertir le string en un true/false
   const isFemale = true;
@@ -40,14 +50,19 @@ function ConsultProfile({
           <div className="displayClosingButton">
             <Icon className="displayClosingButton-item" size="big" color="black" name="close" onClick={toggleProfile} />
           </div>
-          <h1 className="profileTitle"> Profil de **PSEUDO**</h1>
+          <h1 className="profileTitle">
+            {' '}
+            Profil de
+            {' '}
+            {name}
+          </h1>
           <header className="consultHeader">
             <div className="consultHeader-icons">
               {hasGarden ? <IconGarden /> : <IconNoGarden />}
               {hasPet ? <IconPet /> : <IconNoPet />}
             </div>
             <div className="consultHeader-imgWrapper">
-              <img className="consultHeader-imgWrapper-profilePic" src={cat2} alt="profile" />
+              <img className="consultHeader-imgWrapper-profilePic" src={image} alt="profile" />
             </div>
             <div className="consultHeader-icons">
               {hasKid ? <IconKid /> : <IconNoKid />}
@@ -56,19 +71,19 @@ function ConsultProfile({
           </header>
           <section className="infoContainer">
             <div className="infoContainer-oneLine">
-              <p> Name </p>
-              <p> Age </p>
+              <p>{name}</p>
+              <p>{age}</p>
             </div>
             {isCat
               ? (
                 <div className="infoContainer-oneLine">
-                  <p> Race du chat </p>
-                  <p> Couleur du poil </p>
+                  <p>{race}</p>
+                  <p>{color}</p>
                 </div>
               )
               : ''}
             <div className="infoContainer-description">
-              <p>Alors là! Permettez-moi de vous dire! Le coup du mystérieux chevalier gaulois solitaire à la rescousse de l’opprimé. Ca fait vraiment bidon comme légende!</p>
+              <p>{description}</p>
             </div>
           </section>
         </div>
@@ -85,9 +100,13 @@ ConsultProfile.propTypes = {
   hasGarden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
-  // sexe: PropTypes.string.isRequired,
-  // age: PropTypes.string.isRequired,
-  // name: PropTypes.string.isRequired,
+  sexe: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  race: PropTypes.string.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 ConsultProfile.defaultProps = {

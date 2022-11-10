@@ -8,7 +8,7 @@ import './headerstyles.scss';
 function Header({ type }) {
   return (
     <header className="header">
-      <Link to="/search"><img className="logo" src="logo.png" alt="logo adopte ton mhumains" /></Link>
+      <Link to="/homepage"><img className="logo" src="logo.png" alt="logo adopte ton mhumains" /></Link>
       <div className="nav-icon">
         <Link to="/listeprofile"><Icon name="search" size="big" /></Link>
         <Link to="/favprofile"><Icon name="heart outline" size="big" /></Link>
