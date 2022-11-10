@@ -8,12 +8,10 @@ import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
 import { setToken } from '../../requests/instance';
 import { catLoginRequest, humanLoginRequest } from '../../requests/loginRequest';
-import LoginContext from '../../contexts/LoginContext';
 
 function ProfileSelect() {
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
-  const { addLoginInformation } = useContext(LoginContext);
 
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
     setToken(localStorage.getItem('Token'));
@@ -47,7 +45,6 @@ function ProfileSelect() {
   const handleHumanProfileClick = async (pseudo) => {
     try {
       const response = await humanLoginRequest(pseudo);
-      console.log(response);
       localStorage.setItem('isLogged', response.logged);
       localStorage.setItem('profilePseudo', response.pseudo);
       localStorage.setItem('type', 'human');
@@ -67,6 +64,7 @@ function ProfileSelect() {
             {catsProfile
               && catsProfile.map(({ pseudo, image, id }) => (
                 <Link
+                  key={id}
                   to="/homepage"
                   onClick={() => handleCatProfileClick(pseudo)}
                 >
@@ -90,6 +88,7 @@ function ProfileSelect() {
             {humansProfile.length > 0
               ? humansProfile.map(({ pseudo, image, id }) => (
                 <Link
+                  key={id}
                   to="/homepage"
                   onClick={() => handleHumanProfileClick(pseudo)}
                 >
