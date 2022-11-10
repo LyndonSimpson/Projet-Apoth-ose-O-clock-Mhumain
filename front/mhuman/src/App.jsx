@@ -12,9 +12,11 @@ import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHum
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
 import UpdateProfileCat from './Components/UpdateProfileCat/UpdateProfileCat';
+
 import { LoginContextProvider } from './contexts/LoginContext';
 import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
+
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -91,6 +93,7 @@ function App() {
         </LoginContextProvider>
       </AddCatProfileContextProvider>
     </AddHumanProfileContextProvider>
+
   );
 }
 
