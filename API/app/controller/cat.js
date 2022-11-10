@@ -141,7 +141,7 @@ const catController = {
    * 
    * @param {*} req cat token
    * @param {*} res result || errors
-   * @returns empty array if cat deleted
+   * @returns {JSON} empty array if cat deleted
    */
   delete: async (req, res) => {
     const id = req.auth.catId;
