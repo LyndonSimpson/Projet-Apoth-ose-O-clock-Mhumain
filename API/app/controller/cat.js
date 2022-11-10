@@ -32,7 +32,7 @@ const catController = {
   /**
    * gets one cat by id
    * 
-   * @param {*} req cat id in route params
+   * @param {*} req cat token
    * @param {*} res searched cat || errors
    * @return {JSON} the searched cat 
    */

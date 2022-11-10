@@ -42,7 +42,7 @@ const router = Router();
     * @description retrieves the user with the id passed in params from database.
     * @param {integer} request.params - id PK
     */
-    router.get("/user/:id", userController.oneUser);
+    router.get("/userProfile", authorizationMiddleware, userController.oneUser);
 
     /**
     * PATCH /user

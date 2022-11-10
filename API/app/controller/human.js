@@ -37,7 +37,7 @@ const humanController = {
   /**
    * gets one human by id
    * 
-   * @param {*} req human id in route params
+   * @param {*} req human token
    * @param {*} res searched human || errors
    * @returns {JSON} the searched human 
    */
