@@ -35,7 +35,9 @@ function ProfileSelect() {
   const handleCatProfileClick = async (pseudo) => {
     try {
       const response = await catLoginRequest(pseudo);
-      addLoginInformation({ isLogged: response.logged, profilePseudo: response.pseudo, type: 'cat' });
+      localStorage.setItem('isLogged', response.logged);
+      localStorage.setItem('profilePseudo', response.pseudo);
+      localStorage.setItem('type', 'cat');
     } catch (err) {
       console.log(err.response.data);
     }
