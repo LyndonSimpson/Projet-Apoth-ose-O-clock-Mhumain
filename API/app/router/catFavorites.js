@@ -36,7 +36,7 @@ const router = Router();
     * @description delete an existing favorite profile from the database
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/catfavorites/:id", authorizationMiddleware, catFavoritesController.delete);
+    router.delete("/catfavorites", authorizationMiddleware, catFavoritesController.delete);
 
 
 

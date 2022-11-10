@@ -39,10 +39,13 @@ const humanFavoritesDattaMapper = {
     const result = await database.query(query);
     return result.rows;
   },
-  async deleteFavorite(id) {
+  async deleteFavorite(human_id, cat_id) {
     const query = {
-      text: `DELETE FROM human_has_favorites WHERE id = $1`,
-      values: [id]
+      text: `DELETE 
+             FROM human_has_favorites
+             WHERE human_id = $1
+             AND cat_id = $2`,
+      values: [human_id, cat_id]
     };
     const result = await database.query(query);
     return result.rows;

@@ -42,26 +42,30 @@ const catFavoritesDattaMapper = {
    * @returns all the humans that this cat liked 
    */
   async getFavorites(id) {
-    const query ={
-        text: `SELECT *
+    const query = {
+      text: `SELECT *
                FROM human hu
                WHERE hu.id IN (
                     SELECT human_id FROM cat_has_favorites WHERE cat_id = $1
                )`,
-                values: [id]
-                };
+      values: [id]
+    };
     const result = await database.query(query);
     return result.rows;
   },
   /**
-   * deletes the fav relashionship - to modify
+   * deletes the fav relashionship with cat id in cat token and liked human in body
+   * 
    * @param {*} id id of the relashionship - to modify
    * @returns empty - to modify
    */
-  async deleteFavorite(id) {
+  async deleteFavorite(cat_id, human_id) {
     const query = {
-      text: `DELETE FROM cat_has_favorites WHERE id = $1`,
-      values: [id]
+      text: `DELETE 
+             FROM cat_has_favorites 
+             WHERE cat_id = $1
+             AND human_id = $2`,
+      values: [cat_id, human_id]
     };
     const result = await database.query(query);
     return result.rows;

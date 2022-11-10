@@ -57,14 +57,13 @@ const catFavoritesController = {
   /**
    * deletes the human profile from favorites of cat in client cat token
    * 
-   * @param {*} req cat token
-   * @param {*} res result || errors
-   * @returns {JSON} returns new list of human favorites
+   * @param {*} req cat id in cat token / body: liked_profile_id
+   * @param {*} res empty || errors
+   * @returns {JSON} empty
    */
   delete: async (req, res) => {
-    const id = req.auth.catId;
     try {
-      const result = await dataMapper.deleteFavorite(id);
+      const result = await dataMapper.deleteFavorite(req.auth.catId, req.body.liked_profile_id);
       res.json(result);
     } catch (error) {
       console.error(error);
