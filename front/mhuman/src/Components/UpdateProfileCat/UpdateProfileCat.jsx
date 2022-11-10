@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
@@ -40,6 +41,11 @@ function UpdateProfileCat() {
   ];
 
   React.useEffect(() => {
+
+    // get API selon pseudo cat
+    catProfileDispatch(getActionInitValue(catInformation));
+    setToken(localStorage.getItem('Token'));
+
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -120,10 +126,16 @@ function UpdateProfileCat() {
     catProfileDispatch(getActionSetValue(data.name, data.value));
   };
 
+
+  const handleDismiss = () => {
+    setErrorMessage('');
+  };
+
   return (
     <>
       <div className="update-profile">
-        {/* {errorMessage
+        {errorMessage
+
               && (
               <Message
                 negative
@@ -132,7 +144,9 @@ function UpdateProfileCat() {
                 onDismiss={handleDismiss}
                 content={errorMessage}
               />
-              )} */}
+
+              )}
+
         <form
           onSubmit={handleSubmit}
           className="form-update-cat"
@@ -141,6 +155,7 @@ function UpdateProfileCat() {
             <Image.Group size="small">
               <Image rounded src={cat} />
             </Image.Group>
+
             <input
               className="form-desc-cat-input"
               name="fileUpload"
@@ -151,6 +166,7 @@ function UpdateProfileCat() {
               accept="image/*"
               id="fileUpload"
             />
+
           </div>
           <div className="form-update-all-informations">
             <div className="form-update-informations">
@@ -294,6 +310,7 @@ function UpdateProfileCat() {
               </Form.Group>
             </div>
           </div>
+
           <div className="form-update-cat-buttons">
             <Button
               className="form-update-cat-button"
@@ -308,6 +325,7 @@ function UpdateProfileCat() {
           </div>
         </form>
 
+
         { UpdateCatProfil && (
         <Navigate to="/homepage" />
         )}
@@ -315,6 +333,8 @@ function UpdateProfileCat() {
       </div>
 
       {/* <MobileNav className="mobile-nav" /> */}
+
+
     </>
   );
 }

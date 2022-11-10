@@ -11,7 +11,7 @@ function Header() {
       <div className="nav-icon">
         <Link to="/search"><Icon name="search" size="big" /></Link>
         <Link to="/fav"><Icon name="heart outline" size="big" /></Link>
-        <Link to="/updateprofilecat"><Icon name="user" size="big" /></Link>
+        <Link to={loginInformation.type === 'cat' ? '/updateprofilecat' : '/updateprofilehuman'}><Icon name="user" size="big" /></Link>
       </div>
     </header>
   );
