@@ -62,7 +62,7 @@ const upload = multer({
     * @description retrieves the cat with the id passed in params from database.
     * @param {number} request.params - id PK
     */
-    router.get("/cat/:id", catController.oneCat);
+    router.get("/catProfile", catController.oneCat);
 
     /**
     * GET /adoptedcats/:id
