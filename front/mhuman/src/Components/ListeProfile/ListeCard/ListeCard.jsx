@@ -13,11 +13,11 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  hasGarden, hasPet, hasKid, name, age, toggleProfile,
+  hasGarden, hasPet, hasKid, name, age, toggleProfile, fileUpload,
 }) {
   return (
     <Card className="listeCard">
-      <Image src={cat2} wrapped ui={false} />
+      <Image src={fileUpload} wrapped ui={false} />
       <Card.Content className="card-content">
         <Card.Header className="card-header">{name}</Card.Header>
         <Card.Meta>
@@ -50,4 +50,5 @@ ListeCard.propTypes = {
   hasPet: PropTypes.bool.isRequired,
   age: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  fileUpload: PropTypes.string.isRequired,
 };

@@ -23,7 +23,7 @@ function FormHumanDesc({
     try {
       const response = await addHumanProfileRequest(data);
       console.log(response);
-      if (response === 200) {
+      if (response[0].pseudo === humanProfileState.pseudo) {
         setSucceededCreateHumanProfil(true);
       }
     } catch (error) {

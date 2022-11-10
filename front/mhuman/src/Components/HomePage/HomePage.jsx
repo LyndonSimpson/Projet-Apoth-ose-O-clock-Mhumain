@@ -15,26 +15,18 @@ const URL = 'https://catfact.ninja/fact';
 function HomePage() {
   const [catFact, setCatFact] = useState('');
   const [favorites, setFavorites] = useState([]);
-  const [randomProfiles, setRandomProfiles] = useState([]);
+  const [randomHumanProfiles, setRandomHumanProfiles] = useState([]);
+  const [randomCatProfiles, setRandomCatProfiles] = useState([]);
   const pseudo = localStorage.getItem('profilePseudo');
   const type = localStorage.getItem('type');
 
-  async function getCatRandomProfileAndFavorites() {
-    const [favoritesProfiles, randomHumanProfiles] = await Promise.all([
-      catFavoritesRequest(),
+  async function getRandomProfile() {
+    const [randomHumanFetch, randomCatFetch] = await Promise.all([
       getRandomHumanRequest(),
-    ]);
-    setFavorites(favoritesProfiles);
-    setRandomProfiles(randomHumanProfiles);
-  }
-
-  async function getHumanRandomProfileAndFavorites() {
-    const [favoritesProfiles, randomCatProfiles] = await Promise.all([
-      humanFavoritesRequest(),
       getRandomCatRequest(),
     ]);
-    setFavorites(favoritesProfiles);
-    setRandomProfiles(randomCatProfiles);
+    setRandomHumanProfiles(randomHumanFetch);
+    setRandomCatProfiles(randomCatFetch);
   }
 
   useEffect(() => { // J'apelle mes API pour avoir mes données
@@ -43,19 +35,16 @@ function HomePage() {
       const response = await axios.get(URL);
       setCatFact(response.data);
     }
-    if (type === 'cat') {
-      getCatRandomProfileAndFavorites();
-    }
-    if (type === 'human') {
-      getHumanRandomProfileAndFavorites();
-    }
+    getRandomProfile();
     getCatFact();
     // setInterval(getCatFact, 15000);
   }, []);
 
   return (
     <div className="homepage">
-      <Header />
+      <Header
+        type={type}
+      />
       <section className="homeContent">
         <h1 className="homeTitle">
           {' '}
@@ -65,18 +54,35 @@ function HomePage() {
           {' '}
           !
         </h1>
-        <section className="leftContent">
-          <h3 className="homecontentSubtitle">{type === 'cat' ? 'Des humains !' : 'Des chats'}</h3>
-          {randomProfiles.length === 0
+        {type === 'human' ? (
+          <section className="leftContent">
+            <h3 className="homecontentSubtitle">Des chats !</h3>
+            {randomCatProfiles.length === 0
             && <p>Les randoms ici</p>}
-          {randomProfiles.map((RandomProfile) => (
-            <Miniprofile
-              key={RandomProfile.id}
-              pseudo={RandomProfile.pseudo}
-              image={RandomProfile.image}
-            />
-          ))}
-        </section>
+            {randomCatProfiles.map((randomCat) => (
+              <Miniprofile
+                key={randomCat.id}
+                pseudo={randomCat.pseudo}
+                image={randomCat.image}
+              />
+            ))}
+          </section>
+        )
+          : (
+            <section className="leftContent">
+              <h3 className="homecontentSubtitle">Des humains !</h3>
+              {randomHumanProfiles.length === 0
+        && <p>Les randoms ici</p>}
+              {randomHumanProfiles.map((randomHuman) => (
+                <Miniprofile
+                  key={randomHuman.id}
+                  pseudo={randomHuman.pseudo}
+                  image={randomHuman.image}
+                />
+              ))}
+            </section>
+          )}
+
         <section className="rightContent">
           <div className="favProfil">
             <h3 className="homecontentSubtitle">Mes favoris</h3>

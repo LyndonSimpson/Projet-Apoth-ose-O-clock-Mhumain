@@ -11,6 +11,7 @@ import { updateCatProfileRequest } from '../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../contexts/AddCatProfileContext';
 import { setToken } from '../../requests/instance';
+import { getOneCatRequest } from '../../requests/getCatRequest';
 
 function UpdateProfileCat() {
   const { catInformation } = useContext(AddCatProfileContext);
@@ -37,9 +38,16 @@ function UpdateProfileCat() {
     { key: 'femelle', text: 'Femelle', value: 'femelle' },
   ];
 
+  async function getInitialCatInformations() {
+    const [initialCatInformations] = await Promise.all([
+      getOneCatRequest(),
+    ]);
+    catProfileDispatch(getActionInitValue(initialCatInformations));
+  }
+
   React.useEffect(() => {
     // get API selon pseudo cat
-    catProfileDispatch(getActionInitValue(catInformation));
+    getInitialCatInformations();
     setToken(localStorage.getItem('Token'));
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
