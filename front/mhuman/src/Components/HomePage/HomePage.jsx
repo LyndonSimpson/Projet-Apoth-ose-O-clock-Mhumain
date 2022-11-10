@@ -5,7 +5,9 @@ import Footer from '../Footer/Footer';
 import Miniprofile from './Miniprofile/Miniprofile';
 import './homepage.scss';
 import MobileNav from './MobileNav/MobileNav';
-import { catFavoritesRequest, humanFavoritesRequest } from '../../requests/favoritesRequest';
+import {
+  addCatFavoritesRequest, addHumanFavoritesRequest, catFavoritesRequest, humanFavoritesRequest,
+} from '../../requests/favoritesRequest';
 import { getRandomHumanRequest } from '../../requests/getHumanRequest';
 import { getRandomCatRequest } from '../../requests/getCatRequest';
 import { setToken } from '../../requests/instance';
@@ -21,13 +23,43 @@ function HomePage() {
   const type = localStorage.getItem('type');
 
   async function getRandomProfile() {
-    const [randomHumanFetch, randomCatFetch] = await Promise.all([
-      getRandomHumanRequest(),
-      getRandomCatRequest(),
-    ]);
-    setRandomHumanProfiles(randomHumanFetch);
-    setRandomCatProfiles(randomCatFetch);
+    try {
+      const [randomHumanFetch, randomCatFetch] = await Promise.all([
+        getRandomHumanRequest(),
+        getRandomCatRequest(),
+      ]);
+      setRandomHumanProfiles(randomHumanFetch);
+      setRandomCatProfiles(randomCatFetch);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
+  async function getFavorites() {
+    try {
+      if (type === 'cat') {
+        const response = await catFavoritesRequest();
+        setFavorites(response);
+      } else {
+        const response = await humanFavoritesRequest();
+        setFavorites(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleHumanAddCatToFavorite = async (likedId) => {
+    console.log(likedId);
+    const response = await addCatFavoritesRequest(likedId);
+    console.log(response);
+  };
+
+  const handleCatAddHumanToFavorite = async (likedId) => {
+    console.log(likedId);
+    const response = await addHumanFavoritesRequest(likedId);
+    console.log(response);
+  };
 
   useEffect(() => { // J'apelle mes API pour avoir mes données
     setToken(localStorage.getItem('Token'));
@@ -36,9 +68,10 @@ function HomePage() {
       setCatFact(response.data);
     }
     getRandomProfile();
+    getFavorites();
     getCatFact();
     // setInterval(getCatFact, 15000);
-  }, []);
+  }, [type]);
 
   return (
     <div className="homepage">
@@ -62,8 +95,10 @@ function HomePage() {
             {randomCatProfiles.map((randomCat) => (
               <Miniprofile
                 key={randomCat.id}
+                id={randomCat.id}
                 pseudo={randomCat.pseudo}
                 image={randomCat.image}
+                handleClick={handleHumanAddCatToFavorite}
               />
             ))}
           </section>
@@ -76,8 +111,10 @@ function HomePage() {
               {randomHumanProfiles.map((randomHuman) => (
                 <Miniprofile
                   key={randomHuman.id}
+                  id={randomHuman.id}
                   pseudo={randomHuman.pseudo}
                   image={randomHuman.image}
+                  handleClick={handleCatAddHumanToFavorite}
                 />
               ))}
             </section>
@@ -91,6 +128,7 @@ function HomePage() {
             {favorites.map((fav) => (
               <Miniprofile
                 key={fav.id}
+                id={fav.id}
                 pseudo={fav.pseudo}
                 image={fav.image}
               />

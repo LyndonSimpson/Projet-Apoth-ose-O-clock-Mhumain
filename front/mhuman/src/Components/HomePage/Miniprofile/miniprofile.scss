@@ -61,4 +61,8 @@
 
 .heartIcon{
     height: 100%;
+
+    &:hover {
+        color: red
+    }
 }
