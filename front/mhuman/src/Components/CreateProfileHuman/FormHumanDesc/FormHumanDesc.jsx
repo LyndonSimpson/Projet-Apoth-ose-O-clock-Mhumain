@@ -1,38 +1,29 @@
 import './formhumandescstyles.scss';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import useHumanProfileReducer, { getActionSetValue } from '../../../hooks/useHumanProfileReducer';
+import { addHumanProfileRequest } from '../../../requests/profilesRequest';
+import useHumanProfileReducer, { getActionInitValue, getActionSetValue } from '../../../hooks/useHumanProfileReducer';
+import AddHumanProfileContext from '../../../contexts/AddHumanProfileContext';
+import { setToken } from '../../../requests/instance';
 
 function FormHumanDesc({
   handleReturnClick,
 }) {
+  const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
-  const [images, setImages] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateHumanProfil, setSucceededCreateHumanProfil] = useState(false);
 
-  const fetchData = async (payload) => {
+  const fetchData = async (data) => {
     try {
-      const data = new FormData();
-      data.append('image', images);
-      const response = await axios.post('http://localhost:3001/human', data, {
-        image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-        account_id: payload.account_id, // TODO : Gérer l'id de l'utilisateur en cours
-        pseudo: payload.pseudo,
-        name: payload.name,
-        description: payload.description,
-        age: payload.age,
-        has_pets: payload.has_pets,
-        has_kids: payload.has_kids,
-        has_garden: payload.has_garden,
-      });
+      const response = await addHumanProfileRequest(data);
       console.log(response);
-      if (response.status === 200) {
+      if (response === 200) {
         setSucceededCreateHumanProfil(true);
       }
     } catch (error) {
@@ -41,21 +32,31 @@ function FormHumanDesc({
     }
   };
 
+  React.useEffect(() => {
+    console.log('context>>>', humanInformation);
+    humanProfileDispatch(getActionInitValue(humanInformation));
+    console.log('state>>>', humanProfileState);
+    setToken(localStorage.getItem('Token'));
+  }, []);
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
+
+    const data = new FormData();
+    data.append('fileUpload', humanProfileState.fileUpload[0]);
+    data.append('pseudo', humanProfileState.pseudo);
+    data.append('name', humanProfileState.name);
+    data.append('description', humanProfileState.description);
+    data.append('age', humanProfileState.age);
+    data.append('has_pets', humanProfileState.hasPets);
+    data.append('has_kids', humanProfileState.hasKids);
+    data.append('has_garden', humanProfileState.hasGarden);
+
     if (!humanProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
     }
-    fetchData({
-      image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      pseudo: humanProfileState.pseudo,
-      name: humanProfileState.name,
-      description: humanProfileState.description,
-      age: humanProfileState.age,
-      has_pets: humanProfileState.hasPets,
-      has_kids: humanProfileState.hasKids,
-      has_garden: humanProfileState.hasGarden,
-    });
+
+    fetchData(data);
   };
 
   const handleTextFieldChange = (e) => {
@@ -64,10 +65,6 @@ function FormHumanDesc({
 
   const handleDismiss = () => {
     setErrorMessage('');
-  };
-
-  const onInputChange = (e) => {
-    setImages(e.target.files);
   };
 
   // const onSubmit = (e) => {
@@ -113,8 +110,8 @@ function FormHumanDesc({
         />
 
         <div>
-          {/* {
-          Array.from(image).map((item) => (
+          {
+          Array.from(humanProfileState.fileUpload).map((item) => (
             <span>
               <img
                 style={{ padding: '10px' }}
@@ -125,11 +122,13 @@ function FormHumanDesc({
               />
             </span>
           ))
-        } */}
+        }
           <input
             className="form-desc-human-input"
-            onChange={onInputChange}
-            multiple
+            name="fileUpload"
+            onChange={(e) => {
+              humanProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+            }}
             type="file"
             accept="image/*"
             id="fileUpload"

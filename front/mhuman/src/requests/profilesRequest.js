@@ -30,3 +30,10 @@ export async function updateHumanProfileRequest(data) {
   });
   return response.data;
 }
+
+export async function addHumanProfileRequest(data) {
+  const response = await apiInstance.post('/human/signup', data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response.data;
+}
