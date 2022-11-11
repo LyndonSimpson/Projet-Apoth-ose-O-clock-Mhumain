@@ -23,12 +23,20 @@ const router = Router();
     // no route for getOnFavorite -- getHumanById and getCatById already do this in their respective routers.
 
     /**
+    * GET /favoriteCheck
+    * @summary delete favorite
+    * @description delete an existing favorite profile from the database
+    * @param {number} id.path.required - category identifier
+    */
+     router.post("/catfavcheck", authorizationMiddleware, catFavoritesController.isHumanInFavorites);
+
+    /**
     * DELETE /favorite
     * @summary delete favorite
     * @description delete an existing favorite profile from the database
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/catfavorites/:id", authorizationMiddleware, catFavoritesController.delete);
+    router.delete("/catfavorites", authorizationMiddleware, catFavoritesController.delete);
 
 
 

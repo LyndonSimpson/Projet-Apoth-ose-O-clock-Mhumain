@@ -121,12 +121,12 @@ const catController = {
   /**
    * adopts the cat of id in params with human token
    * 
-   * @param {*} req human token / cat id in params of route
+   * @param {*} req human token / body: adopted_cat_id
    * @param {*} res the adopted cat || errors
    * @returns {JSON} the adopted cat info
    */
   adoptCat: async (req, res) => {
-    const id = req.params.id;
+    const id = req.body.adopted_cat_id;
     try {
       const result = await dataMapper.adopt(req.auth.humanId,
         id);
@@ -141,7 +141,7 @@ const catController = {
    * 
    * @param {*} req cat token
    * @param {*} res result || errors
-   * @returns empty array if cat deleted
+   * @returns {JSON} empty array if cat deleted
    */
   delete: async (req, res) => {
     const id = req.auth.catId;
