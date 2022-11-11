@@ -56,8 +56,9 @@ const catFavoritesDattaMapper = {
   /**
    * deletes the fav relashionship with cat id in cat token and liked human in body
    * 
-   * @param {*} id id of the relashionship - to modify
-   * @returns empty - to modify
+   * @param {*} cat_id cat id in cat token
+   * @param {*} human_id human id in body 
+   * @returns empty
    */
   async deleteFavorite(cat_id, human_id) {
     const query = {

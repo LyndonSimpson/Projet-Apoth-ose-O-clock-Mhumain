@@ -5,7 +5,7 @@ const catSearchDattaMapper = {
    * selects all cats that fit the filter options selected by the human
    * 
    * @param {*} sexe 'mâle' or 'femelle'
-   * @param {*} needs_garden true or false
+   * @param {boolean} needs_garden true or false
    * @returns array of cats that fit the search
    */
   async find(sexe, needs_garden) {
