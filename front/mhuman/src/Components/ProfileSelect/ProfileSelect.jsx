@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import './profileselect.scss';
 import { Link } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
 import logo from './fakeData/Logo-Mhumain-Colored.png';
 import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
@@ -56,6 +57,10 @@ function ProfileSelect() {
   return (
     <div className="ProfileSelect">
       <img src={logo} className="ProfileTitle" alt="logo" />
+      <div className="profile-icons">
+        <Link to="/updateuser"><Icon className="profile-icon" name="pencil" size="big" /></Link>
+        <Link to="/"><Icon className="profile-icon logout" name="log out" size="big" /></Link>
+      </div>
       <section className="ProfileContainer">
         <div className="CatProfile">
           <h1 className="ProfileSubtitle"> Profils Chats</h1>
