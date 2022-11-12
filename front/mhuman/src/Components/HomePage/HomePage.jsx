@@ -50,15 +50,13 @@ function HomePage() {
   }
 
   const handleHumanAddCatToFavorite = async (likedId) => {
-    console.log(likedId);
-    const response = await addCatFavoritesRequest(likedId);
-    console.log(response);
+    await addCatFavoritesRequest(likedId);
+    getFavorites();
   };
 
   const handleCatAddHumanToFavorite = async (likedId) => {
-    console.log(likedId);
-    const response = await addHumanFavoritesRequest(likedId);
-    console.log(response);
+    await addHumanFavoritesRequest(likedId);
+    getFavorites();
   };
 
   useEffect(() => { // J'apelle mes API pour avoir mes données
@@ -99,6 +97,7 @@ function HomePage() {
                 pseudo={randomCat.pseudo}
                 image={randomCat.image}
                 handleClick={handleHumanAddCatToFavorite}
+                favorites={favorites}
               />
             ))}
           </section>
@@ -115,6 +114,7 @@ function HomePage() {
                   pseudo={randomHuman.pseudo}
                   image={randomHuman.image}
                   handleClick={handleCatAddHumanToFavorite}
+                  favorites={favorites}
                 />
               ))}
             </section>
@@ -131,6 +131,8 @@ function HomePage() {
                 id={fav.id}
                 pseudo={fav.pseudo}
                 image={fav.image}
+                handleClick={handleCatAddHumanToFavorite}
+                favorites={favorites}
               />
             ))}
           </div>

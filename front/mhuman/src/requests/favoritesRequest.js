@@ -9,7 +9,7 @@ export async function addCatFavoritesRequest(likedId) {
   const response = await apiInstance.post('/humanfavorites', {
     liked_profile_id: likedId,
   });
-  return response.data;
+  return response;
 }
 
 export async function humanFavoritesRequest() {
@@ -21,5 +21,5 @@ export async function addHumanFavoritesRequest(likedId) {
   const response = await apiInstance.post('/catfavorites', {
     liked_profile_id: likedId,
   });
-  return response.data;
+  return response;
 }

@@ -1,11 +1,14 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import Proptypes, { shape } from 'prop-types';
 import './miniprofile.scss';
 import { Icon } from 'semantic-ui-react';
 
 function Miniprofile({
-  pseudo, image, id, handleClick,
+  pseudo, image, id, handleClick, favorites,
 }) {
+  // Fonction de comparaison pour savoir si un profil fait partie des favoris
+  const ProfileIsFavorites = (param) => favorites.some((e) => e.pseudo === param);
+
   return (
     <div className="miniprofile">
       <div className="align-left">
@@ -16,7 +19,8 @@ function Miniprofile({
       </div>
       <Icon
         className="heartIcon"
-        name="heart outline"
+        color={ProfileIsFavorites(pseudo) ? 'red' : ''}
+        name={ProfileIsFavorites(pseudo) ? 'heart' : 'heart outline'}
         size="big"
         onClick={() => handleClick(id)}
       />
@@ -28,6 +32,13 @@ Miniprofile.propTypes = {
   image: Proptypes.string.isRequired,
   id: Proptypes.number.isRequired,
   handleClick: Proptypes.func.isRequired,
+  favorites: Proptypes.arrayOf(shape(
+    { pseudo: Proptypes.string },
+  )),
+};
+
+Miniprofile.defaultProps = {
+  favorites: [],
 };
 
 export default React.memo(Miniprofile);
