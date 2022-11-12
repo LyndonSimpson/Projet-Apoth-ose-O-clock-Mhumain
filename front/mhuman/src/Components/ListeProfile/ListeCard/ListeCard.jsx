@@ -12,7 +12,7 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, addFavorite, email,
+  id, hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, addFavorite, email,
 }) {
   return (
     <Card className="listeCard">
@@ -32,7 +32,7 @@ function ListeCard({
       </Card.Content>
       <Card.Content extra>
         <div className="card-icon-link">
-          <Icon className="card-icon-link-item" name="heart outline" size="big" onClick={addFavorite} />
+          <Icon className="card-icon-link-item" name="heart outline" size="big" onClick={() => addFavorite(id)} />
           <a href={`mailto:${email}`}>
             <Icon className="card-icon-link-item" name="mail outline" size="big" />
           </a>
@@ -63,6 +63,7 @@ ListeCard.propTypes = {
   sexe: PropTypes.string,
   addFavorite: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 ListeCard.defaultProps = {

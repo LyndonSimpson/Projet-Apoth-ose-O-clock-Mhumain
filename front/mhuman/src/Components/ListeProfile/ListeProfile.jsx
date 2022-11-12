@@ -170,6 +170,7 @@ function ListeProfile({ fav }) {
                     image={favorite.image}
                     key={favorite.id}
                     id={favorite.id}
+                    email={email}
                   />
                 ))}
                 {openProfile && (
@@ -197,6 +198,7 @@ function ListeProfile({ fav }) {
                       name={favorite.name}
                       age={favorite.age}
                       image={favorite.image}
+                      email={email}
                     />
                   ))}
                   {openProfile && (

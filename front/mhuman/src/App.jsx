@@ -12,6 +12,8 @@ import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHum
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
 import UpdateProfileCat from './Components/UpdateProfileCat/UpdateProfileCat';
+import ForgotPassword from './Components/LandingPage/ForgotPassword/ForgotPassword';
+import ResetPassword from './Components/LandingPage/ResetPassword/ResetPassword';
 import { LoginContextProvider } from './contexts/LoginContext';
 import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
@@ -84,6 +86,16 @@ function App() {
               <Route
                 path="/updateprofilecat"
                 element={<UpdateProfileCat />}
+                end
+              />
+              <Route
+                path="/forgotpassword"
+                element={<ForgotPassword />}
+                end
+              />
+              <Route
+                path="/resetpassword"
+                element={<ResetPassword />}
                 end
               />
             </Routes>

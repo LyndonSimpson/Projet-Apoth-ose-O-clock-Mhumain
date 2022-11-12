@@ -13,13 +13,13 @@ import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
 import { setToken } from '../../requests/instance';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import { getOneHumanRequest } from '../../requests/getHumanRequest';
 
 function UpdateProfileHuman() {
   const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const pseudo = localStorage.getItem('profilePseudo');
 
   const fetchData = async (data) => {
     try {
@@ -33,9 +33,8 @@ function UpdateProfileHuman() {
   };
 
   React.useEffect(() => {
-    console.log('context>>>', humanInformation);
-    humanProfileDispatch(getActionInitValue(humanInformation));
     setToken(localStorage.getItem('Token'));
+    getOneHumanRequest().then((response) => { humanProfileDispatch(getActionInitValue(response[0])); });
   }, []);
 
   const handleSubmit = (evt) => {
@@ -62,10 +61,10 @@ function UpdateProfileHuman() {
       setErrorMessage('Le pseudo est obligatoire');
       return;
     }
-    if (!humanProfileState.age.trim()) {
-      setErrorMessage('L\'age est obligatoire');
-      return;
-    }
+    // if (!humanProfileState.age.trim()) {
+    //   setErrorMessage('L\'age est obligatoire');
+    //   return;
+    // }
 
     fetchData(data);
   };
@@ -241,7 +240,7 @@ function UpdateProfileHuman() {
         </form>
 
         { UpdateHumanProfil && (
-        <Navigate to="/homepage" />
+        <Navigate to="/profileselect" />
         )}
       </section>
       <Footer />
