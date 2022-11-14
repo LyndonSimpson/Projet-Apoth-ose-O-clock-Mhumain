@@ -1,6 +1,7 @@
 const dataMapper = require("../datamapper/user");
 const humanDataMapper = require("../datamapper/human");
 const catDataMapper = require("../datamapper/cat");
+const bcrypt = require('bcrypt');
 
 const userController = {
   /**
@@ -80,7 +81,8 @@ const userController = {
   update: async (req, res) => {
     const id = req.auth.userId;
     try {
-      const result = await dataMapper.updateUser(id, req.body.email, req.body.password); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+      const encryptedMsg = bcrypt.hashSync(req.body.password, 10);
+      const result = await dataMapper.updateUser(id, req.body.email, encryptedMsg); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
       res.json(result);
     } catch (error) {
       console.error(error);
