@@ -1,6 +1,5 @@
 const dataMapper = require("../datamapper/catFavorites");
 
-
 const catFavoritesController = {
   /**
    * adds a new human favorite to the client with the cat token
