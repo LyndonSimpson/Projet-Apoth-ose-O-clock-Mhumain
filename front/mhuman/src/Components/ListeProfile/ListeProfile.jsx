@@ -8,23 +8,21 @@ import ConsultProfile from '../ConsultProfile/ConsultProfile';
 import { getAllCatRequest } from '../../requests/getCatRequest';
 import { getAllHumanRequest } from '../../requests/getHumanRequest';
 import { setToken } from '../../requests/instance';
+import {
+  catFavoritesRequest, humanFavoritesRequest, addCatFavoritesRequest, addHumanFavoritesRequest,
+} from '../../requests/favoritesRequest';
 
 import './listeprofile.scss';
-
-// // Fake data profile
-// const hasGarden = true;
-// const hasKid = true;
-// const hasPet = true;
-// const pseudo = 'Minou';
-// const age = '3 ans';
 
 // Props fav pour afficher les favoris au lieu des randoms profils
 function ListeProfile({ fav }) {
   const [openProfile, setOpenProfile] = useState(false);
+  const [favorites, setFavorites] = useState([]);
   const [catsProfile, setCatsProfile] = useState([]);
   const [humansProfile, setHumansProfile] = useState([]);
   const [modaleProfile, setModaleProfile] = useState({});
   const type = localStorage.getItem('type');
+  const email = localStorage.getItem('userEmail');
 
   const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color) => {
     setModaleProfile({
@@ -42,6 +40,32 @@ function ListeProfile({ fav }) {
     setOpenProfile(!openProfile);
   };
 
+  async function getFavorites() {
+    try {
+      if (type === 'cat') {
+        const response = await catFavoritesRequest();
+        setFavorites(response);
+      } else {
+        const response = await humanFavoritesRequest();
+        setFavorites(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const handleHumanAddCatToFavorite = async (likedId) => {
+    console.log(likedId);
+    const response = await addCatFavoritesRequest(likedId);
+    console.log(response);
+  };
+
+  const handleCatAddHumanToFavorite = async (likedId) => {
+    console.log(likedId);
+    const response = await addHumanFavoritesRequest(likedId);
+    console.log(response);
+  };
+
   async function getListProfiles() {
     const [listHumanFetch, listCatFetch] = await Promise.all([
       getAllCatRequest(),
@@ -54,6 +78,7 @@ function ListeProfile({ fav }) {
   useEffect(() => {
     setToken(localStorage.getItem('Token'));
     getListProfiles();
+    getFavorites();
   }, []);
 
   return (
@@ -61,68 +86,141 @@ function ListeProfile({ fav }) {
       <Header />
       <section className="liste-content">
         <h1 className="listeProfile-title">
-          {fav ? 'Vos favoris' : '' }
+          {fav ? 'Vos favoris' : 'Liste des profils' }
         </h1>
-        <div className="list-card-container">
-          {type === 'cat' ? (
-            <>
-              {humansProfile.map((human) => (
-                <ListeCard
-                  toggleProfile={toggleProfile}
-                  hasGarden={human.has_garden}
-                  hasKid={human.has_kids}
-                  hasPet={human.has_pets}
-                  name={human.name}
-                  age={human.age}
-                  image={human.image}
-                />
-              ))}
-              {openProfile && (
-              <ConsultProfile
-                toggleProfile={toggleProfile}
-                hasGarden={modaleProfile.has_garden}
-                hasKid={modaleProfile.has_kids}
-                hasPet={modaleProfile.has_pets}
-                name={modaleProfile.name}
-                age={modaleProfile.age}
-                description={modaleProfile.description}
-                image={modaleProfile.image}
-              />
-              )}
-            </>
-          )
-            : (
+        {!fav ? (
+          <div className="list-card-container">
+            {type === 'cat' ? (
               <>
-                {catsProfile.map((cat) => (
+                {humansProfile.map((human) => (
                   <ListeCard
                     toggleProfile={toggleProfile}
-                    hasGarden={cat.needs_garden}
-                    hasKid={cat.likes_kids}
-                    hasPet={cat.likes_pets}
-                    name={cat.name}
-                    age={cat.age}
-                    image={cat.image}
+                    hasGarden={human.has_garden}
+                    hasKid={human.has_kids}
+                    hasPet={human.has_pets}
+                    name={human.name}
+                    age={human.age}
+                    image={human.image}
+                    id={human.id}
+                    email={email}
+                    addFavorite={handleCatAddHumanToFavorite}
                   />
                 ))}
                 {openProfile && (
                 <ConsultProfile
-                  isCat
                   toggleProfile={toggleProfile}
-                  hasGarden={modaleProfile.needs_garden}
-                  hasKid={modaleProfile.likes_kids}
-                  hasPet={modaleProfile.likes_pets}
+                  hasGarden={modaleProfile.has_garden}
+                  hasKid={modaleProfile.has_kids}
+                  hasPet={modaleProfile.has_pets}
                   name={modaleProfile.name}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
                   image={modaleProfile.image}
-                  race={modaleProfile.race}
-                  color={modaleProfile.color}
-                  sexe={modaleProfile.sexe}
                 />
                 )}
               </>
-            )}
-        </div>
+            )
+              : (
+                <>
+                  {catsProfile.map((cat) => (
+                    <ListeCard
+                      toggleProfile={toggleProfile}
+                      hasGarden={cat.needs_garden}
+                      hasKid={cat.likes_kids}
+                      hasPet={cat.likes_pets}
+                      name={cat.name}
+                      age={cat.age}
+                      image={cat.image}
+                      id={cat.id}
+                      email={email}
+                      addFavorite={handleHumanAddCatToFavorite}
+                    />
+                  ))}
+                  {openProfile && (
+                  <ConsultProfile
+                    isCat
+                    toggleProfile={toggleProfile}
+                    hasGarden={modaleProfile.needs_garden}
+                    hasKid={modaleProfile.likes_kids}
+                    hasPet={modaleProfile.likes_pets}
+                    name={modaleProfile.name}
+                    age={modaleProfile.age}
+                    description={modaleProfile.description}
+                    image={modaleProfile.image}
+                    race={modaleProfile.race}
+                    color={modaleProfile.color}
+                    sexe={modaleProfile.sexe}
+                  />
+                  )}
+                </>
+              )}
+          </div>
+        ) : (
+          <div className="list-card-container">
+            {type === 'cat' ? (
+              <>
+                {favorites.map((favorite) => (
+                  <ListeCard
+                    toggleProfile={toggleProfile}
+                    hasGarden={favorite.has_garden}
+                    hasKid={favorite.has_kids}
+                    hasPet={favorite.has_pets}
+                    name={favorite.name}
+                    age={favorite.age}
+                    image={favorite.image}
+                    key={favorite.id}
+                    id={favorite.id}
+                    email={email}
+                  />
+                ))}
+                {openProfile && (
+                <ConsultProfile
+                  toggleProfile={toggleProfile}
+                  hasGarden={modaleProfile.has_garden}
+                  hasKid={modaleProfile.has_kids}
+                  hasPet={modaleProfile.has_pets}
+                  name={modaleProfile.name}
+                  age={modaleProfile.age}
+                  description={modaleProfile.description}
+                  image={modaleProfile.image}
+                />
+                )}
+              </>
+            )
+              : (
+                <>
+                  {favorites.map((favorite) => (
+                    <ListeCard
+                      toggleProfile={toggleProfile}
+                      hasGarden={favorite.needs_garden}
+                      hasKid={favorite.likes_kids}
+                      hasPet={favorite.likes_pets}
+                      name={favorite.name}
+                      age={favorite.age}
+                      image={favorite.image}
+                      email={email}
+                    />
+                  ))}
+                  {openProfile && (
+                  <ConsultProfile
+                    isCat
+                    toggleProfile={toggleProfile}
+                    hasGarden={modaleProfile.needs_garden}
+                    hasKid={modaleProfile.likes_kids}
+                    hasPet={modaleProfile.likes_pets}
+                    name={modaleProfile.name}
+                    age={modaleProfile.age}
+                    description={modaleProfile.description}
+                    image={modaleProfile.image}
+                    race={modaleProfile.race}
+                    color={modaleProfile.color}
+                    sexe={modaleProfile.sexe}
+                  />
+                  )}
+                </>
+              )}
+          </div>
+        )}
       </section>
       <Footer />
       <MobileNav />

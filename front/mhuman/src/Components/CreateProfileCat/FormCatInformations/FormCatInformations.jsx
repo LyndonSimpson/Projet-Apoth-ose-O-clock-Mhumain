@@ -103,7 +103,7 @@ function FormCatInformations({
           && (
           <Message
             negative
-            className="error-msg"
+            className="error-form-msg"
             header="Erreur"
             onDismiss={handleDismiss}
             content={errorMessage}

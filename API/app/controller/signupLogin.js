@@ -8,8 +8,8 @@ const userController = {
      * creates a new user acount, checks i user mail already exists, encrypts password and returns created account
      * 
      * @param {*} req body: email, password, passworConfirm
-     * @param {*} res created user account
-     * @returns {JSON} the new created user account  info
+     * @param {*} res pseudo of created user account
+     * @returns {JSON} just a pseudonyme
      */
     async signupAction(req, res) {
         try {
@@ -29,7 +29,14 @@ const userController = {
             const encryptedMsg = bcrypt.hashSync(req.body.password, 10);
             const newUser = await dataMapper.createUser(req.body.email, encryptedMsg);
             const searchedUser1 = await dataMapper.getOneUserByEmail(req.body.email);
-            res.json(searchedUser1);
+            let userObject = searchedUser1[0];
+            userObject.password = false;
+            userObject.is_admin = false;
+            userObject.id = false;
+            const str = userObject.email;
+            const nameMatch = str.match(/^([^@]*)@/);
+            const pseudo = nameMatch ? nameMatch[1] : null;
+            res.json(pseudo);
         } catch (error) {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
@@ -89,7 +96,7 @@ const userController = {
      */
     disconnect(req, res) {
         req.session.user = false;
-        res.send('succesfully disconnected') 
+        res.send('succesfully disconnected')
     }
 };
 module.exports = userController;

@@ -21,6 +21,7 @@ function HomePage() {
   const [randomCatProfiles, setRandomCatProfiles] = useState([]);
   const pseudo = localStorage.getItem('profilePseudo');
   const type = localStorage.getItem('type');
+  const email = localStorage.getItem('userEmail');
 
   async function getRandomProfile() {
     try {
@@ -98,6 +99,7 @@ function HomePage() {
                 image={randomCat.image}
                 handleClick={handleHumanAddCatToFavorite}
                 favorites={favorites}
+                email={email}
               />
             ))}
           </section>
@@ -115,6 +117,7 @@ function HomePage() {
                   image={randomHuman.image}
                   handleClick={handleCatAddHumanToFavorite}
                   favorites={favorites}
+                  email={email}
                 />
               ))}
             </section>
@@ -133,6 +136,7 @@ function HomePage() {
                 image={fav.image}
                 handleClick={handleCatAddHumanToFavorite}
                 favorites={favorites}
+                email={email}
               />
             ))}
           </div>

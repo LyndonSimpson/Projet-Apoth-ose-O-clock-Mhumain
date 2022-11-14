@@ -1,20 +1,19 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
-  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown, Message,
+  Button, Icon, TextArea, Input, Form, Radio, Dropdown, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
-import cat from '../../styles/cat.jpg';
 import { updateCatProfileRequest } from '../../requests/profilesRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
-import AddCatProfileContext from '../../contexts/AddCatProfileContext';
 import { setToken } from '../../requests/instance';
 import { getOneCatRequest } from '../../requests/getCatRequest';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 
 function UpdateProfileCat() {
-  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
@@ -38,16 +37,7 @@ function UpdateProfileCat() {
     { key: 'femelle', text: 'Femelle', value: 'femelle' },
   ];
 
-  async function getInitialCatInformations() {
-    const [initialCatInformations] = await Promise.all([
-      getOneCatRequest(),
-    ]);
-    catProfileDispatch(getActionInitValue(initialCatInformations));
-  }
-
   React.useEffect(() => {
-    // get API selon pseudo cat
-    getInitialCatInformations();
     setToken(localStorage.getItem('Token'));
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
@@ -74,6 +64,7 @@ function UpdateProfileCat() {
       setListOption(listOptions);
     }
     getCatBreed();
+    getOneCatRequest().then((response) => { catProfileDispatch(getActionInitValue(response[0])); });
   }, []);
 
   const handleSubmit = (evt) => {
@@ -132,8 +123,9 @@ function UpdateProfileCat() {
   };
 
   return (
-    <>
-      <div className="update-profile">
+    <div className="update-page">
+      <Header />
+      <div className="update-profile-cat">
         {errorMessage
               && (
               <Message
@@ -149,9 +141,6 @@ function UpdateProfileCat() {
           className="form-update-cat"
         >
           <div className="form-update-image">
-            <Image.Group size="small">
-              <Image rounded src={cat} />
-            </Image.Group>
             <input
               className="form-desc-cat-input"
               name="fileUpload"
@@ -241,64 +230,64 @@ function UpdateProfileCat() {
 
             <div className="form-update-radios">
               <Form.Group grouped>
-                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
+                <label htmlFor="likesPets">Aime-t-il les animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasPets"
+                    name="likesPets"
                     value="true"
-                    checked={catProfileState.hasPets === 'true'}
+                    checked={catProfileState.likesPets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasPets"
+                    name="likesPets"
                     value="false"
-                    checked={catProfileState.hasPets === 'false'}
+                    checked={catProfileState.likesPets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
+                <label htmlFor="likesKids">Aime-t-il les enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasKids"
+                    name="likesKids"
                     value="true"
-                    checked={catProfileState.hasKids === 'true'}
+                    checked={catProfileState.likesKids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasKids"
+                    name="likesKids"
                     value="false"
-                    checked={catProfileState.hasKids === 'false'}
+                    checked={catProfileState.likesKids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
+                <label htmlFor="needsGarden">A-t-il besoin d'un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasGarden"
+                    name="needsGarden"
                     value="true"
-                    checked={catProfileState.hasGarden === 'true'}
+                    checked={catProfileState.needsGarden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasGarden"
+                    name="needsGarden"
                     value="false"
-                    checked={catProfileState.hasGarden === 'false'}
+                    checked={catProfileState.needsGarden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
@@ -320,13 +309,12 @@ function UpdateProfileCat() {
         </form>
 
         { UpdateCatProfil && (
-        <Navigate to="/homepage" />
+        <Navigate to="/profileselect" />
         )}
-
       </div>
       {/* <MobileNav className="mobile-nav" /> */}
-
-    </>
+      <Footer />
+    </div>
   );
 }
 

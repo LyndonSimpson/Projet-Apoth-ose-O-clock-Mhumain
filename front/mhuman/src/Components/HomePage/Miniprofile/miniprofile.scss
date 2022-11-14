@@ -66,3 +66,17 @@
         color: red
     }
 }
+
+.mail {
+    color: white;
+
+    &:hover {
+        color: blue;
+    }
+}
+
+.bloc-icons {
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+}

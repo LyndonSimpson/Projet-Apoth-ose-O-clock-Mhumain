@@ -57,12 +57,12 @@ const upload = multer({
     router.get("/cat", authorizationMiddleware, catController.allCats);
  
     /**
-    * GET /cat/:id
+    * GET /cat/
     * @summary selects a specific cat
     * @description retrieves the cat with the id passed in params from database.
     * @param {number} request.params - id PK
     */
-    router.get("/catProfile", catController.oneCat);
+    router.get("/catProfile", authorizationMiddleware, catController.oneCat);
 
     /**
     * GET /adoptedcats/:id
@@ -86,7 +86,7 @@ const upload = multer({
     * @description adopts the cat with the id passed in params from database. the cat now is adopted and has an owner.
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/catadopt/:id", authorizationMiddleware, catController.adoptCat);
+    router.patch("/catadopt", authorizationMiddleware, catController.adoptCat);
  
     /**
     * DELETE /cat
