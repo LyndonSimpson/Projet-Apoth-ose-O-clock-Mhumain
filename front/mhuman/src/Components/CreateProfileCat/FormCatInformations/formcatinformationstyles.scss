@@ -18,9 +18,13 @@
     margin-top: 3rem;
 }
 
-.header {
-    max-height: 20px;
+.error-form-msg {
+    .header {
+        max-height: 20px;
+    }
 }
+
+
 
 .form-informations {
 
@@ -45,8 +49,10 @@
         height: 100vh;
     }
 
-    .header {
-        max-height: 20px;
+    .error-form-msg {
+        .header {
+            max-height: 20px;
+        }
     }
 
 }
