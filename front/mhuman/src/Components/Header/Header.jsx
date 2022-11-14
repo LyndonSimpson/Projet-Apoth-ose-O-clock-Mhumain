@@ -12,7 +12,8 @@ function Header({ type }) {
       <div className="nav-icon">
         <Link to="/listeprofile"><Icon name="search" size="big" /></Link>
         <Link to="/favprofile"><Icon name="heart outline" size="big" /></Link>
-        <Link to={type === 'cat' ? '/updateprofilecat' : '/updateprofilehuman'}><Icon name="user" size="big" /></Link>
+        <Link to={type === 'cat' ? '/updateprofilecat' : '/updateprofilehuman'}><Icon name="pencil" size="big" /></Link>
+        <Link to="/profileselect"><Icon name="user" size="big" /></Link>
       </div>
     </header>
   );

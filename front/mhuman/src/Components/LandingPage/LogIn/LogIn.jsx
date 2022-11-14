@@ -21,6 +21,7 @@ function LogIn({
       const response = await loginRequest(email, password);
       if (response.logged) {
         setIsConnected(true);
+        localStorage.setItem('userEmail', response.pseudo);
       }
     } catch (err) {
       setErrorMessage(err.response.data);
@@ -83,6 +84,7 @@ function LogIn({
                 value={passwordValue}
                 onChange={(e) => { SetPasswordValue(e.target.value); }}
               />
+              <a href="/forgotpassword" className="forgot-password">Mot de passe oublié ?</a>
             </Form.Field>
             <Button size="big" type="submit"> Se connecter </Button>
           </Form>

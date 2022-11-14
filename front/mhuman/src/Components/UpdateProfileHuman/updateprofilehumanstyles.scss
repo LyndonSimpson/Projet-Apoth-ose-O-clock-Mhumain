@@ -1,7 +1,13 @@
+.update-page {
+    background: rgb(63,108,251);
+    background: linear-gradient(162deg, rgba(63,108,251,1) 0%, rgba(252,70,117,1) 100%);
+    color: white;
+}
+
 .update-profile {
     display: flex;
     flex-direction: column;
-    height: 75vh;
+    height: 80vh;
     justify-content: center;
     align-items: center;
 }
@@ -36,8 +42,8 @@
 
 @media only screen and (max-width: 768px) {
     .update-profile {
-        border: none;
-        
+        margin-top: -8rem;
+        margin-bottom: 18rem;
     }
 
     .form-update-human {

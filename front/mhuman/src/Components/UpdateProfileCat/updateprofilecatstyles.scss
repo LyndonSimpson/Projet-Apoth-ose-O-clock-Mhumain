@@ -1,9 +1,9 @@
-.update-profile {
+.update-profile-cat {
     display: flex;
     flex-direction: column;
-    height: 75vh;
     justify-content: center;
     align-items: center;
+    height: 80vh;
 }
 
 .form-update-cat {
@@ -11,7 +11,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 80vw;
 }
 
 .form-update-all-informations {
@@ -43,9 +42,10 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .update-profile {
+    .update-profile-cat {
         border: none;
-        
+        margin-top: -25rem;
+        margin-bottom: 2rem;
     }
 
     .form-update-cat {
@@ -66,6 +66,11 @@
 
     .form-update-image {
         margin-top: 25rem;
+    }
+
+    .update-informations-cat-only {
+        margin-left: 0;
+        margin-bottom: 1rem;
     }
 }
 
