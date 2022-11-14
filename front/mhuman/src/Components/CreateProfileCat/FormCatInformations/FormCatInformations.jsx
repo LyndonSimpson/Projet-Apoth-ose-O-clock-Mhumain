@@ -147,7 +147,6 @@ function FormCatInformations({
               />
               <Dropdown
                 className="form-informations-dropdown"
-                clearable
                 placeholder="Sélectionnez la race du chat"
                 name="breed"
                 fluid

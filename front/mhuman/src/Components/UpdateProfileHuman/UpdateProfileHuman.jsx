@@ -9,14 +9,12 @@ import cat from '../../styles/cat.jpg';
 import { updateHumanProfileRequest } from '../../requests/profilesRequest';
 import { deleteHumanProfile } from '../../requests/deleteProfileRequest';
 import useHumanProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useHumanProfileReducer';
-import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
 import { setToken } from '../../requests/instance';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { getOneHumanRequest } from '../../requests/getHumanRequest';
 
 function UpdateProfileHuman() {
-  const { humanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');

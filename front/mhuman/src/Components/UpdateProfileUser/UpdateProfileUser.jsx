@@ -1,43 +1,43 @@
 import React, { useState } from 'react';
 import {
-  Button, Form, Message, Icon,
+  Button, Form, Message,
 } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
-import useUserReducer, { getActionReset, getActionSetValue } from '../../hooks/useUserReducer';
-
+import { Navigate } from 'react-router-dom';
+import useUserReducer, { getActionSetValue } from '../../hooks/useUserReducer';
+import { deleteUserRequest, updateUserRequest } from '../../requests/profilesRequest';
 import Logo from '../LandingPage/logo.png';
 import './updateprofileuserstyles.scss';
+import { setToken } from '../../requests/instance';
 
-function SignUp({
-  handleReturnClick,
-  handleSucceededCreateUser,
-}) {
+function UpdateProfileUser() {
   const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
+  const [UpdateUserProfile, setUpdateUserProfile] = useState(false);
+  const userEmail = localStorage.getItem('userEmail');
 
-  const fetchData = async ({ email, password, passwordConfirm }) => {
+  const fetchData = async ({ email, password }) => {
     try {
-      const response = await axios.post('http://localhost:3001/user/signup', {
+      const response = updateUserRequest({
 
         email,
         password,
-        passwordConfirm,
 
       });
       if (response.status === 200) {
-        handleSucceededCreateUser();
+        setUpdateUserProfile();
       }
     } catch (err) {
       setErrorMessage(err.response.data);
     }
   };
 
+  React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
+  }, []);
+
   const handleTextFieldChange = (e) => {
     userDispatch(getActionSetValue(e.target.name, e.target.value));
   };
-
-  const handleReset = () => userDispatch(getActionReset());
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -52,20 +52,25 @@ function SignUp({
       return;
     }
     // Je verifie si l'utilisateur à bien confirmer son mot de passe
-    if (userState.password !== userState.passwordConfirm) {
-      setErrorMessage('Votre confirmation de mot de passe est incorrect');
-      return;
-    }
+    // if (userState.password !== userState.passwordConfirm) {
+    //   setErrorMessage('Votre confirmation de mot de passe est incorrect');
+    //   return;
+    // }
     // TODO : use emailValue and passwordValue for add new user in db
     fetchData(userState);
-    handleReset();
   };
+
+  const handleDelete = () => {
+    deleteUserRequest();
+    setUpdateUserProfile(true);
+  };
+
   const handleDismiss = () => { // Gere la fermeture du message
     setErrorMessage('');
   };
 
   return (
-    <div className="signup-form">
+    <div className="update-user">
       <div className="landingTitle">
         <img src={Logo} alt="logo" />
       </div>
@@ -80,7 +85,7 @@ function SignUp({
           />
           )}
       <Form onSubmit={handleSubmit}>
-        <h3> Créer un compte </h3>
+        <h3> Modifier mon email ou mon mot de passe </h3>
         <Form.Field>
           <input
             name="email"
@@ -93,28 +98,29 @@ function SignUp({
         <Form.Field>
           <input
             name="password"
-            placeholder="Mot de passe"
+            placeholder="Nouveau mot de passe"
             type="password"
             value={userState.password}
             onChange={handleTextFieldChange}
           />
         </Form.Field>
-        <Form.Field>
+        {/* <Form.Field>
           <input
             name="passwordConfirm"
-            placeholder="Confirmer le mot de passe"
+            placeholder="Confirmer le nouveau mot de passe"
             type="password"
             value={userState.passwordConfirm}
             onChange={handleTextFieldChange}
           />
-        </Form.Field>
+        </Form.Field> */}
         <div className="signup-buttons">
           <Button
+            negative
             size="big"
-            type="button"
-            onClick={handleReset}
+            type="submit"
+            onClick={handleDelete}
           >
-            Reset
+            Supprimer
           </Button>
           <Button
             size="big"
@@ -125,7 +131,7 @@ function SignUp({
         </div>
       </Form>
       <div className="return-button">
-        <Button
+        {/* <Button
           onClick={handleReturnClick}
           size="big"
           animated="fade"
@@ -134,15 +140,13 @@ function SignUp({
           <Button.Content hidden>
             <Icon name="arrow left" />
           </Button.Content>
-        </Button>
+        </Button> */}
       </div>
+      { UpdateUserProfile && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }
 
-SignUp.propTypes = {
-  handleReturnClick: PropTypes.func.isRequired,
-  handleSucceededCreateUser: PropTypes.func.isRequired,
-};
-
-export default React.memo(SignUp);
+export default React.memo(UpdateProfileUser);
