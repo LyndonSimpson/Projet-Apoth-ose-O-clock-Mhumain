@@ -45,7 +45,7 @@ function FormCatDesc({
     data.append('name', catProfileState.name);
     data.append('description', catProfileState.description);
     data.append('age', catProfileState.age);
-    data.append('race', catProfileState.race);
+    data.append('race', catProfileState.breed);
     data.append('sexe', catProfileState.sexe);
     data.append('color', catProfileState.color);
     data.append('likes_pets', catProfileState.likesPets);
