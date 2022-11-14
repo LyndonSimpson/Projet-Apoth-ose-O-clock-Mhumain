@@ -6,7 +6,8 @@ import Miniprofile from './Miniprofile/Miniprofile';
 import './homepage.scss';
 import MobileNav from './MobileNav/MobileNav';
 import {
-  addCatFavoritesRequest, addHumanFavoritesRequest, catFavoritesRequest, humanFavoritesRequest,
+  addCatFavoritesRequest, addHumanFavoritesRequest, catFavoritesRequest,
+  humanFavoritesRequest, deleteHumanFavoritesRequest, deleteCatFavoritesRequest,
 } from '../../requests/favoritesRequest';
 import { getRandomHumanRequest } from '../../requests/getHumanRequest';
 import { getRandomCatRequest } from '../../requests/getCatRequest';
@@ -50,12 +51,29 @@ function HomePage() {
     }
   }
 
-  const handleHumanAddCatToFavorite = async (likedId) => {
-    await addCatFavoritesRequest(likedId);
+  // Fonctions pour delete un favoris
+  const handleDeleteFav = async (unlikedId) => {
+    if (type === 'cat') {
+      console.log("i'm cat want to delete", unlikedId);
+      const response = await deleteHumanFavoritesRequest(unlikedId);
+      console.log("i'm cat response", response);
+    } else {
+      console.log("i'm human want to delete", unlikedId);
+      const response = await deleteCatFavoritesRequest(unlikedId);
+      console.log("i'm human response", response);
+    }
     getFavorites();
   };
 
+  // Fonction pour ajouter un chat en favoris si on est humain
+  const handleHumanAddCatToFavorite = async (likedId) => {
+    console.log("i'm human want to add");
+    await addCatFavoritesRequest(likedId);
+    getFavorites();
+  };
+  // Fonction pour ajouter un humain en favoris si on est un chat
   const handleCatAddHumanToFavorite = async (likedId) => {
+    console.log("i'm cat want to add");
     await addHumanFavoritesRequest(likedId);
     getFavorites();
   };
@@ -97,7 +115,8 @@ function HomePage() {
                 id={randomCat.id}
                 pseudo={randomCat.pseudo}
                 image={randomCat.image}
-                handleClick={handleHumanAddCatToFavorite}
+                handleAddFav={handleHumanAddCatToFavorite}
+                handleDeleteFav={handleDeleteFav}
                 favorites={favorites}
                 email={email}
               />
@@ -115,7 +134,8 @@ function HomePage() {
                   id={randomHuman.id}
                   pseudo={randomHuman.pseudo}
                   image={randomHuman.image}
-                  handleClick={handleCatAddHumanToFavorite}
+                  handleAddFav={handleCatAddHumanToFavorite}
+                  handleDeleteFav={handleDeleteFav}
                   favorites={favorites}
                   email={email}
                 />
@@ -134,7 +154,8 @@ function HomePage() {
                 id={fav.id}
                 pseudo={fav.pseudo}
                 image={fav.image}
-                handleClick={handleCatAddHumanToFavorite}
+                handleAddFav={handleCatAddHumanToFavorite}
+                handleDeleteFav={handleDeleteFav}
                 favorites={favorites}
                 email={email}
               />
