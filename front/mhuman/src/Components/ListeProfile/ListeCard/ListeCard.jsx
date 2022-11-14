@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { shape } from 'prop-types';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import './listecard.scss';
 import {
@@ -12,8 +12,11 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  id, hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, addFavorite, email,
+  id, hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, handleAddFav, email, favorites, handleDeleteFav,
 }) {
+  // Fonction de comparaison pour savoir si un profil fait partie des favoris
+  const ProfileIsFavorites = (param) => favorites.some((e) => e.id === param);
+
   return (
     <Card className="listeCard">
       <Image src={image} wrapped ui={false} />
@@ -32,7 +35,22 @@ function ListeCard({
       </Card.Content>
       <Card.Content extra>
         <div className="card-icon-link">
-          <Icon className="card-icon-link-item" name="heart outline" size="big" onClick={() => addFavorite(id)} />
+          {ProfileIsFavorites(id) ? (
+            <Icon
+              className="heartIcon"
+              color="red"
+              name="heart"
+              size="big"
+              onClick={() => handleDeleteFav(id)}
+            />
+          ) : (
+            <Icon
+              className="heartIcon"
+              name="heart outline"
+              size="big"
+              onClick={() => handleAddFav(id)}
+            />
+          )}
           <a href={`mailto:${email}`}>
             <Icon className="card-icon-link-item" name="mail outline" size="big" />
           </a>
@@ -55,19 +73,24 @@ ListeCard.propTypes = {
   hasGarden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
-  age: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   race: PropTypes.string,
   color: PropTypes.string,
   sexe: PropTypes.string,
-  addFavorite: PropTypes.func.isRequired,
+  handleAddFav: PropTypes.func.isRequired,
+  handleDeleteFav: PropTypes.func.isRequired,
   email: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  favorites: PropTypes.arrayOf(shape(
+    { id: PropTypes.number },
+  )),
 };
 
 ListeCard.defaultProps = {
   race: '',
   color: '',
   sexe: '',
+  favorites: [],
 };

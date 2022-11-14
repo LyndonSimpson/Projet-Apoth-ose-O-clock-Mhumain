@@ -32,7 +32,6 @@ export async function addHumanFavoritesRequest(likedId) {
 }
 
 export async function deleteHumanFavoritesRequest(likedId) {
-  console.log('likedId dans request', likedId);
   const response = await apiInstance.delete('/catfavorites', {
     data: { liked_profile_id: likedId },
   });

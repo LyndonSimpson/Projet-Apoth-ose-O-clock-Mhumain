@@ -54,26 +54,20 @@ function HomePage() {
   // Fonctions pour delete un favoris
   const handleDeleteFav = async (unlikedId) => {
     if (type === 'cat') {
-      console.log("i'm cat want to delete", unlikedId);
-      const response = await deleteHumanFavoritesRequest(unlikedId);
-      console.log("i'm cat response", response);
+      await deleteHumanFavoritesRequest(unlikedId);
     } else {
-      console.log("i'm human want to delete", unlikedId);
-      const response = await deleteCatFavoritesRequest(unlikedId);
-      console.log("i'm human response", response);
+      await deleteCatFavoritesRequest(unlikedId);
     }
     getFavorites();
   };
 
   // Fonction pour ajouter un chat en favoris si on est humain
   const handleHumanAddCatToFavorite = async (likedId) => {
-    console.log("i'm human want to add");
     await addCatFavoritesRequest(likedId);
     getFavorites();
   };
   // Fonction pour ajouter un humain en favoris si on est un chat
   const handleCatAddHumanToFavorite = async (likedId) => {
-    console.log("i'm cat want to add");
     await addHumanFavoritesRequest(likedId);
     getFavorites();
   };
