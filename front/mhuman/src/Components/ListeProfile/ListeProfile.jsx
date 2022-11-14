@@ -9,7 +9,8 @@ import { getAllCatRequest } from '../../requests/getCatRequest';
 import { getAllHumanRequest } from '../../requests/getHumanRequest';
 import { setToken } from '../../requests/instance';
 import {
-  catFavoritesRequest, humanFavoritesRequest, addCatFavoritesRequest, addHumanFavoritesRequest,
+  catFavoritesRequest, humanFavoritesRequest, addCatFavoritesRequest,
+  addHumanFavoritesRequest, deleteHumanFavoritesRequest, deleteCatFavoritesRequest,
 } from '../../requests/favoritesRequest';
 
 import './listeprofile.scss';
@@ -54,16 +55,24 @@ function ListeProfile({ fav }) {
     }
   }
 
+  // Fonctions pour delete un favoris
+  const handleDeleteFav = async (unlikedId) => {
+    if (type === 'cat') {
+      await deleteHumanFavoritesRequest(unlikedId);
+    } else {
+      await deleteCatFavoritesRequest(unlikedId);
+    }
+    getFavorites();
+  };
+
   const handleHumanAddCatToFavorite = async (likedId) => {
-    console.log(likedId);
-    const response = await addCatFavoritesRequest(likedId);
-    console.log(response);
+    await addCatFavoritesRequest(likedId);
+    getFavorites();
   };
 
   const handleCatAddHumanToFavorite = async (likedId) => {
-    console.log(likedId);
-    const response = await addHumanFavoritesRequest(likedId);
-    console.log(response);
+    await addHumanFavoritesRequest(likedId);
+    getFavorites();
   };
 
   async function getListProfiles() {
@@ -94,6 +103,8 @@ function ListeProfile({ fav }) {
               <>
                 {humansProfile.map((human) => (
                   <ListeCard
+                    key={human.id}
+                    favorites={favorites}
                     toggleProfile={toggleProfile}
                     hasGarden={human.has_garden}
                     hasKid={human.has_kids}
@@ -103,7 +114,8 @@ function ListeProfile({ fav }) {
                     image={human.image}
                     id={human.id}
                     email={email}
-                    addFavorite={handleCatAddHumanToFavorite}
+                    handleAddFav={handleCatAddHumanToFavorite}
+                    handleDeleteFav={handleDeleteFav}
                   />
                 ))}
                 {openProfile && (
@@ -124,6 +136,8 @@ function ListeProfile({ fav }) {
                 <>
                   {catsProfile.map((cat) => (
                     <ListeCard
+                      key={cat.id}
+                      favorites={favorites}
                       toggleProfile={toggleProfile}
                       hasGarden={cat.needs_garden}
                       hasKid={cat.likes_kids}
@@ -133,7 +147,8 @@ function ListeProfile({ fav }) {
                       image={cat.image}
                       id={cat.id}
                       email={email}
-                      addFavorite={handleHumanAddCatToFavorite}
+                      handleAddFav={handleHumanAddCatToFavorite}
+                      handleDeleteFav={handleDeleteFav}
                     />
                   ))}
                   {openProfile && (
@@ -162,6 +177,7 @@ function ListeProfile({ fav }) {
                 {favorites.map((favorite) => (
                   <ListeCard
                     toggleProfile={toggleProfile}
+                    favorites={favorites}
                     hasGarden={favorite.has_garden}
                     hasKid={favorite.has_kids}
                     hasPet={favorite.has_pets}
@@ -171,6 +187,7 @@ function ListeProfile({ fav }) {
                     key={favorite.id}
                     id={favorite.id}
                     email={email}
+                    handleDeleteFav={handleDeleteFav}
                   />
                 ))}
                 {openProfile && (
@@ -191,6 +208,8 @@ function ListeProfile({ fav }) {
                 <>
                   {favorites.map((favorite) => (
                     <ListeCard
+                      key={favorite.id}
+                      favorites={favorites}
                       toggleProfile={toggleProfile}
                       hasGarden={favorite.needs_garden}
                       hasKid={favorite.likes_kids}
@@ -198,7 +217,9 @@ function ListeProfile({ fav }) {
                       name={favorite.name}
                       age={favorite.age}
                       image={favorite.image}
+                      id={favorite.id}
                       email={email}
+                      handleDeleteFav={handleDeleteFav}
                     />
                   ))}
                   {openProfile && (

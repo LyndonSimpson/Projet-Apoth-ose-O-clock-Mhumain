@@ -4,7 +4,7 @@ import './miniprofile.scss';
 import { Icon } from 'semantic-ui-react';
 
 function Miniprofile({
-  pseudo, image, id, handleClick, favorites, email,
+  pseudo, image, id, handleAddFav, favorites, email, handleDeleteFav,
 }) {
   // Fonction de comparaison pour savoir si un profil fait partie des favoris
   const ProfileIsFavorites = (param) => favorites.some((e) => e.pseudo === param);
@@ -21,13 +21,23 @@ function Miniprofile({
         <a href={`mailto:${email}`}>
           <Icon className="mail" name="mail outline" size="big" />
         </a>
-        <Icon
-          className="heartIcon"
-          color={ProfileIsFavorites(pseudo) ? 'red' : ''}
-          name={ProfileIsFavorites(pseudo) ? 'heart' : 'heart outline'}
-          size="big"
-          onClick={() => handleClick(id)}
-        />
+        {ProfileIsFavorites(pseudo) ? (
+          <Icon
+            className="heartIcon"
+            color="red"
+            name="heart"
+            size="big"
+            onClick={() => handleDeleteFav(id)}
+          />
+        ) : (
+          <Icon
+            className="heartIcon"
+            name="heart outline"
+            size="big"
+            onClick={() => handleAddFav(id)}
+          />
+        )}
+
       </div>
     </div>
   );
@@ -36,7 +46,8 @@ Miniprofile.propTypes = {
   pseudo: Proptypes.string.isRequired,
   image: Proptypes.string.isRequired,
   id: Proptypes.number.isRequired,
-  handleClick: Proptypes.func.isRequired,
+  handleAddFav: Proptypes.func.isRequired,
+  handleDeleteFav: Proptypes.func.isRequired,
   email: Proptypes.string.isRequired,
   favorites: Proptypes.arrayOf(shape(
     { pseudo: Proptypes.string },
