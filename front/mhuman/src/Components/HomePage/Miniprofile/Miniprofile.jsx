@@ -25,7 +25,6 @@ function Miniprofile({
           className="heartIcon"
           color={ProfileIsFavorites(pseudo) ? 'red' : ''}
           name={ProfileIsFavorites(pseudo) ? 'heart' : 'heart outline'}
-          name="heart outline"
           size="big"
           onClick={() => handleClick(id)}
         />
