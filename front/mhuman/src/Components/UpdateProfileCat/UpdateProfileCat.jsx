@@ -5,8 +5,9 @@ import './updateprofilecatstyles.scss';
 import {
   Button, Icon, TextArea, Input, Form, Radio, Dropdown, Message,
 } from 'semantic-ui-react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, redirect } from 'react-router-dom';
 import { updateCatProfileRequest } from '../../requests/profilesRequest';
+import { deleteCatProfile } from '../../requests/deleteProfileRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
 import { setToken } from '../../requests/instance';
 import { getOneCatRequest } from '../../requests/getCatRequest';
@@ -120,6 +121,11 @@ function UpdateProfileCat() {
 
   const handleDismiss = () => {
     setErrorMessage('');
+  };
+
+  const handleDelete = () => {
+    deleteCatProfile();
+    setUpdateUpdateCatProfil(true);
   };
 
   return (
@@ -295,6 +301,17 @@ function UpdateProfileCat() {
             </div>
           </div>
           <div className="form-update-cat-buttons">
+            <Button
+              className="delete-cat-profile"
+              animated="fade"
+              type="button"
+              onClick={handleDelete}
+            >
+              <Button.Content visible>Supprimer ce profil</Button.Content>
+              <Button.Content hidden>
+                <Icon name="user delete" />
+              </Button.Content>
+            </Button>
             <Button
               className="form-update-cat-button"
               animated="fade"

@@ -7,7 +7,7 @@ import {
 import { Navigate } from 'react-router-dom';
 import cat from '../../styles/cat.jpg';
 import { updateHumanProfileRequest } from '../../requests/profilesRequest';
-
+import { deleteHumanProfile } from '../../requests/deleteProfileRequest';
 import useHumanProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useHumanProfileReducer';
 import AddHumanProfileContext from '../../contexts/AddHumanProfileContext';
 import { setToken } from '../../requests/instance';
@@ -79,6 +79,11 @@ function UpdateProfileHuman() {
 
   const handleDismiss = () => {
     setErrorMessage('');
+  };
+
+  const handleDelete = () => {
+    deleteHumanProfile();
+    setUpdateCreateHumanProfil(true);
   };
 
   return (
@@ -226,6 +231,17 @@ function UpdateProfileHuman() {
             </section>
           </section>
           <section className="form-update-human-buttons">
+            <Button
+              className="delete-human-profile"
+              animated="fade"
+              type="button"
+              onClick={handleDelete}
+            >
+              <Button.Content visible>Supprimer ce profil</Button.Content>
+              <Button.Content hidden>
+                <Icon name="user delete" />
+              </Button.Content>
+            </Button>
             <Button
               className="form-update-human-button"
               animated="fade"
