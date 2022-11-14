@@ -26,7 +26,7 @@ const humanMessage = {
      */
     getMyMessages: async (req, res) => {
         try {
-            const result = await dataMapper.s(req.auth.humanId); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            const result = await dataMapper.getMessages(req.auth.humanId); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             res.json(result);
         } catch (error) {
             console.error(error);

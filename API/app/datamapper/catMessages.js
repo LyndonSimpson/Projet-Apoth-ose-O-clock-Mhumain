@@ -16,7 +16,8 @@ const catMessagesDataMapper = {
             values: [cat_id, human_id, content]
           };
         const result = await database.query(query);
-        return result.rows;
+        console.log(result);
+        return result.rows[0];
     },
     /**
      * retrieves all the messages sent to this cat with the cat id

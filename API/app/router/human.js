@@ -93,7 +93,7 @@ const upload = multer({
     */
     router.get("/humanRandom", authorizationMiddleware, humanController.Humans5);
 
-    router.post("/catmessages", authorizationMiddleware, humanMessageController.sendMessage);
-    router.get("/catmessages", authorizationMiddleware, humanMessageController.getMyMessages);
+    router.post("/humanmessages", authorizationMiddleware, humanMessageController.sendMessage);
+    router.get("/humanmessages", authorizationMiddleware, humanMessageController.getMyMessages);
  
 module.exports = router;

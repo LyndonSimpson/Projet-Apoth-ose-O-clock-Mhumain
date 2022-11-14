@@ -8,8 +8,7 @@ CREATE TABLE IF NOT EXISTS "human_has_message" (
   "cat_id" integer NOT NULL REFERENCES "cat" ("id"),
   "content" TEXT NOT NULL,  
   "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updated_at" timestamptz, 
-  UNIQUE ("human_id", "cat_id")
+  "updated_at" timestamptz
 );
 
 CREATE TABLE IF NOT EXISTS "cat_has_message" (
@@ -18,8 +17,7 @@ CREATE TABLE IF NOT EXISTS "cat_has_message" (
   "human_id" integer NOT NULL REFERENCES "human" ("id"), 
   "content" TEXT NOT NULL, 
   "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  "updated_at" timestamptz, 
-  UNIQUE ("cat_id", "human_id")
+  "updated_at" timestamptz
 );
 
 COMMIT;
