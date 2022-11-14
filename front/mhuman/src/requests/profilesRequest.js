@@ -37,3 +37,13 @@ export async function addHumanProfileRequest(data) {
   });
   return response.data;
 }
+
+export async function updateUserRequest(data) {
+  const response = await apiInstance.patch('/user', data);
+  return response.data;
+}
+
+export async function deleteUserRequest() {
+  const response = await apiInstance.delete('/user');
+  return response.data;
+}

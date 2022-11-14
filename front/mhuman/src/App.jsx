@@ -12,6 +12,7 @@ import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHum
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
 import UpdateProfileCat from './Components/UpdateProfileCat/UpdateProfileCat';
+import UpdateProfileUser from './Components/UpdateProfileUser/UpdateProfileUser';
 import ForgotPassword from './Components/LandingPage/ForgotPassword/ForgotPassword';
 import ResetPassword from './Components/LandingPage/ResetPassword/ResetPassword';
 import { LoginContextProvider } from './contexts/LoginContext';
@@ -96,6 +97,11 @@ function App() {
               <Route
                 path="/resetpassword"
                 element={<ResetPassword />}
+                end
+              />
+              <Route
+                path="/updateuser"
+                element={<UpdateProfileUser />}
                 end
               />
             </Routes>

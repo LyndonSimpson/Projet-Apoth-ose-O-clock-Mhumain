@@ -59,7 +59,7 @@ function ProfileSelect() {
       <img src={logo} className="ProfileTitle" alt="logo" />
       <div className="profile-icons">
         <Link to="/updateuser"><Icon className="profile-icon" name="pencil" size="big" /></Link>
-        <Link to="/"><Icon className="profile-icon logout" name="log out" size="big" /></Link>
+        <Link to="/" onClick={() => localStorage.setItem('Token', '')}><Icon className="profile-icon logout" name="log out" size="big" /></Link>
       </div>
       <section className="ProfileContainer">
         <div className="CatProfile">
