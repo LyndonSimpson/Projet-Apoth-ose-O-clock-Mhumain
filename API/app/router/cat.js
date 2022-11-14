@@ -4,6 +4,7 @@ const catLoginController = require('../controller/catLogin.js');
 const authorizationMiddleware = require('../middlewares/jwt');
 const catSearchController = require('../controller/catSearch');
 const factController = require('../controller/frenchCatFact');
+const catMessageController = require('../controller/catMessage');
 const multer = require('multer');
 const storage = require('../middlewares/storage');
 
@@ -118,6 +119,10 @@ const upload = multer({
     * @description get 5 random cat profiles
     */
      router.get("/catRandom", authorizationMiddleware, catController.cats5);
+    
+
+    router.post("/catmessages", authorizationMiddleware, catMessageController.sendMessage);
+    router.get("/catmessages", authorizationMiddleware, catMessageController.getMyMessages);
  
  
 module.exports = router;
