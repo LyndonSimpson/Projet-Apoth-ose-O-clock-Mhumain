@@ -13,9 +13,7 @@ export async function addCatProfileRequest(data) {
 }
 
 export async function updateCatProfileRequest(data) {
-  const response = await apiInstance.patch('/catupdate', data, {
-    headers: { 'Content-Type': 'multipart/form-data' },
-  });
+  const response = await apiInstance.patch('/catupdate', data);
   return response;
 }
 
@@ -32,10 +30,15 @@ export async function humanProfilesRequest() {
 }
 
 export async function updateHumanProfileRequest(data) {
-  const response = await apiInstance.patch('/humanupdate', data, {
+  const response = await apiInstance.patch('/humanupdate', data);
+  return response;
+}
+
+export async function updateHumanImageProfileRequest(data) {
+  const response = await apiInstance.patch('/humanupdateImage', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-  return response.data;
+  return response;
 }
 
 export async function addHumanProfileRequest(data) {
