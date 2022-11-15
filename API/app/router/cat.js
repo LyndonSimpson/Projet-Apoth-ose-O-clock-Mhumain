@@ -121,9 +121,7 @@ const upload = multer({
     */
      router.get("/catRandom", authorizationMiddleware, catController.cats5);
     
-
-    router.post("/catmessages", authorizationMiddleware, sendMailController.main);
-    router.get("/catmessages", authorizationMiddleware, catMessageController.getMyMessages);
+    router.post("/catmessages", authorizationMiddleware, sendMailController.sendMessage);
  
  
 module.exports = router;

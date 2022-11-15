@@ -2,7 +2,13 @@ const nodemailer = require("nodemailer");
 const userDataMapper = require('../datamapper/user');
 
 const sendMailController = {
-    main: async (req, res) => {
+    /**
+     * checks if the client has cat or human token and depending on that generates an email using the email account linked to their profile - also retrieves de receivers id in the body to find the mail of their main account and put them in the "to:" property of the send() method
+     * @param {*} req the id (in token) of the profile sending a message / body: the profile id of the receiver
+     * @param {*} res link to the generated mailForm - testing with ethereal for dev -replace with paid SMTP for production
+     * @returns {*} returns the new generated mailForm for user to validate
+     */
+    sendMessage: async (req, res) => {
         // Generate test SMTP service account from ethereal.email
         // Only needed if you don't have a real mail account for testing
         let testAccount = await nodemailer.createTestAccount();
