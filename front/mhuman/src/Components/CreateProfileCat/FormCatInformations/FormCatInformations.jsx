@@ -10,16 +10,21 @@ import propTypes from 'prop-types';
 import FormCatDesc from '../FormCatDesc/FormCatDesc';
 import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
+import { getAllCatRequest } from '../../../requests/getCatRequest';
+import { setToken } from '../../../requests/instance';
 
 function FormCatInformations({
   handleReturnClick,
 }) {
   const { addCatInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
+  const [cats, setCats] = useState([]);
+  const [existedPseudo, setExistedPseudo] = useState(true);
   const [next, setNext] = useState('');
   const [listOption, setListOption] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const PseudoExist = (param) => cats.some((e) => e.pseudo === param);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!catProfileState.name.trim()) {
@@ -30,12 +35,24 @@ function FormCatInformations({
       setErrorMessage('Le pseudo est obligatoire');
       return;
     }
+    if (PseudoExist(catProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déja');
+      return;
+    }
     if (!catProfileState.age.trim()) {
       setErrorMessage('L\'age est obligatoire');
       return;
     }
     if (!catProfileState.color.trim()) {
       setErrorMessage('La couleur est obligatoire');
+      return;
+    }
+    if (!catProfileState.sexe.trim()) {
+      setErrorMessage('Le sexe est obligatoire');
+      return;
+    }
+    if (!catProfileState.breed.trim()) {
+      setErrorMessage('La race est obligatoire');
       return;
     }
     addCatInformation(catProfileState);
@@ -47,6 +64,16 @@ function FormCatInformations({
   const handleReturnButton = () => {
     setNext('');
   };
+
+  const handlePseudoFieldChange = (e) => {
+    catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+    if (PseudoExist(e.target.value)) {
+      setExistedPseudo(true);
+    } else {
+      setExistedPseudo(false);
+    }
+  };
+
   const handleTextFieldChange = (e) => {
     catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
   };
@@ -68,6 +95,11 @@ function FormCatInformations({
   ];
 
   React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
+    async function getCats() {
+      const response = await getAllCatRequest();
+      setCats(response);
+    }
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -92,6 +124,7 @@ function FormCatInformations({
       });
       setListOption(listOptions);
     }
+    getCats();
     getCatBreed();
   }, []);
 
@@ -124,8 +157,9 @@ function FormCatInformations({
                 id="form-input-control-last-name"
                 placeholder="Pseudo"
                 name="pseudo"
+                icon={existedPseudo ? 'close' : 'check'}
                 value={catProfileState.pseudo}
-                onChange={handleTextFieldChange}
+                onChange={handlePseudoFieldChange}
               />
               <Input
                 className="form-informations-input"

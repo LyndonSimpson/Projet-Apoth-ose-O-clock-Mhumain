@@ -9,7 +9,7 @@ export async function addCatProfileRequest(data) {
   const response = await apiInstance.post('/cat/signup', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-  return response.data;
+  return response;
 }
 
 export async function updateCatProfileRequest(data) {
@@ -35,7 +35,7 @@ export async function addHumanProfileRequest(data) {
   const response = await apiInstance.post('/human/signup', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-  return response.data;
+  return response;
 }
 
 export async function updateUserRequest(data) {
