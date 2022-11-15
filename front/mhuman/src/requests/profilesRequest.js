@@ -47,3 +47,8 @@ export async function deleteUserRequest() {
   const response = await apiInstance.delete('/user');
   return response.data;
 }
+
+export async function getOneUserRequest() {
+  const response = await apiInstance.get('/userProfile');
+  return response.data;
+}
