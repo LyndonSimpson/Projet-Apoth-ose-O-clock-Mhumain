@@ -2,6 +2,7 @@ import React from 'react';
 import Proptypes, { shape } from 'prop-types';
 import './miniprofile.scss';
 import { Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 function Miniprofile({
   pseudo, image, id, handleAddFav, favorites, email, handleDeleteFav,
@@ -18,9 +19,12 @@ function Miniprofile({
         <p className="profileName">{pseudo}</p>
       </div>
       <div className="bloc-icons">
-        <a href={`mailto:${email}`}>
+        <Link
+          to="/chat"
+          state={{ to: pseudo }}
+        >
           <Icon className="mail" name="mail outline" size="big" />
-        </a>
+        </Link>
         {ProfileIsFavorites(pseudo) ? (
           <Icon
             className="heartIcon"
