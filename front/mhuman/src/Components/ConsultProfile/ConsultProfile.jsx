@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable max-len */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -36,7 +37,7 @@ function ConsultProfile({
     isFemale = true;
   } else {
     isFemale = false;
-    console.log('SEXE IN CONSULTPROFILE >>>>>>>>>>>', sexe);
+    console.log(sexe);
   }
 
   return (
@@ -56,9 +57,6 @@ function ConsultProfile({
             <Icon className="displayClosingButton-item" size="big" color="black" name="close" onClick={toggleProfile} />
           </div>
           <h1 className="profileTitle">
-            {' '}
-            Profil de
-            {' '}
             {name}
           </h1>
           <header className="consultHeader">
@@ -71,7 +69,16 @@ function ConsultProfile({
             </div>
             <div className="consultHeader-icons">
               {hasKid ? <IconKid /> : <IconNoKid />}
-              {isFemale ? <IconFemale /> : <IconMale />}
+              {/* ligne pour faire la difference entre chat et humain */}
+              {isCat ? (
+                <>
+                  {isFemale ? <IconFemale /> : <IconMale />}
+                </>
+              ) : (
+                <>
+
+                </>
+              )}
             </div>
           </header>
           <section className="infoContainer">

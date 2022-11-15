@@ -12,7 +12,7 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  id, has_garden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, handleAddFav, email, favorites, handleDeleteFav,
+  id, hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, handleAddFav, email, favorites, handleDeleteFav, description,
 }) {
   // Fonction de comparaison pour savoir si un profil fait partie des favoris
   const ProfileIsFavorites = (param) => favorites.some((e) => e.id === param);
@@ -60,7 +60,7 @@ function ListeCard({
             className="card-icon-link-item"
             name="expand"
             size="big"
-            onClick={() => toggleProfile(has_garden, hasPet, hasKid, name, age, image, race, sexe, color)}
+            onClick={() => toggleProfile(hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description)}
           />
         </div>
       </Card.Content>
@@ -78,6 +78,7 @@ ListeCard.propTypes = {
   age: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   race: PropTypes.string,
   color: PropTypes.string,
   sexe: PropTypes.string,
