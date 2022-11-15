@@ -25,7 +25,7 @@ const userDattaMapper = {
    */
   async getUserById(id) {
     const query = {
-      text: `SELECT * FROM account WHERE id = $1`,
+      text: `SELECT email FROM account WHERE id = $1`,
       values: [id]
     };
     const result = await database.query(query);
