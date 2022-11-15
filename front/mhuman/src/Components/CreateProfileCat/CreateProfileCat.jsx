@@ -1,7 +1,6 @@
 import React from 'react';
 import './createprofilecatstyles.scss';
 import { Link } from 'react-router-dom';
-import { Icon } from 'semantic-ui-react';
 import FormCatCheckbox from './FormCatCheckbox/FormCatCheckbox';
 import FormAPI from '../FormAPI/FormAPI';
 import Logo from '../../styles/logo.png';

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Button, Form, Message,
 } from 'semantic-ui-react';
-import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useUserReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useUserReducer';
 import { deleteUserRequest, updateUserRequest, getOneUserRequest } from '../../requests/profilesRequest';
 import Logo from '../LandingPage/logo.png';
@@ -13,14 +13,11 @@ function UpdateProfileUser() {
   const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [UpdateUserProfile, setUpdateUserProfile] = useState(false);
-  const userEmail = localStorage.getItem('userEmail');
 
   const fetchData = async (data) => {
     try {
-      const response = updateUserRequest(data);
-      if (response.status === 200) {
-        setUpdateUserProfile(true);
-      }
+      updateUserRequest(data);
+      setUpdateUserProfile(true);
     } catch (err) {
       setErrorMessage(err.response.data);
     }
@@ -47,12 +44,6 @@ function UpdateProfileUser() {
       setErrorMessage('Le mot de passe est obligatoire');
       return;
     }
-    // Je verifie si l'utilisateur à bien confirmer son mot de passe
-    // if (userState.password !== userState.passwordConfirm) {
-    //   setErrorMessage('Votre confirmation de mot de passe est incorrect');
-    //   return;
-    // }
-    // TODO : use emailValue and passwordValue for add new user in db
     fetchData(userState);
   };
 
@@ -68,7 +59,7 @@ function UpdateProfileUser() {
   return (
     <div className="update-user">
       <div className="landingTitle">
-        <img src={Logo} alt="logo" />
+        <Link to="/profileselect"><img className="profile-logo" src={Logo} alt="logo adopte ton mhumains" /></Link>
       </div>
       {errorMessage
           && (
@@ -80,66 +71,53 @@ function UpdateProfileUser() {
             content={errorMessage}
           />
           )}
-      <Form onSubmit={handleSubmit}>
+      <Form className="update-user-form" onSubmit={handleSubmit}>
         <h3> Modifier mon email ou mon mot de passe </h3>
-        <Form.Field>
-          <input
-            name="email"
-            placeholder="Email"
-            type="email"
-            value={userState.email}
-            onChange={handleTextFieldChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <input
-            name="password"
-            placeholder="Nouveau mot de passe"
-            type="password"
-            value={userState.password}
-            onChange={handleTextFieldChange}
-          />
-        </Form.Field>
-        {/* <Form.Field>
-          <input
-            name="passwordConfirm"
-            placeholder="Confirmer le nouveau mot de passe"
-            type="password"
-            value={userState.passwordConfirm}
-            onChange={handleTextFieldChange}
-          />
-        </Form.Field> */}
-        <div className="signup-buttons">
-          <Button
-            negative
-            size="big"
-            type="submit"
-            onClick={handleDelete}
-          >
-            Supprimer
-          </Button>
+        <div className="update-user-input">
+          <Form.Field>
+            <input
+              className="update-user-input"
+              name="email"
+              placeholder="Email"
+              type="email"
+              value={userState.email}
+              onChange={handleTextFieldChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <input
+              className="update-user-input"
+              name="password"
+              placeholder="Nouveau mot de passe"
+              type="password"
+              value={userState.password || ''}
+              onChange={handleTextFieldChange}
+            />
+          </Form.Field>
+        </div>
+        <div className="update-buttons">
           <Button
             size="big"
             type="submit"
           >
             Valider
           </Button>
+          <Button
+            negative
+            size="big"
+            type="submit"
+            onClick={handleDelete}
+          >
+            Supprimer mon compte
+          </Button>
         </div>
       </Form>
-      <div className="return-button">
-        {/* <Button
-          onClick={handleReturnClick}
-          size="big"
-          animated="fade"
-        >
-          <Button.Content visible>Retour</Button.Content>
-          <Button.Content hidden>
-            <Icon name="arrow left" />
-          </Button.Content>
-        </Button> */}
-      </div>
       { UpdateUserProfile && (
-        <Navigate to="/" />
+        <Message
+          success
+          content="Vos modifications ont bien été prises en compte"
+          className="success-message"
+        />
       )}
     </div>
   );
