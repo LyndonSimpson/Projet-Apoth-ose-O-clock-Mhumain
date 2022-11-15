@@ -128,8 +128,8 @@ const catDataMapper = {
         needs_garden, siblings_id, id) {
         const query = {
             text: `UPDATE cat
-            SET pseudo = $1, name = $2, description = $3, race = $4, age = $5, sexe = $9, color = $10, likes_pets = $11, likes_kids = $12, needs_garden = $13, siblings_id = $14
-            WHERE id = $15`,
+            SET pseudo = $1, name = $2, description = $3, race = $4, age = $5, sexe = $6, color = $7, likes_pets = $8, likes_kids = $9, needs_garden = $10, siblings_id = $11
+            WHERE id = $12`,
             values: [pseudo, name, description, race, age, sexe, color, likes_pets, likes_kids,
                 needs_garden, siblings_id, id
             ]
