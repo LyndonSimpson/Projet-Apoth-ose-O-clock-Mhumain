@@ -31,11 +31,16 @@ function ConsultProfile({
   color,
   sexe,
 }) {
-  // FAKE DATA TODO:convertir le string en un true/false
-  const isFemale = true;
+  let isFemale;
+  if (sexe === 'femelle') {
+    isFemale = true;
+  } else {
+    isFemale = false;
+    console.log('SEXE IN CONSULTPROFILE >>>>>>>>>>>', sexe);
+  }
 
   return (
-    <modal className="consultProfile">
+    <section className="consultProfile">
       <div
         className="click-background"
         onClick={toggleProfile}
@@ -72,7 +77,12 @@ function ConsultProfile({
           <section className="infoContainer">
             <div className="infoContainer-oneLine">
               <p>{name}</p>
-              <p>{age}</p>
+              <p>
+                {age}
+                {' '}
+                ans
+                {' '}
+              </p>
             </div>
             {isCat
               ? (
@@ -88,7 +98,7 @@ function ConsultProfile({
           </section>
         </div>
       </div>
-    </modal>
+    </section>
   );
 }
 
