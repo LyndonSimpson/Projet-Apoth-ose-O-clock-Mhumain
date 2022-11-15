@@ -93,13 +93,28 @@ const humanController = {
   update: async (req, res) => {
     const id = req.auth.humanId;
     try {
-      //console.log(`nouveau pseudo human modifié : ${req.body.pseudo}`); - for testing
-      //console.log(`nom de sa nouvelle photo : ${req.file.filename}`); - for testing
-      const image_name = req.file.filename;
-      const result = await dataMapper.updateHuman(req.body.pseudo, image_name, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+      const result = await dataMapper.updateHuman(req.body.pseudo, req.body.name, //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
         req.body.description, req.body.age,
         req.body.has_pets, req.body.has_kids, req.body.has_garden,
         id); 
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  /**
+   * update only human profile image of human in token
+   * 
+   * @param {*} req human token id
+   * @param {*} res empty
+   */
+  updateImage: async (req, res) => {
+    const id = req.auth.humanId;
+    try {
+      //console.log(`nom de sa nouvelle photo : ${req.file.filename}`); - for testing
+      const image_name = req.file.filename;
+      const result = await dataMapper.updateHumanImage(image_name, id);
       res.json(result);
     } catch (error) {
       console.error(error);
