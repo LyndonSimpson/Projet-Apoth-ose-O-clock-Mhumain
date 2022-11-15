@@ -79,7 +79,7 @@ const userController = {
    * @returns {JSON} the updated profile info
    */
   update: async (req, res) => {
-    const id = req.auth.userId;
+    const id = req.userId;
     try {
       const encryptedMsg = bcrypt.hashSync(req.body.password, 10);
       const result = await dataMapper.updateUser(id, req.body.email, encryptedMsg); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
