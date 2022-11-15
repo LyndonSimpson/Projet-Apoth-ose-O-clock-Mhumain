@@ -2,6 +2,7 @@ const { Router } = require('express');
 const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
+const userLogoutController = require('../controller/userLogout');
  
 const router = Router();
 
@@ -27,7 +28,7 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", authorizationMiddleware, signupLoginController.disconnect);
+    router.get("/user/logout", userLogoutController.disconnect);
 
     /**
     * GET /user

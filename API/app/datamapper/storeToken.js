@@ -15,6 +15,19 @@ const tokenDattaMapper = {
     };
     const result = await database.query(query);
     return result.rows;
+  },
+  /**
+   * gets the token of the user in token
+   * @param {*} user_id user id in token
+   * @returns user_token
+   */
+  async get(user_id) {
+    const query = {
+        text: `SELECT * FROM user_tokens WHERE account_id = $1`,
+        values: [user_id]
+    };
+    const result = await database.query(query);
+    return result.rows;
   }
 }
 

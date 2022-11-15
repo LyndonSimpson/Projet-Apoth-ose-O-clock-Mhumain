@@ -77,7 +77,7 @@ const userController = {
                 };
                 const user_id = sessionUser.id
                 const jwt = jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions);
-                const storeToken = await tokenDataMapper.store(user_id, jwt);
+                //const storeToken = await tokenDataMapper.store(user_id, jwt); --------------------- to store token in DB !
                 console.log('<< 200 user logged in');
                 res.json({
                     logged: true,
@@ -92,15 +92,6 @@ const userController = {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
         }
-    },
-    /**
-     * disconnects the user /// still testing
-     * @param {*} req 
-     * @param {*} res 
-     */
-    disconnect(req, res) {
-        req.session.user = false;
-        res.send('succesfully disconnected')
     }
 };
 module.exports = userController;

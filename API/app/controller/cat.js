@@ -119,6 +119,24 @@ const catController = {
     }
   },
   /**
+   * updates only the image of the cat in DB with id of cat in token
+   * 
+   * @param {*} req image in multipart form and id in token
+   * @param {*} res empty - success 200
+   */
+  updateImage: async (req, res) => {
+    const id = req.auth.catId;
+    try {
+      //console.log(`nom de sa nouvelle photo : ${req.file.filename}`); - for testing
+      const image_name = req.file.filename;
+      const result = await dataMapper.updateCatimage(image_name, id);
+      res.json(result);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send(`An error occured with the database :\n${error.message}`);
+    }
+  },
+  /**
    * adopts the cat of id in params with human token
    * 
    * @param {*} req human token / body: adopted_cat_id
