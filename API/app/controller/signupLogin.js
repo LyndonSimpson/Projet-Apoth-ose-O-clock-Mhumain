@@ -74,12 +74,17 @@ const userController = {
                     algorithm: 'HS256',
                     expiresIn: '3h'
                 };
+                const token = jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions);
+                res.cookie('authcookie', token, {maxAge:900000, httpOnly:true});
                 console.log('<< 200 user logged in');
-                res.json({
-                    logged: true,
-                    pseudo: sessionUser.email,
-                    token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
-                });
+                let userObject = searchedUser[0];
+                userObject.password = false;
+                userObject.is_admin = false;
+                userObject.id = false;
+                const str = userObject.email;
+                const nameMatch = str.match(/^([^@]*)@/);
+                const pseudo = nameMatch ? nameMatch[1] : null;
+                res.status(200).json(`user logged in : ${pseudo}`);
             } else {
                 console.log('<< 401 UNAUTHORIZED');
                 res.sendStatus(401);
@@ -91,12 +96,14 @@ const userController = {
     },
     /**
      * disconnects the user 
+     * 
      * @param {*} req 
-     * @param {*} res 
+     * @param {*} res disconnects the user and redirects to login
      */
     disconnect(req, res) {
-        req.session.user = false;
-        res.send('succesfully disconnected')
+        console.log('<< 200 user logged out');
+        res.clearCookie('authcookie');
+        res.status(200).json(`user logged out`); 
     }
 };
 module.exports = userController;
