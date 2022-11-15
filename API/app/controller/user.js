@@ -12,7 +12,7 @@ const userController = {
    * @returns {JSON} user profile info
    */
   oneUser: async (req, res) => {
-    const id = req.auht.userId;
+    const id = req.auth.userId;
     try {
       const result = await dataMapper.getUserById(id);
       res.json(result);

@@ -76,6 +76,36 @@ const userDattaMapper = {
     return result.rows;
   },
   /**
+   * returns the email of the account linked to cat in token
+   * 
+   * @param {*} cat_id cat id in cat token
+   * @returns email of account
+   */
+  async catMail(cat_id) {
+    const query = {
+      text: `SELECT email 
+             FROM account u 
+             WHERE u.id IN (
+              SELECT account_id FROM cat WHERE id = $1
+             )`,
+      values: [cat_id]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
+  async humanMail(human_id) {
+    const query = {
+      text: `SELECT email 
+             FROM account u 
+             WHERE u.id IN (
+              SELECT account_id FROM human WHERE id = $1
+             )`,
+      values: [human_id]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
+  /**
    * deletes the user with user token
    * 
    * @param {*} id user id in user token
