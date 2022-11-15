@@ -124,13 +124,13 @@ const catDataMapper = {
      * @param {*} id retrieved from cat token
      * @returns the updated cat info
      */
-    async updateCat(pseudo, image, name, description, race, age, sexe, color, likes_pets, likes_kids,
+    async updateCat(pseudo, name, description, race, age, sexe, color, likes_pets, likes_kids,
         needs_garden, siblings_id, id) {
         const query = {
             text: `UPDATE cat
-            SET pseudo = $1, image = $2, name = $3, description = $4, race = $5, age = $6, sexe = $7, color = $8, likes_pets = $9, likes_kids = $10, needs_garden = $11, siblings_id = $12
-            WHERE id = $13`,
-            values: [pseudo, image, name, description, race, age, sexe, color, likes_pets, likes_kids,
+            SET pseudo = $1, name = $2, description = $3, race = $4, age = $5, sexe = $6, color = $7, likes_pets = $8, likes_kids = $9, needs_garden = $10, siblings_id = $11
+            WHERE id = $12`,
+            values: [pseudo, name, description, race, age, sexe, color, likes_pets, likes_kids,
                 needs_garden, siblings_id, id
             ]
         };
@@ -144,7 +144,7 @@ const catDataMapper = {
      * @param {*} id id of cat ot update
      * @returns 
      */
-    async updateCat(image, id) {
+    async updateCatimage(image, id) {
         const query = {
             text: `UPDATE cat
             SET image = $1

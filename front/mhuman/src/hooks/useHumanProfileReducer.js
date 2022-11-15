@@ -5,10 +5,10 @@ const humanProfileInitialState = {
   pseudo: '',
   description: '',
   age: '',
-  hasPets: 'false',
-  hasKids: 'false',
-  hasGarden: 'false',
-  fileUpload: [],
+  has_pets: 'false',
+  has_kids: 'false',
+  has_garden: 'false',
+  fileUpload: null,
 };
 
 function humanProfileReducer(oldState, action) {

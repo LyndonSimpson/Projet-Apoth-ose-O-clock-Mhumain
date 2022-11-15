@@ -27,7 +27,7 @@ function ListeProfile({ fav }) {
 
   const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description) => {
     setModaleProfile({
-      hasGarden,
+      has_garden,
       hasPet,
       hasKid,
       name,
@@ -164,7 +164,7 @@ function ListeProfile({ fav }) {
                   <ConsultProfile
                     isCat
                     toggleProfile={toggleProfile}
-                    hasGarden={modaleProfile.hasGarden}
+                    has_garden={modaleProfile.has_garden}
                     hasKid={modaleProfile.hasKid}
                     hasPet={modaleProfile.hasPet}
                     name={modaleProfile.name}
@@ -187,7 +187,7 @@ function ListeProfile({ fav }) {
                   <ListeCard
                     toggleProfile={toggleProfile}
                     favorites={favorites}
-                    hasGarden={favorite.has_garden}
+                    has_garden={favorite.has_garden}
                     hasKid={favorite.has_kids}
                     hasPet={favorite.has_pets}
                     name={favorite.name}
@@ -223,7 +223,7 @@ function ListeProfile({ fav }) {
                       key={favorite.id}
                       favorites={favorites}
                       toggleProfile={toggleProfile}
-                      hasGarden={favorite.needs_garden}
+                      has_garden={favorite.needs_garden}
                       hasKid={favorite.likes_kids}
                       hasPet={favorite.likes_pets}
                       name={favorite.name}

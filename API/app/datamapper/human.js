@@ -106,15 +106,31 @@ const humanDataMapper = {
      * @param {*} id retrieved from human token
      * @returns 
      */
-    async updateHuman(pseudo, image, name, description, age, has_pets, has_kids,
+    async updateHuman(pseudo, name, description, age, has_pets, has_kids,
         has_garden, id) {
         const query = {
             text: `UPDATE human
-            SET pseudo = $1, image = $2, name = $3, description = $4, age = $5, has_pets = $6, has_kids = $7, has_garden = $8
-            WHERE id = $9`,
-            values: [pseudo, image, name, description, age, has_pets, has_kids,
+            SET pseudo = $1, name = $2, description = $3, age = $4, has_pets = $5, has_kids = $6, has_garden = $7
+            WHERE id = $8`,
+            values: [pseudo, name, description, age, has_pets, has_kids,
                 has_garden, id
             ]
+        };
+        const result = await database.query(query);
+        return result.rows;
+    },
+    /**
+     * updates only the image of the human in token
+     * @param {*} image image name multipart form multer
+     * @param {*} id human id in token
+     * @returns empty -success 200
+     */
+    async updateHumanImage(image, id) {
+        const query = {
+            text: `UPDATE human
+            SET image = $1
+            WHERE id = $2`,
+            values: [image, id]
         };
         const result = await database.query(query);
         return result.rows;

@@ -30,7 +30,7 @@ function ListeCard({
           </span>
         </Card.Meta>
         <Card.Description className="card-icon">
-          {hasGarden ? <IconGarden /> : <IconNoGarden />}
+          {has_garden ? <IconGarden /> : <IconNoGarden />}
           {hasPet ? <IconPet /> : <IconNoPet />}
           {hasKid ? <IconKid /> : <IconNoKid />}
         </Card.Description>
@@ -72,7 +72,7 @@ export default React.memo(ListeCard);
 
 ListeCard.propTypes = {
   toggleProfile: PropTypes.func.isRequired,
-  hasGarden: PropTypes.bool.isRequired,
+  has_garden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
   age: PropTypes.number.isRequired,

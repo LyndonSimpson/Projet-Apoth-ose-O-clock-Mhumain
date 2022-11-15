@@ -68,7 +68,15 @@ const upload = multer({
     * @description update an existing human profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/humanupdate", authorizationMiddleware, upload.single("fileUpload"), humanController.update); 
+    router.patch("/humanupdate", authorizationMiddleware, humanController.update); 
+
+    /**
+    * PATCH /human
+    * @summary update human profile
+    * @description update an existing human profile into the database with id passed in params
+    * @param {number} id.path.required - category identifier
+    */
+     router.patch("/humanupdateImage", authorizationMiddleware, upload.single("fileUpload"), humanController.updateImage);
  
     /**
     * DELETE /human

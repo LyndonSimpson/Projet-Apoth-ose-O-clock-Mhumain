@@ -80,7 +80,7 @@ const upload = multer({
     * @description update an existing cat profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/catupdate", authorizationMiddleware, upload.single("fileUpload"), catController.update); 
+    router.patch("/catupdate", authorizationMiddleware, catController.update); 
     
     /**
     * PATCH /cat
