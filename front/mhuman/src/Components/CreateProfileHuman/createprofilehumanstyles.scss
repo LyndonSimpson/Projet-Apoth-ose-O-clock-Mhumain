@@ -22,8 +22,9 @@
 }
 
 .create-title {
-    top: 0;
-    position: fixed;
+    @media screen and (max-height:730px){
+        margin-top: -2em;
+    }
 }
 
 @media only screen and (max-width: 768px) {

@@ -16,7 +16,7 @@ function ListeCard({
 }) {
   return (
     <Card className="listeCard">
-      <Image src={image} wrapped ui={false} />
+      <Image className="listeCard-img" src={image} wrapped ui={false} />
       <Card.Content className="card-content">
         <Card.Header className="card-header">{name}</Card.Header>
         <Card.Meta>

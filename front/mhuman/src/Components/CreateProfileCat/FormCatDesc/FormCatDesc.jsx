@@ -67,7 +67,7 @@ function FormCatDesc({
   };
 
   return (
-    <div>
+    <div className="form-container">
       {errorMessage
           && (
           <Message

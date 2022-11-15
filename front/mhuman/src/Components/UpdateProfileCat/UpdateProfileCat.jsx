@@ -306,6 +306,7 @@ function UpdateProfileCat() {
               animated="fade"
               type="button"
               onClick={handleDelete}
+              color="red"
             >
               <Button.Content visible>Supprimer ce profil</Button.Content>
               <Button.Content hidden>
