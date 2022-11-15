@@ -69,7 +69,7 @@ const router = Router();
     * @description gets all the owned cat profiles of the logged in user. 
     *  - category identifier
     */
-    router.get("/usercats",checkToken, authorizationMiddleware, userController.getMyCatProfiles);
+    router.get("/usercats", checkToken, authorizationMiddleware, userController.getMyCatProfiles);
 
     /**
     * DELETE /user

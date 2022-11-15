@@ -76,13 +76,16 @@ const userController = {
                     expiresIn: '3h'
                 };
                 const user_id = sessionUser.id
+                const str = sessionUser.email;
+                const nameMatch = str.match(/^([^@]*)@/);
+                const pseudo = nameMatch ? nameMatch[1] : null;
                 const jwt = jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions);
                 const jwt1 = `Bearer ${jwt}`;
                 const storeToken = await tokenDataMapper.store(user_id, jwt1); //--------------------- to store token in DB !
                 console.log('<< 200 user logged in');
                 res.json({
                     logged: true,
-                    pseudo: sessionUser.email,
+                    pseudo: pseudo,
                     token: jwt,
                 });
             } else {
