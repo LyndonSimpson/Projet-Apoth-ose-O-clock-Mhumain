@@ -82,7 +82,7 @@ function HomePage() {
     getFavorites();
     getCatFact();
     // setInterval(getCatFact, 15000);
-  }, [type]);
+  }, [pseudo]);
 
   return (
     <div className="homepage">
