@@ -16,7 +16,7 @@ export async function updateCatProfileRequest(data) {
   const response = await apiInstance.patch('/catupdate', data, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
-  return response.data;
+  return response;
 }
 
 export async function humanProfilesRequest() {
