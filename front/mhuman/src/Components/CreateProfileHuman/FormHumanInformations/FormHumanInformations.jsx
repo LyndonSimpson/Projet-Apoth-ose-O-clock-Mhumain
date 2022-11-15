@@ -123,64 +123,64 @@ function FormHumanInformations({
 
             <div className="form-informations-radios">
               <Form.Group grouped>
-                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
+                <label htmlFor="has_pets">Avez-vous des animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasPets"
+                    name="has_pets"
                     value="true"
-                    checked={humanProfileState.hasPets === 'true'}
+                    checked={humanProfileState.has_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasPets"
+                    name="has_pets"
                     value="false"
-                    checked={humanProfileState.hasPets === 'false'}
+                    checked={humanProfileState.has_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
+                <label htmlFor="has_kids">Avez-vous des enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasKids"
+                    name="has_kids"
                     value="true"
-                    checked={humanProfileState.hasKids === 'true'}
+                    checked={humanProfileState.has_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasKids"
+                    name="has_kids"
                     value="false"
-                    checked={humanProfileState.hasKids === 'false'}
+                    checked={humanProfileState.has_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
+                <label htmlFor="has_garden">Avez-vous un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasGarden"
+                    name="has_garden"
                     value="true"
-                    checked={humanProfileState.hasGarden === 'true'}
+                    checked={humanProfileState.has_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasGarden"
+                    name="has_garden"
                     value="false"
-                    checked={humanProfileState.hasGarden === 'false'}
+                    checked={humanProfileState.has_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>

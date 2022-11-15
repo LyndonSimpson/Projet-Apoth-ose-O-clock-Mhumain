@@ -25,9 +25,9 @@ function ListeProfile({ fav }) {
   const type = localStorage.getItem('type');
   const email = localStorage.getItem('userEmail');
 
-  const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color) => {
+  const toggleProfile = (has_garden, hasPet, hasKid, name, age, image, race, sexe, color) => {
     setModaleProfile({
-      hasGarden,
+      has_garden,
       hasPet,
       hasKid,
       name,
@@ -92,7 +92,7 @@ function ListeProfile({ fav }) {
   // console.log('LOG >>>>', modaleProfile);
   // console.log('HUMAN PROFILE>>>>', humansProfile);
   // console.log('CAT PROFILE >>>>', catsProfile); modaleProfile.needs_garden
-  console.log('HERE >>>>', modaleProfile.hasGarden);
+  console.log('HERE >>>>', modaleProfile.has_garden);
 
   return (
     <div className="listeProfile">
@@ -110,7 +110,7 @@ function ListeProfile({ fav }) {
                     key={human.id}
                     favorites={favorites}
                     toggleProfile={toggleProfile}
-                    hasGarden={human.has_garden}
+                    has_garden={human.has_garden}
                     hasKid={human.has_kids}
                     hasPet={human.has_pets}
                     name={human.name}
@@ -125,7 +125,7 @@ function ListeProfile({ fav }) {
                 {openProfile && (
                 <ConsultProfile
                   toggleProfile={toggleProfile}
-                  hasGarden={modaleProfile.has_garden}
+                  has_garden={modaleProfile.has_garden}
                   hasKid={modaleProfile.has_kids}
                   hasPet={modaleProfile.has_pets}
                   name={modaleProfile.name}
@@ -143,7 +143,7 @@ function ListeProfile({ fav }) {
                       key={cat.id}
                       favorites={favorites}
                       toggleProfile={toggleProfile}
-                      hasGarden={cat.needs_garden}
+                      has_garden={cat.needs_garden}
                       hasKid={cat.likes_kids}
                       hasPet={cat.likes_pets}
                       name={cat.name}
@@ -159,7 +159,7 @@ function ListeProfile({ fav }) {
                   <ConsultProfile
                     isCat
                     toggleProfile={toggleProfile}
-                    hasGarden={modaleProfile.hasGarden}
+                    has_garden={modaleProfile.has_garden}
                     hasKid={modaleProfile.hasKid}
                     hasPet={modaleProfile.hasPet}
                     name={modaleProfile.name}
@@ -182,7 +182,7 @@ function ListeProfile({ fav }) {
                   <ListeCard
                     toggleProfile={toggleProfile}
                     favorites={favorites}
-                    hasGarden={favorite.has_garden}
+                    has_garden={favorite.has_garden}
                     hasKid={favorite.has_kids}
                     hasPet={favorite.has_pets}
                     name={favorite.name}
@@ -197,7 +197,7 @@ function ListeProfile({ fav }) {
                 {openProfile && (
                 <ConsultProfile
                   toggleProfile={toggleProfile}
-                  hasGarden={modaleProfile.hasGarden}
+                  has_garden={modaleProfile.has_garden}
                   hasKid={modaleProfile.haKid}
                   hasPet={modaleProfile.hasPet}
                   name={modaleProfile.name}
@@ -215,7 +215,7 @@ function ListeProfile({ fav }) {
                       key={favorite.id}
                       favorites={favorites}
                       toggleProfile={toggleProfile}
-                      hasGarden={favorite.needs_garden}
+                      has_garden={favorite.needs_garden}
                       hasKid={favorite.likes_kids}
                       hasPet={favorite.likes_pets}
                       name={favorite.name}
@@ -230,7 +230,7 @@ function ListeProfile({ fav }) {
                   <ConsultProfile
                     isCat
                     toggleProfile={toggleProfile}
-                    hasGarden={modaleProfile.needs_garden}
+                    has_garden={modaleProfile.needs_garden}
                     hasKid={modaleProfile.likes_kids}
                     hasPet={modaleProfile.likes_pets}
                     name={modaleProfile.name}

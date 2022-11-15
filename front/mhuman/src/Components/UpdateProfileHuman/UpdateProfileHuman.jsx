@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import './updateprofilehumanstyles.scss';
 import {
   Button, Icon, TextArea, Input, Form, Radio, Image, Message,
@@ -38,14 +38,14 @@ function UpdateProfileHuman() {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const data = new FormData();
-    data.append('fileUpload', humanProfileState.fileUpload[0]);
+    data.append('fileUpload', humanProfileState.fileUpload);
     data.append('pseudo', humanProfileState.pseudo);
     data.append('name', humanProfileState.name);
     data.append('description', humanProfileState.description);
     data.append('age', humanProfileState.age);
-    data.append('has_pets', humanProfileState.hasPets);
-    data.append('has_kids', humanProfileState.hasKids);
-    data.append('has_garden', humanProfileState.hasGarden);
+    data.append('has_pets', humanProfileState.has_pets);
+    data.append('has_kids', humanProfileState.has_kids);
+    data.append('has_garden', humanProfileState.has_garden);
 
     if (!humanProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -102,21 +102,27 @@ function UpdateProfileHuman() {
           onSubmit={handleSubmit}
           className="form-update-human"
         >
-          <section className="form-update-image">
-            <Image.Group size="small">
-              <Image src={cat} />
-            </Image.Group>
+          <div className="form-update-image">
+            <span>
+              <img
+                style={{ padding: '10px' }}
+                width={150}
+                height={150}
+                src={humanProfileState.fileUpload ? URL.createObjectURL(humanProfileState.fileUpload) : humanProfileState.image}
+                alt="Photos"
+              />
+            </span>
             <input
               className="form-desc-cat-input"
               name="fileUpload"
               onChange={(e) => {
-                humanProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+                humanProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
               }}
               type="file"
               accept="image/*"
               id="fileUpload"
             />
-          </section>
+          </div>
           <section className="form-update-all-informations">
             <section className="form-update-informations">
               <section className="form-update-input">
@@ -164,64 +170,70 @@ function UpdateProfileHuman() {
 
             <section className="form-update-radios">
               <Form.Group grouped>
-                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
+                <label htmlFor="has_pets">Avez-vous des animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasPets"
+                    name="has_pets"
                     value="true"
-                    checked={humanProfileState.hasPets === 'true'}
+                    checked={typeof humanProfileState.has_pets === 'boolean' ? humanProfileState.has_pets.toString() === 'true'
+                      : humanProfileState.has_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasPets"
+                    name="has_pets"
                     value="false"
-                    checked={humanProfileState.hasPets === 'false'}
+                    checked={typeof humanProfileState.has_pets === 'boolean' ? humanProfileState.has_pets.toString() === 'false'
+                      : humanProfileState.has_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
+                <label htmlFor="has_kids">Avez-vous des enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasKids"
+                    name="has_kids"
                     value="true"
-                    checked={humanProfileState.hasKids === 'true'}
+                    checked={typeof humanProfileState.has_kids === 'boolean' ? humanProfileState.has_kids.toString() === 'true'
+                      : humanProfileState.has_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasKids"
+                    name="has_kids"
                     value="false"
-                    checked={humanProfileState.hasKids === 'false'}
+                    checked={typeof humanProfileState.has_kids === 'boolean' ? humanProfileState.has_kids.toString() === 'false'
+                      : humanProfileState.has_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
+                <label htmlFor="has_garden">Avez-vous un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasGarden"
+                    name="has_garden"
                     value="true"
-                    checked={humanProfileState.hasGarden === 'true'}
+                    checked={typeof humanProfileState.has_garden === 'boolean' ? humanProfileState.has_garden.toString() === 'true'
+                      : humanProfileState.has_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasGarden"
+                    name="has_garden"
                     value="false"
-                    checked={humanProfileState.hasGarden === 'false'}
+                    checked={typeof humanProfileState.garden === 'boolean' ? humanProfileState.has_garden.toString() === 'false'
+                      : humanProfileState.has_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>

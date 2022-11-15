@@ -19,6 +19,13 @@ export async function updateCatProfileRequest(data) {
   return response;
 }
 
+export async function updateCatImageProfileRequest(data) {
+  const response = await apiInstance.patch('/catupdateImage', data, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return response;
+}
+
 export async function humanProfilesRequest() {
   const response = await apiInstance.get('/userhumans');
   return response.data;
