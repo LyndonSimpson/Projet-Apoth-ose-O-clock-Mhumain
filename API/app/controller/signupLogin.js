@@ -77,7 +77,8 @@ const userController = {
                 };
                 const user_id = sessionUser.id
                 const jwt = jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions);
-                //const storeToken = await tokenDataMapper.store(user_id, jwt); --------------------- to store token in DB !
+                const jwt1 = `Bearer ${jwt}`;
+                const storeToken = await tokenDataMapper.store(user_id, jwt1); //--------------------- to store token in DB !
                 console.log('<< 200 user logged in');
                 res.json({
                     logged: true,

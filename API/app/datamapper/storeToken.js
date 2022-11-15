@@ -21,10 +21,18 @@ const tokenDattaMapper = {
    * @param {*} user_id user id in token
    * @returns user_token
    */
-  async get(user_id) {
+  async get(token) {
     const query = {
-        text: `SELECT * FROM user_tokens WHERE account_id = $1`,
-        values: [user_id]
+        text: `SELECT id FROM user_tokens WHERE content = $1`,
+        values: [token]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
+  async delete(token) {
+    const query = {
+        text: `DELETE FROM user_tokens WHERE content = $1`,
+        values: [token]
     };
     const result = await database.query(query);
     return result.rows;

@@ -3,6 +3,8 @@ const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
 const userLogoutController = require('../controller/userLogout');
+const checkTokenMiddleware = require ('../middlewares/checkToken');
+const checkToken = require('../middlewares/checkToken');
  
 const router = Router();
 
@@ -67,7 +69,7 @@ const router = Router();
     * @description gets all the owned cat profiles of the logged in user. 
     *  - category identifier
     */
-    router.get("/usercats", authorizationMiddleware, userController.getMyCatProfiles);
+    router.get("/usercats",checkToken, authorizationMiddleware, userController.getMyCatProfiles);
 
     /**
     * DELETE /user
