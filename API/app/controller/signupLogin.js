@@ -1,4 +1,5 @@
 const dataMapper = require("../datamapper/user");
+const tokenDataMapper = require('../datamapper/storeToken');
 const emailValidator = require('email-validator');
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -74,11 +75,14 @@ const userController = {
                     algorithm: 'HS256',
                     expiresIn: '3h'
                 };
+                const user_id = sessionUser.id
+                const jwt = jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions);
+                const storeToken = await tokenDataMapper.store(user_id, jwt);
                 console.log('<< 200 user logged in');
                 res.json({
                     logged: true,
                     pseudo: sessionUser.email,
-                    token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
+                    token: jwt,
                 });
             } else {
                 console.log('<< 401 UNAUTHORIZED');
