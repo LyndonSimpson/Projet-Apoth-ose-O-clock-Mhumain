@@ -64,7 +64,7 @@ function FormHumanDesc({
   };
 
   return (
-    <div>
+    <div className="form-container">
       {errorMessage
           && (
           <Message
@@ -143,9 +143,7 @@ function FormHumanDesc({
       {SucceededCreateHumanProfil && (
         <Navigate to="/profileselect" />
       )}
-
     </div>
-
   );
 }
 
