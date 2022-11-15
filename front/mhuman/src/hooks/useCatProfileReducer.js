@@ -7,11 +7,11 @@ const catProfileInitialState = {
   age: '',
   color: '',
   sexe: 'male',
-  breed: 'Chat de gouttière',
-  likesPets: 'false',
-  likesKids: 'false',
-  needsGarden: 'false',
-  fileUpload: [],
+  race: 'Chat de gouttière',
+  likes_pets: 'false',
+  likes_kids: 'false',
+  needs_garden: 'false',
+  fileUpload: null,
 };
 
 function catProfileReducer(oldState, action) {

@@ -8,10 +8,10 @@ const dataCatProfile = {
   age: '',
   color: '',
   sexe: '',
-  breed: '',
-  likesPets: 'false',
-  likesKids: 'false',
-  needsGarden: 'false',
+  race: '',
+  likes_pets: 'false',
+  likes_kids: 'false',
+  needs_garden: 'false',
   fileUpload: [],
 };
 

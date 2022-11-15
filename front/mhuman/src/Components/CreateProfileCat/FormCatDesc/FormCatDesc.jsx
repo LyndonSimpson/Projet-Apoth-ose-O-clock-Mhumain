@@ -39,17 +39,17 @@ function FormCatDesc({
     evt.preventDefault();
 
     const data = new FormData();
-    data.append('fileUpload', catProfileState.fileUpload[0]);
+    data.append('fileUpload', catProfileState.fileUpload);
     data.append('pseudo', catProfileState.pseudo);
     data.append('name', catProfileState.name);
     data.append('description', catProfileState.description);
     data.append('age', catProfileState.age);
-    data.append('race', catProfileState.breed);
+    data.append('race', catProfileState.race);
     data.append('sexe', catProfileState.sexe);
     data.append('color', catProfileState.color);
-    data.append('likes_pets', catProfileState.likesPets);
-    data.append('likes_kids', catProfileState.likesKids);
-    data.append('needs_garden', catProfileState.needsGarden);
+    data.append('likes_pets', catProfileState.likes_pets);
+    data.append('likes_kids', catProfileState.likes_kids);
+    data.append('needs_garden', catProfileState.needs_garden);
 
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -92,24 +92,23 @@ function FormCatDesc({
         />
 
         <div>
-          {
-          Array.from(catProfileState.fileUpload).map((item) => (
-            <span>
-              <img
-                style={{ padding: '10px' }}
-                width={150}
-                height={150}
-                src={item ? URL.createObjectURL(item) : null}
-                alt="Photos"
-              />
-            </span>
-          ))
-        }
+          {catProfileState.fileUpload
+          && (
+          <span>
+            <img
+              style={{ padding: '10px' }}
+              width={150}
+              height={150}
+              src={URL.createObjectURL(catProfileState.fileUpload)}
+              alt="Photos"
+            />
+          </span>
+          )}
           <input
             className="form-desc-cat-input"
             name="fileUpload"
             onChange={(e) => {
-              catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
             }}
             type="file"
             accept="image/*"

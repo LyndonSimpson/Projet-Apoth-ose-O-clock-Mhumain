@@ -51,7 +51,7 @@ function FormCatInformations({
       setErrorMessage('Le sexe est obligatoire');
       return;
     }
-    if (!catProfileState.breed.trim()) {
+    if (!catProfileState.race.trim()) {
       setErrorMessage('La race est obligatoire');
       return;
     }
@@ -182,10 +182,10 @@ function FormCatInformations({
               <Dropdown
                 className="form-informations-dropdown"
                 placeholder="Sélectionnez la race du chat"
-                name="breed"
+                name="race"
                 fluid
                 selection
-                value={catProfileState.breed}
+                value={catProfileState.race}
                 options={listOption}
                 onChange={handleDropdownChange}
               />
@@ -202,64 +202,64 @@ function FormCatInformations({
 
             <div className="form-informations-radios">
               <Form.Group>
-                <label htmlFor="likesPets">Aime-t-il les autres animaux ?</label>
+                <label htmlFor="likes_pets">Aime-t-il les autres animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="likesPets"
+                    name="likes_pets"
                     value="true"
-                    checked={catProfileState.likesPets === 'true'}
+                    checked={catProfileState.likes_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="likesPets"
+                    name="likes_pets"
                     value="false"
-                    checked={catProfileState.likesPets === 'false'}
+                    checked={catProfileState.likes_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="likesKids">Aime-t-il les enfants ?</label>
+                <label htmlFor="likes_kids">Aime-t-il les enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="likesKids"
+                    name="likes_kids"
                     value="true"
-                    checked={catProfileState.likesKids === 'true'}
+                    checked={catProfileState.likes_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="likesKids"
+                    name="likes_kids"
                     value="false"
-                    checked={catProfileState.likesKids === 'false'}
+                    checked={catProfileState.likes_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="needsGarden">A-t-il besoin d'un jardin ?</label>
+                <label htmlFor="needs_garden">A-t-il besoin d'un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="needsGarden"
+                    name="needs_garden"
                     value="true"
-                    checked={catProfileState.needsGarden === 'true'}
+                    checked={catProfileState.needs_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="needsGarden"
+                    name="needs_garden"
                     value="false"
-                    checked={catProfileState.needsGarden === 'false'}
+                    checked={catProfileState.needs_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>

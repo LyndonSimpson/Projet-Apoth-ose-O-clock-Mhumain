@@ -5,12 +5,12 @@ import './updateprofilecatstyles.scss';
 import {
   Button, Icon, TextArea, Input, Form, Radio, Dropdown, Message,
 } from 'semantic-ui-react';
-import { Navigate, redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { updateCatProfileRequest } from '../../requests/profilesRequest';
 import { deleteCatProfile } from '../../requests/deleteProfileRequest';
 import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
 import { setToken } from '../../requests/instance';
-import { getOneCatRequest } from '../../requests/getCatRequest';
+import { getOneCatRequest, getAllCatRequest } from '../../requests/getCatRequest';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 
@@ -19,12 +19,15 @@ function UpdateProfileCat() {
   const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [existedPseudo, setExistedPseudo] = useState(true);
+  const [cats, setCats] = useState([]);
 
+  const PseudoExist = (param) => cats.some((e) => e.pseudo === param);
   const fetchData = async (data) => {
     try {
       const response = await updateCatProfileRequest(data);
       console.log(response);
-      if (response[0].pseudo === catProfileState.pseudo) {
+      if (response.status === 200) {
         setUpdateUpdateCatProfil(true);
       }
     } catch (error) {
@@ -40,6 +43,10 @@ function UpdateProfileCat() {
 
   React.useEffect(() => {
     setToken(localStorage.getItem('Token'));
+    async function getCats() {
+      const response = await getAllCatRequest();
+      setCats(response);
+    }
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -65,13 +72,15 @@ function UpdateProfileCat() {
       setListOption(listOptions);
     }
     getCatBreed();
-    getOneCatRequest().then((response) => { catProfileDispatch(getActionInitValue(response[0])); });
+    getOneCatRequest().then((response) => {
+      catProfileDispatch(getActionInitValue(response[0])); console.log(response[0]);
+    });
   }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     const data = new FormData();
-    data.append('fileUpload', catProfileState.fileUpload[0]);
+    data.append('fileUpload', catProfileState.fileUpload);
     data.append('pseudo', catProfileState.pseudo);
     data.append('name', catProfileState.name);
     data.append('description', catProfileState.description);
@@ -79,9 +88,9 @@ function UpdateProfileCat() {
     data.append('race', catProfileState.race);
     data.append('sexe', catProfileState.sexe);
     data.append('color', catProfileState.color);
-    data.append('likes_pets', catProfileState.likesPets);
-    data.append('likes_kids', catProfileState.likesKids);
-    data.append('needs_garden', catProfileState.needsGarden);
+    data.append('likes_pets', catProfileState.likes_pets);
+    data.append('likes_kids', catProfileState.likes_kids);
+    data.append('needs_garden', catProfileState.needs_garden);
 
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -93,10 +102,6 @@ function UpdateProfileCat() {
     }
     if (!catProfileState.pseudo.trim()) {
       setErrorMessage('Le pseudo est obligatoire');
-      return;
-    }
-    if (!catProfileState.age.trim()) {
-      setErrorMessage('L\'age est obligatoire');
       return;
     }
     if (!catProfileState.color.trim()) {
@@ -128,6 +133,15 @@ function UpdateProfileCat() {
     setUpdateUpdateCatProfil(true);
   };
 
+  const handlePseudoFieldChange = (e) => {
+    catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
+      setExistedPseudo(true);
+    } else {
+      setExistedPseudo(false);
+    }
+  };
+
   return (
     <div className="update-page">
       <Header />
@@ -147,11 +161,20 @@ function UpdateProfileCat() {
           className="form-update-cat"
         >
           <div className="form-update-image">
+            <span>
+              <img
+                style={{ padding: '10px' }}
+                width={150}
+                height={150}
+                src={catProfileState.fileUpload ? URL.createObjectURL(catProfileState.fileUpload) : catProfileState.image}
+                alt="Photos"
+              />
+            </span>
             <input
               className="form-desc-cat-input"
               name="fileUpload"
               onChange={(e) => {
-                catProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+                catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
               }}
               type="file"
               accept="image/*"
@@ -175,8 +198,9 @@ function UpdateProfileCat() {
                     id="form-input-control-last-name"
                     placeholder="Pseudo"
                     name="pseudo"
+                    icon={existedPseudo ? 'close' : 'check'}
                     value={catProfileState.pseudo}
-                    onChange={handleTextFieldChange}
+                    onChange={handlePseudoFieldChange}
                   />
                   <Input
                     className="form-informations-input"
@@ -214,12 +238,11 @@ function UpdateProfileCat() {
               />
               <Dropdown
                 className="form-informations-dropdown"
-                clearable
                 placeholder="Sélectionnez la race du chat"
-                name="breed"
+                name="race"
                 fluid
                 selection
-                value={catProfileState.breed}
+                value={catProfileState.race}
                 options={listOption}
                 onChange={handleDropdownChange}
               />
@@ -236,64 +259,70 @@ function UpdateProfileCat() {
 
             <div className="form-update-radios">
               <Form.Group grouped>
-                <label htmlFor="likesPets">Aime-t-il les animaux ?</label>
+                <label htmlFor="likes_pets">Aime-t-il les animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="likesPets"
+                    name="likes_pets"
                     value="true"
-                    checked={catProfileState.likesPets === 'true'}
+                    checked={typeof catProfileState.likes_pets === 'boolean' ? catProfileState.likes_pets.toString() === 'true'
+                      : catProfileState.likes_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="likesPets"
+                    name="likes_pets"
                     value="false"
-                    checked={catProfileState.likesPets === 'false'}
+                    checked={typeof catProfileState.likes_pets === 'boolean' ? catProfileState.likes_pets.toString() === 'false'
+                      : catProfileState.likes_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="likesKids">Aime-t-il les enfants ?</label>
+                <label htmlFor="likes_kids">Aime-t-il les enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="likesKids"
+                    name="likes_kids"
                     value="true"
-                    checked={catProfileState.likesKids === 'true'}
+                    checked={typeof catProfileState.likes_kids === 'boolean' ? catProfileState.likes_kids.toString() === 'true'
+                      : catProfileState.likes_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="likesKids"
+                    name="likes_kids"
                     value="false"
-                    checked={catProfileState.likesKids === 'false'}
+                    checked={typeof catProfileState.likes_kids === 'boolean' ? catProfileState.likes_kids.toString() === 'false'
+                      : catProfileState.likes_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="needsGarden">A-t-il besoin d'un jardin ?</label>
+                <label htmlFor="needs_garden">A-t-il besoin d'un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="needsGarden"
+                    name="needs_garden"
                     value="true"
-                    checked={catProfileState.needsGarden === 'true'}
+                    checked={typeof catProfileState.needs_garden === 'boolean' ? catProfileState.needs_garden.toString() === 'true'
+                      : catProfileState.needs_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="needsGarden"
+                    name="needs_garden"
                     value="false"
-                    checked={catProfileState.needsGarden === 'false'}
+                    checked={typeof catProfileState.needs_garden === 'boolean' ? catProfileState.needs_garden.toString() === 'false'
+                      : catProfileState.needs_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
