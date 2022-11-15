@@ -10,7 +10,7 @@ const humanController = {
    * @returns {JSON} if checks work and client has user token, new cat
    */
   newHuman: async (req, res) => {
-    const id = re.auht.userId;
+    const id = req.auth.userId;
     const fakeObject = {};
     try {
       const AlreadyExists = await dataMapper.getMyhumans(id);
