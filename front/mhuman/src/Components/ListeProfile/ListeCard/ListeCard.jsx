@@ -12,7 +12,7 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  id, hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, handleAddFav, email, favorites, handleDeleteFav,
+  id, has_garden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, handleAddFav, email, favorites, handleDeleteFav,
 }) {
   // Fonction de comparaison pour savoir si un profil fait partie des favoris
   const ProfileIsFavorites = (param) => favorites.some((e) => e.id === param);
@@ -30,7 +30,7 @@ function ListeCard({
           </span>
         </Card.Meta>
         <Card.Description className="card-icon">
-          {hasGarden ? <IconGarden /> : <IconNoGarden />}
+          {has_garden ? <IconGarden /> : <IconNoGarden />}
           {hasPet ? <IconPet /> : <IconNoPet />}
           {hasKid ? <IconKid /> : <IconNoKid />}
         </Card.Description>
@@ -60,7 +60,7 @@ function ListeCard({
             className="card-icon-link-item"
             name="expand"
             size="big"
-            onClick={() => toggleProfile(hasGarden, hasPet, hasKid, name, age, image, race, sexe, color)}
+            onClick={() => toggleProfile(has_garden, hasPet, hasKid, name, age, image, race, sexe, color)}
           />
         </div>
       </Card.Content>
@@ -72,7 +72,7 @@ export default React.memo(ListeCard);
 
 ListeCard.propTypes = {
   toggleProfile: PropTypes.func.isRequired,
-  hasGarden: PropTypes.bool.isRequired,
+  has_garden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
   age: PropTypes.number.isRequired,

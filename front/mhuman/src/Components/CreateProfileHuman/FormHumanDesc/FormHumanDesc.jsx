@@ -44,9 +44,9 @@ function FormHumanDesc({
     data.append('name', humanProfileState.name);
     data.append('description', humanProfileState.description);
     data.append('age', humanProfileState.age);
-    data.append('has_pets', humanProfileState.hasPets);
-    data.append('has_kids', humanProfileState.hasKids);
-    data.append('has_garden', humanProfileState.hasGarden);
+    data.append('has_pets', humanProfileState.has_pets);
+    data.append('has_kids', humanProfileState.has_kids);
+    data.append('has_garden', humanProfileState.has_garden);
 
     if (!humanProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');

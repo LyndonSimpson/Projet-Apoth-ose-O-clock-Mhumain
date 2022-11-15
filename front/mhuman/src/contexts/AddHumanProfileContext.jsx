@@ -6,9 +6,9 @@ const dataHumanProfile = {
   pseudo: '',
   description: '',
   age: '',
-  hasPets: 'false',
-  hasKids: 'false',
-  hasGarden: 'false',
+  has_pets: 'false',
+  has_kids: 'false',
+  has_garden: 'false',
   fileUpload: [],
 };
 
