@@ -9,14 +9,20 @@ import propTypes from 'prop-types';
 import FormHumanDesc from '../FormHumanDesc/FormHumanDesc';
 import useHumanProfileReducer, { getActionSetValue } from '../../../hooks/useHumanProfileReducer';
 import AddHumanProfileContext from '../../../contexts/AddHumanProfileContext';
+import { setToken } from '../../../requests/instance';
+import { getAllHumanRequest } from '../../../requests/getHumanRequest';
 
 function FormHumanInformations({
   handleReturnClick,
 }) {
-  const { addHumanInformation, humanInformation } = useContext(AddHumanProfileContext);
+  const { addHumanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
+  const [humans, setHumans] = useState([]);
+  const [existedPseudo, setExistedPseudo] = useState(true);
   const [next, setNext] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const PseudoExist = (param) => humans.some((e) => e.pseudo === param);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!humanProfileState.name.trim()) {
@@ -25,6 +31,10 @@ function FormHumanInformations({
     }
     if (!humanProfileState.pseudo.trim()) {
       setErrorMessage('Le pseudo est obligatoire');
+      return;
+    }
+    if (PseudoExist(humanProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déja');
       return;
     }
     if (!humanProfileState.age.trim()) {
@@ -38,17 +48,33 @@ function FormHumanInformations({
     setErrorMessage('');
   };
 
+  const handlePseudoFieldChange = (e) => {
+    humanProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
+      setExistedPseudo(true);
+    } else {
+      setExistedPseudo(false);
+    }
+  };
+
   const handleTextFieldChange = (e) => {
     humanProfileDispatch(getActionSetValue(e.target.name, e.target.value));
   };
-
   const handleRadioFieldChange = (e, { name, value }) => {
     humanProfileDispatch(getActionSetValue(name, value));
   };
-
   const handleReturnButton = () => {
     setNext('');
   };
+
+  React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
+    async function getHumans() {
+      const response = await getAllHumanRequest();
+      setHumans(response);
+    }
+    getHumans();
+  }, []);
 
   return (
     <>
@@ -79,8 +105,9 @@ function FormHumanInformations({
                 id="form-input-control-last-name"
                 placeholder="Pseudo"
                 name="pseudo"
+                icon={existedPseudo ? 'close' : 'check'}
                 value={humanProfileState.pseudo}
-                onChange={handleTextFieldChange}
+                onChange={handlePseudoFieldChange}
               />
               <Input
                 className="form-informations-input"

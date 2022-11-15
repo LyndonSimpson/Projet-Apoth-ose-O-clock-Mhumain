@@ -21,8 +21,7 @@ function FormCatDesc({
   const fetchData = async (data) => {
     try {
       const response = await addCatProfileRequest(data);
-      console.log(response);
-      if (response[0].pseudo === catProfileState.pseudo) {
+      if (response.status === 200) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
@@ -32,8 +31,8 @@ function FormCatDesc({
   };
 
   React.useEffect(() => {
-    catProfileDispatch(getActionInitValue(catInformation));
     setToken(localStorage.getItem('Token'));
+    catProfileDispatch(getActionInitValue(catInformation));
   }, []);
 
   const handleSubmit = (evt) => {
