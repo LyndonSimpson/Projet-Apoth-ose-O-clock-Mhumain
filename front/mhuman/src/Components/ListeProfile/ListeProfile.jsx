@@ -89,6 +89,10 @@ function ListeProfile({ fav }) {
     getListProfiles();
     getFavorites();
   }, []);
+  // console.log('LOG >>>>', modaleProfile);
+  // console.log('HUMAN PROFILE>>>>', humansProfile);
+  // console.log('CAT PROFILE >>>>', catsProfile); modaleProfile.needs_garden
+  console.log('HERE >>>>', modaleProfile.hasGarden);
 
   return (
     <div className="listeProfile">
@@ -155,9 +159,9 @@ function ListeProfile({ fav }) {
                   <ConsultProfile
                     isCat
                     toggleProfile={toggleProfile}
-                    hasGarden={modaleProfile.needs_garden}
-                    hasKid={modaleProfile.likes_kids}
-                    hasPet={modaleProfile.likes_pets}
+                    hasGarden={modaleProfile.hasGarden}
+                    hasKid={modaleProfile.hasKid}
+                    hasPet={modaleProfile.hasPet}
                     name={modaleProfile.name}
                     age={modaleProfile.age}
                     description={modaleProfile.description}
@@ -193,9 +197,9 @@ function ListeProfile({ fav }) {
                 {openProfile && (
                 <ConsultProfile
                   toggleProfile={toggleProfile}
-                  hasGarden={modaleProfile.has_garden}
-                  hasKid={modaleProfile.has_kids}
-                  hasPet={modaleProfile.has_pets}
+                  hasGarden={modaleProfile.hasGarden}
+                  hasKid={modaleProfile.haKid}
+                  hasPet={modaleProfile.hasPet}
                   name={modaleProfile.name}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
