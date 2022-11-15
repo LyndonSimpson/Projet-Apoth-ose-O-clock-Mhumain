@@ -23,7 +23,7 @@ const tokenDattaMapper = {
    */
   async get(token) {
     const query = {
-        text: `SELECT id FROM user_tokens WHERE content = $1`,
+        text: `SELECT content FROM user_tokens WHERE content = $1`,
         values: [token]
     };
     const result = await database.query(query);
