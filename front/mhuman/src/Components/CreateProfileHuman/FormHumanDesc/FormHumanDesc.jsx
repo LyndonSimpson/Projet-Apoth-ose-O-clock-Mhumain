@@ -1,7 +1,6 @@
 import './formhumandescstyles.scss';
 import React, { useState, useContext } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
 import {
   Button, TextArea, Icon, Message,
 } from 'semantic-ui-react';
@@ -22,8 +21,7 @@ function FormHumanDesc({
   const fetchData = async (data) => {
     try {
       const response = await addHumanProfileRequest(data);
-      console.log(response);
-      if (response[0].pseudo === humanProfileState.pseudo) {
+      if (response.status === 200) {
         setSucceededCreateHumanProfil(true);
       }
     } catch (error) {
@@ -33,9 +31,7 @@ function FormHumanDesc({
   };
 
   React.useEffect(() => {
-    console.log('context>>>', humanInformation);
     humanProfileDispatch(getActionInitValue(humanInformation));
-    console.log('state>>>', humanProfileState);
     setToken(localStorage.getItem('Token'));
   }, []);
 
@@ -66,23 +62,6 @@ function FormHumanDesc({
   const handleDismiss = () => {
     setErrorMessage('');
   };
-
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   const data = new FormData();
-
-  //  for let (i = 0; i < images.length; i++) {
-  //  data.append('images', images[i])
-  // }
-
-  //   axios.post('http://localhost:3001/human', data)
-  //     .then((e) => {
-  //       console.log('Success');
-  //     })
-  //     .catch((e) => {
-  //       console.log('Error', e);
-  //     });
-  // };
 
   return (
     <div>

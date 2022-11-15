@@ -67,7 +67,7 @@ function FormCatInformations({
 
   const handlePseudoFieldChange = (e) => {
     catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
-    if (PseudoExist(e.target.value)) {
+    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
       setExistedPseudo(true);
     } else {
       setExistedPseudo(false);
