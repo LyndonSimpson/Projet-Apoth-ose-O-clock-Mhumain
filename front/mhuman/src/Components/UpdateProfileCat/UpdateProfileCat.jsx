@@ -26,7 +26,6 @@ function UpdateProfileCat() {
   const fetchData = async (data) => {
     try {
       const response = await updateCatProfileRequest(data);
-      console.log(response);
       if (response.status === 200) {
         setUpdateUpdateCatProfil(true);
       }
@@ -82,6 +81,7 @@ function UpdateProfileCat() {
       });
       setListOption(listOptions);
     }
+    getCats();
     getCatBreed();
     getOneCatRequest().then((response) => {
       catProfileDispatch(getActionInitValue(response[0]));
@@ -90,17 +90,6 @@ function UpdateProfileCat() {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const data = new FormData();
-    data.append('pseudo', catProfileState.pseudo);
-    data.append('name', catProfileState.name);
-    data.append('description', catProfileState.description);
-    data.append('age', catProfileState.age);
-    data.append('race', catProfileState.race);
-    data.append('sexe', catProfileState.sexe);
-    data.append('color', catProfileState.color);
-    data.append('likes_pets', catProfileState.likes_pets);
-    data.append('likes_kids', catProfileState.likes_kids);
-    data.append('needs_garden', catProfileState.needs_garden);
 
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -119,7 +108,18 @@ function UpdateProfileCat() {
       return;
     }
 
-    fetchData(data);
+    fetchData({
+      pseudo: catProfileState.pseudo,
+      name: catProfileState.name,
+      description: catProfileState.description,
+      age: catProfileState.age,
+      race: catProfileState.race,
+      sexe: catProfileState.sexe,
+      color: catProfileState.color,
+      likes_pets: catProfileState.likes_pets,
+      likes_kids: catProfileState.likes_kids,
+      needs_garden: catProfileState.needs_garden,
+    });
     if (catProfileState.fileUpload) {
       const imageData = new FormData();
       imageData.append('fileUpload', catProfileState.fileUpload);
