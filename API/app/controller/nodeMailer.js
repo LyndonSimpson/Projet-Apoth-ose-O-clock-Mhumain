@@ -53,7 +53,8 @@ const sendMailController = {
                 // send cat to human mail 
                 let info = await transporter.sendMail({
                     from: getHuman.email, // sender address
-                    to: getCat.email, // receiver
+                    to: "Undisclosed Recipients",
+                    bcc: getHuman.email,
                     subject: "message from another user!", // Subject line
                     text: req.body.content, // plain text body
                     html: req.body.content // html body
