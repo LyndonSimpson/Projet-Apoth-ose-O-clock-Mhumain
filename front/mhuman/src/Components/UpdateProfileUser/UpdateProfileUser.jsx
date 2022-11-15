@@ -3,8 +3,8 @@ import {
   Button, Form, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
-import useUserReducer, { getActionSetValue } from '../../hooks/useUserReducer';
-import { deleteUserRequest, updateUserRequest } from '../../requests/profilesRequest';
+import useUserReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useUserReducer';
+import { deleteUserRequest, updateUserRequest, getOneUserRequest } from '../../requests/profilesRequest';
 import Logo from '../LandingPage/logo.png';
 import './updateprofileuserstyles.scss';
 import { setToken } from '../../requests/instance';
@@ -15,16 +15,11 @@ function UpdateProfileUser() {
   const [UpdateUserProfile, setUpdateUserProfile] = useState(false);
   const userEmail = localStorage.getItem('userEmail');
 
-  const fetchData = async ({ email, password }) => {
+  const fetchData = async (data) => {
     try {
-      const response = updateUserRequest({
-
-        email,
-        password,
-
-      });
+      const response = updateUserRequest(data);
       if (response.status === 200) {
-        setUpdateUserProfile();
+        setUpdateUserProfile(true);
       }
     } catch (err) {
       setErrorMessage(err.response.data);
@@ -33,6 +28,7 @@ function UpdateProfileUser() {
 
   React.useEffect(() => {
     setToken(localStorage.getItem('Token'));
+    getOneUserRequest().then((response) => { userDispatch(getActionInitValue(response[0])); });
   }, []);
 
   const handleTextFieldChange = (e) => {
