@@ -10,7 +10,6 @@ const userLogout = {
      * @returns empty - status 200
      */
      async disconnect(req, res) {
-         console.log(req);
         jwt({ secret: jwtSecret, algorithms: ['HS256'] });
         console.log(req);
         const id = req.auth.userId;
