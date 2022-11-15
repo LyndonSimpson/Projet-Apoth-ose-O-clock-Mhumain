@@ -80,7 +80,15 @@ const upload = multer({
     * @description update an existing cat profile into the database with id passed in params
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/catupdate", authorizationMiddleware, upload.single("fileUpload"), catController.update);  // enlever le is_adopted si on fait une route patch dédiée à patch seulement le "is_adopted" et le "owner_id"
+    router.patch("/catupdate", authorizationMiddleware, upload.single("fileUpload"), catController.update); 
+    
+    /**
+    * PATCH /cat
+    * @summary update cat profile
+    * @description update an existing cat profile into the database with id passed in params
+    * @param {number} id.path.required - category identifier
+    */
+     router.patch("/catupdateImage", authorizationMiddleware, upload.single("fileUpload"), catController.updateImage);
 
     /**
     * PATCH /cat/:id

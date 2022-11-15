@@ -27,10 +27,10 @@ const sendMailController = {
             if (req.auth.humanId) {
                 const senderMail = await userDataMapper.humanMail(req.auth.humanId);
                 const getHuman = senderMail[0];
-                console.log('getHuman------------>', getHuman);
+                //console.log('getHuman------------>', getHuman);
                 const receiverMail = await userDataMapper.catMail(req.body.receiver_profile_id);
                 const getCat = receiverMail[0];
-                console.log('getCat-------------->', getCat);
+                //console.log('getCat-------------->', getCat);
                 // send human to cat mail 
                 let info = await transporter.sendMail({
                     from: getHuman.email, // sender address
@@ -46,10 +46,10 @@ const sendMailController = {
             } else if (req.auth.catId) {
                 const senderMail = await userDataMapper.catMail(req.auth.catId);
                 const getCat = senderMail[0];
-                console.log('getCat---------------->', getCat);
+                // console.log('getCat---------------->', getCat);
                 const receiverMail = await userDataMapper.catMail(req.body.receiver_profile_id);
                 const getHuman = receiverMail[0];
-                console.log('getHuman-------------->', getHuman);
+                //console.log('getHuman-------------->', getHuman);
                 // send cat to human mail 
                 let info = await transporter.sendMail({
                     from: getHuman.email, // sender address

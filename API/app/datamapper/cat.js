@@ -138,6 +138,23 @@ const catDataMapper = {
         return result.rows;
     },
     /**
+     * updates the image of the cat
+     * 
+     * @param {*} image new image
+     * @param {*} id id of cat ot update
+     * @returns 
+     */
+    async updateCat(image, id) {
+        const query = {
+            text: `UPDATE cat
+            SET image = $1
+            WHERE id = $2`,
+            values: [image, id]
+        };
+        const result = await database.query(query);
+        return result.rows;
+    },
+    /**
      * changes the cat info to is_adopted = true and gives the cat an owner id : this is the PK of the human that adopted the cat
      * 
      * @param {*} owner_id human id retrieved in human token
