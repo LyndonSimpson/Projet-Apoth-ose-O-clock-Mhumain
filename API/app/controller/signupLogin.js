@@ -90,7 +90,7 @@ const userController = {
         }
     },
     /**
-     * disconnects the user 
+     * disconnects the user /// still testing
      * @param {*} req 
      * @param {*} res 
      */
