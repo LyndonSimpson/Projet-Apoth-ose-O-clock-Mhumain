@@ -39,7 +39,7 @@ function FormHumanDesc({
     evt.preventDefault();
 
     const data = new FormData();
-    data.append('fileUpload', humanProfileState.fileUpload[0]);
+    data.append('fileUpload', humanProfileState.fileUpload);
     data.append('pseudo', humanProfileState.pseudo);
     data.append('name', humanProfileState.name);
     data.append('description', humanProfileState.description);
@@ -89,30 +89,28 @@ function FormHumanDesc({
         />
 
         <div>
-          {
-          Array.from(humanProfileState.fileUpload).map((item) => (
-            <span>
-              <img
-                style={{ padding: '10px' }}
-                width={150}
-                height={150}
-                src={item ? URL.createObjectURL(item) : null}
-                alt="Photos"
-              />
-            </span>
-          ))
-        }
+          {humanProfileState.fileUpload
+          && (
+          <span>
+            <img
+              style={{ padding: '10px' }}
+              width={150}
+              height={150}
+              src={URL.createObjectURL(humanProfileState.fileUpload)}
+              alt="Photos"
+            />
+          </span>
+          )}
           <input
             className="form-desc-human-input"
             name="fileUpload"
             onChange={(e) => {
-              humanProfileDispatch(getActionSetValue(e.target.name, e.target.files));
+              humanProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
             }}
             type="file"
             accept="image/*"
             id="fileUpload"
           />
-
         </div>
 
         <div className="form-desc-human-buttons">

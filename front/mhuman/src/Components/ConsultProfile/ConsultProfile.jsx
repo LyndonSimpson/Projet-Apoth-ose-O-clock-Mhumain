@@ -21,7 +21,7 @@ import './consultprofile.scss';
 function ConsultProfile({
   toggleProfile,
   isCat,
-  has_garden,
+  hasGarden,
   hasPet,
   hasKid,
   name,
@@ -61,7 +61,7 @@ function ConsultProfile({
           </h1>
           <header className="consultHeader">
             <div className="consultHeader-icons">
-              {has_garden ? <IconGarden /> : <IconNoGarden />}
+              {hasGarden ? <IconGarden /> : <IconNoGarden />}
               {hasPet ? <IconPet /> : <IconNoPet />}
             </div>
             <div className="consultHeader-imgWrapper">
@@ -114,7 +114,7 @@ export default React.memo(ConsultProfile);
 ConsultProfile.propTypes = {
   toggleProfile: PropTypes.func.isRequired,
   isCat: PropTypes.bool,
-  has_garden: PropTypes.bool.isRequired,
+  hasGarden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
   sexe: PropTypes.string.isRequired,

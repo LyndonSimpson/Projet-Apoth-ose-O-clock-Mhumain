@@ -261,7 +261,7 @@ function UpdateProfileHuman() {
                     label="Non"
                     name="has_garden"
                     value="false"
-                    checked={typeof humanProfileState.garden === 'boolean' ? humanProfileState.has_garden.toString() === 'false'
+                    checked={typeof humanProfileState.has_garden === 'boolean' ? humanProfileState.has_garden.toString() === 'false'
                       : humanProfileState.has_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />

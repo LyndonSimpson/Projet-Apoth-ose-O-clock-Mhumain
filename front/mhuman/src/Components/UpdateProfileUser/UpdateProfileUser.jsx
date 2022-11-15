@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import {
   Button, Form, Message,
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import useUserReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useUserReducer';
 import { deleteUserRequest, updateUserRequest, getOneUserRequest } from '../../requests/profilesRequest';
 import Logo from '../LandingPage/logo.png';
@@ -12,6 +12,7 @@ import { setToken } from '../../requests/instance';
 function UpdateProfileUser() {
   const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
+  const [accountDelete, setAccountDelete] = useState(false);
   const [UpdateUserProfile, setUpdateUserProfile] = useState(false);
 
   const fetchData = async (data) => {
@@ -49,7 +50,7 @@ function UpdateProfileUser() {
 
   const handleDelete = () => {
     deleteUserRequest();
-    setUpdateUserProfile(true);
+    setAccountDelete(true);
   };
 
   const handleDismiss = () => { // Gere la fermeture du message
@@ -105,7 +106,6 @@ function UpdateProfileUser() {
           <Button
             negative
             size="big"
-            type="submit"
             onClick={handleDelete}
           >
             Supprimer mon compte
@@ -118,6 +118,9 @@ function UpdateProfileUser() {
           content="Vos modifications ont bien été prises en compte"
           className="success-message"
         />
+      )}
+      { accountDelete && (
+        <Navigate to="/" />
       )}
     </div>
   );

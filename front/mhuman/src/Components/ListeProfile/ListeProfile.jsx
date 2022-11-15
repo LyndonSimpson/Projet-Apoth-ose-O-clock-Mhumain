@@ -27,7 +27,7 @@ function ListeProfile({ fav }) {
 
   const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description) => {
     setModaleProfile({
-      has_garden,
+      hasGarden,
       hasPet,
       hasKid,
       name,
@@ -96,7 +96,9 @@ function ListeProfile({ fav }) {
 
   return (
     <div className="listeProfile">
-      <Header />
+      <Header
+        type={type}
+      />
       <section className="liste-content">
         <h1 className="listeProfile-title">
           {fav ? 'Vos favoris' : 'Liste des profils' }
