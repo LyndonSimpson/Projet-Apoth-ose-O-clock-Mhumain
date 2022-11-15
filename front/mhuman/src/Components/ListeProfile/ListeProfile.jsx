@@ -25,7 +25,7 @@ function ListeProfile({ fav }) {
   const type = localStorage.getItem('type');
   const email = localStorage.getItem('userEmail');
 
-  const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color) => {
+  const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description) => {
     setModaleProfile({
       hasGarden,
       hasPet,
@@ -37,6 +37,7 @@ function ListeProfile({ fav }) {
       race,
       sexe,
       color,
+      description,
     });
     setOpenProfile(!openProfile);
   };
@@ -92,7 +93,6 @@ function ListeProfile({ fav }) {
   // console.log('LOG >>>>', modaleProfile);
   // console.log('HUMAN PROFILE>>>>', humansProfile);
   // console.log('CAT PROFILE >>>>', catsProfile); modaleProfile.needs_garden
-  console.log('HERE >>>>', modaleProfile.hasGarden);
 
   return (
     <div className="listeProfile">
@@ -110,6 +110,7 @@ function ListeProfile({ fav }) {
                     key={human.id}
                     favorites={favorites}
                     toggleProfile={toggleProfile}
+                    description={human.description}
                     hasGarden={human.has_garden}
                     hasKid={human.has_kids}
                     hasPet={human.has_pets}
@@ -125,9 +126,9 @@ function ListeProfile({ fav }) {
                 {openProfile && (
                 <ConsultProfile
                   toggleProfile={toggleProfile}
-                  hasGarden={modaleProfile.has_garden}
-                  hasKid={modaleProfile.has_kids}
-                  hasPet={modaleProfile.has_pets}
+                  hasGarden={modaleProfile.hasGarden}
+                  hasKid={modaleProfile.hasKids}
+                  hasPet={modaleProfile.hasPets}
                   name={modaleProfile.name}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
@@ -143,6 +144,7 @@ function ListeProfile({ fav }) {
                       key={cat.id}
                       favorites={favorites}
                       toggleProfile={toggleProfile}
+                      description={cat.description}
                       hasGarden={cat.needs_garden}
                       hasKid={cat.likes_kids}
                       hasPet={cat.likes_pets}
@@ -151,6 +153,9 @@ function ListeProfile({ fav }) {
                       image={cat.image}
                       id={cat.id}
                       email={email}
+                      sexe={cat.sexe}
+                      color={cat.color}
+                      race={cat.race}
                       handleAddFav={handleHumanAddCatToFavorite}
                       handleDeleteFav={handleDeleteFav}
                     />
@@ -192,18 +197,21 @@ function ListeProfile({ fav }) {
                     id={favorite.id}
                     email={email}
                     handleDeleteFav={handleDeleteFav}
+                    description={favorite.description}
                   />
                 ))}
                 {openProfile && (
                 <ConsultProfile
                   toggleProfile={toggleProfile}
                   hasGarden={modaleProfile.hasGarden}
-                  hasKid={modaleProfile.haKid}
+                  hasKid={modaleProfile.hasKid}
                   hasPet={modaleProfile.hasPet}
                   name={modaleProfile.name}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
                   image={modaleProfile.image}
+                  color={modaleProfile.color}
+                  sexe={modaleProfile.sexe}
                 />
                 )}
               </>
@@ -224,15 +232,19 @@ function ListeProfile({ fav }) {
                       id={favorite.id}
                       email={email}
                       handleDeleteFav={handleDeleteFav}
+                      sexe={favorite.sexe}
+                      description={favorite.description}
+                      race={favorite.race}
+                      color={favorite.color}
                     />
                   ))}
                   {openProfile && (
                   <ConsultProfile
                     isCat
                     toggleProfile={toggleProfile}
-                    hasGarden={modaleProfile.needs_garden}
-                    hasKid={modaleProfile.likes_kids}
-                    hasPet={modaleProfile.likes_pets}
+                    hasGarden={modaleProfile.hasGarden}
+                    hasKid={modaleProfile.hasKid}
+                    hasPet={modaleProfile.hasPet}
                     name={modaleProfile.name}
                     age={modaleProfile.age}
                     description={modaleProfile.description}
