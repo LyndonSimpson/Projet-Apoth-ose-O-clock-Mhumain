@@ -23,11 +23,13 @@
     border: 2px solid rgb(98, 0, 244);
     border-radius: 20px;
     padding: 0.5em;
+    margin: 0.5rem 0;
     text-align: left;
     display: flex;
     font-size: large;
     align-items: center;
     cursor: pointer;
+    color: white;
 
     &:hover {
         border: 2px solid rgb(250, 1, 221);
