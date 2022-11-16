@@ -13,6 +13,7 @@ import {
 import { getRandomHumanRequest } from '../../requests/getHumanRequest';
 import { getRandomCatRequest } from '../../requests/getCatRequest';
 import { setToken } from '../../requests/instance';
+import { getCatMessageRequest, getHumanMessageRequest } from '../../requests/messageRequests';
 
 const URL = 'https://catfact.ninja/fact';
 
@@ -53,6 +54,15 @@ function HomePage() {
     }
   }
 
+  const handleMessage = async (reiciverId) => {
+    if (type === 'cat') {
+      const response = await getCatMessageRequest(reiciverId);
+      console.log(response);
+    } else {
+      const response = await getHumanMessageRequest(reiciverId);
+      console.log(response);
+    }
+  };
   // Fonctions pour delete un favoris
   const handleDeleteFav = async (unlikedId) => {
     if (type === 'cat') {
@@ -62,7 +72,6 @@ function HomePage() {
     }
     getFavorites();
   };
-
   // Fonction pour ajouter un chat en favoris si on est humain
   const handleHumanAddCatToFavorite = async (likedId) => {
     await addCatFavoritesRequest(likedId);
@@ -113,6 +122,7 @@ function HomePage() {
                 image={randomCat.image}
                 handleAddFav={handleHumanAddCatToFavorite}
                 handleDeleteFav={handleDeleteFav}
+                handleMessage={handleMessage}
                 favorites={favorites}
                 email={email}
               />
@@ -132,6 +142,7 @@ function HomePage() {
                   image={randomHuman.image}
                   handleAddFav={handleCatAddHumanToFavorite}
                   handleDeleteFav={handleDeleteFav}
+                  handleMessage={handleMessage}
                   favorites={favorites}
                   email={email}
                 />
@@ -152,6 +163,7 @@ function HomePage() {
                 image={fav.image}
                 handleAddFav={handleCatAddHumanToFavorite}
                 handleDeleteFav={handleDeleteFav}
+                handleMessage={handleMessage}
                 favorites={favorites}
                 email={email}
               />

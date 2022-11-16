@@ -7,7 +7,7 @@ import LandingPage from './Components/LandingPage/LandingPage';
 import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 import HomePage from './Components/HomePage/HomePage';
 import ListeProfile from './Components/ListeProfile/ListeProfile';
-
+import Chat from './Components/Chat/Chat';
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
@@ -114,6 +114,11 @@ function App() {
               <Route
                 path="/faq"
                 element={<FAQ />}
+                end
+              />
+              <Route
+                path="/chat"
+                element={<Chat />}
                 end
               />
             </Routes>

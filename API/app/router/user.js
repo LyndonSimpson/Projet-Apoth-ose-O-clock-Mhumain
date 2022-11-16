@@ -3,7 +3,7 @@ const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
 const userLogoutController = require('../controller/userLogout');
-const checkToken = require('../middlewares/checkToken');
+//const checkToken = require('../middlewares/checkToken');
  
 const router = Router();
 
@@ -29,7 +29,7 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", checkToken, userLogoutController.disconnect);
+    router.get("/user/logout", authorizationMiddleware, userLogoutController.disconnect);
 
     /**
     * GET /user
@@ -44,7 +44,7 @@ const router = Router();
     * @description retrieves the user with the id passed in params from database.
     * @param {integer} request.params - id PK
     */
-    router.get("/userProfile", checkToken, authorizationMiddleware, userController.oneUser);
+    router.get("/userProfile", authorizationMiddleware, userController.oneUser);
 
     /**
     * PATCH /user
@@ -52,7 +52,7 @@ const router = Router();
     * @description update an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/user", checkToken, authorizationMiddleware, userController.update);
+    router.patch("/user", authorizationMiddleware, userController.update);
 
     /**
     * GET /userhumans
@@ -76,6 +76,6 @@ const router = Router();
     * @description delete an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/user", checkToken, authorizationMiddleware, userController.delete);
+    router.delete("/user", authorizationMiddleware, userController.delete);
 
 module.exports = router;
