@@ -22,6 +22,8 @@ function UpdateProfileHuman() {
   const [humans, setHumans] = useState([]);
   const Token = localStorage.getItem('Token');
 
+  const type = localStorage.getItem('type');
+
   const PseudoExist = (param) => humans.some((e) => e.pseudo === param);
   const fetchData = async (data) => {
     try {
@@ -302,7 +304,9 @@ function UpdateProfileHuman() {
         )}
       </section>
       <Footer />
-      <MobileNav />
+      <MobileNav
+        type={type}
+      />
       {!Token && (
         <Navigate to="/" />
       )}

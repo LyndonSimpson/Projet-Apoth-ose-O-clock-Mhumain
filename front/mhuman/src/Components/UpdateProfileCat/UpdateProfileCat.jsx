@@ -13,6 +13,7 @@ import { setToken } from '../../requests/instance';
 import { getOneCatRequest, getAllCatRequest } from '../../requests/getCatRequest';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
+import MobileNav from '../Header/MobileNav/MobileNav';
 
 function UpdateProfileCat() {
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
@@ -22,6 +23,7 @@ function UpdateProfileCat() {
   const [existedPseudo, setExistedPseudo] = useState(true);
   const [cats, setCats] = useState([]);
   const Token = localStorage.getItem('Token');
+  const type = localStorage.getItem('type');
 
   const PseudoExist = (param) => cats.some((e) => e.pseudo === param);
   const fetchData = async (data) => {
@@ -197,7 +199,7 @@ function UpdateProfileCat() {
               id="fileUpload"
             />
           </div>
-          <div className="form-update-all-informations">
+          <div className="form-update-cat-all-informations">
             <div className="form-update-informations">
               <div className="form-update-input">
                 <Form.Group className="form-informations">
@@ -375,8 +377,10 @@ function UpdateProfileCat() {
         <Navigate to="/profileselect" />
         )}
       </div>
-      {/* <MobileNav className="mobile-nav" /> */}
       <Footer />
+      <MobileNav
+        type={type}
+      />
       {!Token && (
         <Navigate to="/" />
       )}
