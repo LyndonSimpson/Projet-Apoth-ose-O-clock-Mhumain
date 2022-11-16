@@ -13,7 +13,7 @@ const checkToken = async (req, res, next) => {
     const bolean = check[0] || null;
     if (!bolean) {
         return res.send('you are not logged in');
-    } else {
+    } else if (bolean.content == token ) {
         next();
     }
 };

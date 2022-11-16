@@ -3,7 +3,6 @@ const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
 const userLogoutController = require('../controller/userLogout');
-const checkTokenMiddleware = require ('../middlewares/checkToken');
 const checkToken = require('../middlewares/checkToken');
  
 const router = Router();
@@ -30,7 +29,7 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", userLogoutController.disconnect);
+    router.get("/user/logout", checkToken, userLogoutController.disconnect);
 
     /**
     * GET /user
@@ -45,7 +44,7 @@ const router = Router();
     * @description retrieves the user with the id passed in params from database.
     * @param {integer} request.params - id PK
     */
-    router.get("/userProfile", authorizationMiddleware, userController.oneUser);
+    router.get("/userProfile", checkToken, authorizationMiddleware, userController.oneUser);
 
     /**
     * PATCH /user
@@ -53,7 +52,7 @@ const router = Router();
     * @description update an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.patch("/user", authorizationMiddleware, userController.update);
+    router.patch("/user", checkToken, authorizationMiddleware, userController.update);
 
     /**
     * GET /userhumans
@@ -61,7 +60,7 @@ const router = Router();
     * @description gets all the owned human profiles of the logged in user. 
     *  - category identifier
     */
-    router.get("/userhumans", authorizationMiddleware, userController.getMyHumanProfiles);
+    router.get("/userhumans", checkToken, authorizationMiddleware, userController.getMyHumanProfiles);
 
     /**
     * GET /user/cats
@@ -69,7 +68,7 @@ const router = Router();
     * @description gets all the owned cat profiles of the logged in user. 
     *  - category identifier
     */
-    router.get("/usercats", authorizationMiddleware, userController.getMyCatProfiles);
+    router.get("/usercats", checkToken, authorizationMiddleware, userController.getMyCatProfiles);
 
     /**
     * DELETE /user
@@ -77,8 +76,6 @@ const router = Router();
     * @description delete an existing user account into the database
     * @param {number} id.path.required - category identifier
     */
-    router.delete("/user", authorizationMiddleware, userController.delete);
-
-
+    router.delete("/user", checkToken, authorizationMiddleware, userController.delete);
 
 module.exports = router;
