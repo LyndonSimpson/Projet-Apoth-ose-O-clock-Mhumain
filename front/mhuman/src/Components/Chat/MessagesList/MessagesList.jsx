@@ -22,7 +22,7 @@ function MessagesList() {
           key={index}
           author={author}
           message={message}
-          isMine={author === 'Me'}
+          isMine={author === localStorage.getItem('profilePseudo')}
         />
       ))}
     </div>

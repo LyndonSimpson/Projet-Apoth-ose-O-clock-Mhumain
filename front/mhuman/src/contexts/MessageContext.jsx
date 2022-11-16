@@ -44,14 +44,14 @@ export function MessageContextProvider({
 }) {
   const [messages, setMessages] = useState(messagesData);
 
-  const sendMessage = (messageText) => {
+  const sendMessage = (obj) => {
     // on passe une fonction à setMessages, cette fonction prends l'ancienne valeur du state message, et retourne la nouvelle valeur
     // cela permet de rendre sendMessage agnostique/isolé/indépendant de variables changeante (messages étant une variable changeante, mais setMessages)
     setMessages((oldMessages) => [
       ...oldMessages,
       {
-        author: localStorage.getItem('profilePseudo'),
-        message: messageText,
+        author: obj.author,
+        message: obj.messageText,
       },
     ]);
   };

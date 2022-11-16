@@ -10,7 +10,7 @@ import { MessageContextProvider } from '../../contexts/MessageContext';
 
 function Chat() {
   const location = useLocation();
-  const { to } = location.state;
+  const { pseudo, id } = location.state;
 
   return (
     <MessageContextProvider>
@@ -18,7 +18,7 @@ function Chat() {
         <Header />
         <div className="chat-content">
           <MessagesList />
-          <MessageFormSend />
+          <MessageFormSend id={id} />
         </div>
         <Footer />
       </div>

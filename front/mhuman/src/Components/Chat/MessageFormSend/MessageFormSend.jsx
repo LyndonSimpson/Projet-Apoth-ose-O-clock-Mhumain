@@ -6,16 +6,26 @@ import { Icon } from 'semantic-ui-react';
 
 import './messageFormSendStyles.scss';
 import MessageContext from '../../../contexts/MessageContext';
+import { addCatMessageRequest, addHumanMessageRequest } from '../../../requests/messageRequests';
 
-function MessageFormSend() {
+function MessageFormSend({ receiverId }) {
   const { sendMessage } = useContext(MessageContext);
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
+  const type = localStorage.getItem('type');
 
   useEffect(() => {
     // sur le mount on met le focus sur l'input
     inputRef.current?.focus(); // le ?. remplace un if =>  if (inputRef.current) { inputRef.current.focus();}
   }, []);
+
+  const fetchMessage = async (id, content) => {
+    if (type === 'cat') {
+      await addCatMessageRequest({ receiver_id: id, content });
+    } else {
+      await addHumanMessageRequest({ receiver_id: id, content });
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +36,8 @@ function MessageFormSend() {
     }
 
     // on envoie la valeur au container du state message
-    sendMessage(value.trim());
+    sendMessage({ author: localStorage.getItem('profilePseudo'), messageText: value.trim() });
+    fetchMessage(receiverId, value.trim());
 
     // je reset l'input
     setValue('');
@@ -50,7 +61,9 @@ function MessageFormSend() {
     </form>
   );
 }
-MessageFormSend.propTypes = {};
+MessageFormSend.propTypes = {
+  receiverId: PropTypes.number.isRequired,
+};
 
 MessageFormSend.defaultProps = {};
 
