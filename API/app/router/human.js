@@ -3,7 +3,9 @@ const humanController = require('../controller/human');
 const humanLoginController = require('../controller/humanLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
 const humanSearchController = require('../controller/humanSearch');
-const sendMailController = require('../controller/nodeMailer');
+//const sendMailController = require('../controller/nodeMailer');
+const humanMessageController = require('../controller/humanMessage');
+
 const multer = require('multer');
 const storage = require('../middlewares/storage');
 
@@ -101,6 +103,7 @@ const upload = multer({
     */
     router.get("/humanRandom", authorizationMiddleware, humanController.Humans5);
 
-    router.post("/humanmessages", authorizationMiddleware, sendMailController.sendMessage);
+    router.post("/humanmessages", authorizationMiddleware, humanMessageController.sendMessage);
+    router.get("/humanmessages", authorizationMiddleware, humanMessageController.getMyMessages);
  
 module.exports = router;

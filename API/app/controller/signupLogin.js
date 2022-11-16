@@ -81,7 +81,7 @@ const userController = {
                 const pseudo = nameMatch ? nameMatch[1] : null;
                 const jwt = jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions);
                 const jwt1 = `Bearer ${jwt}`;
-                const storeToken = await tokenDataMapper.store(user_id, jwt1); //---------------------- to store token in DB !
+                //const storeToken = await tokenDataMapper.store(user_id, jwt1); //---------------------- to store token in DB ! not working for front
                 console.log('<< 200 user logged in');
                 res.json({
                     logged: true,
