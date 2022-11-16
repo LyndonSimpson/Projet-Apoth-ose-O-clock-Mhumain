@@ -37,7 +37,7 @@ const catController = {
    * @return {JSON} the searched cat 
    */
   oneCat: async (req, res) => {
-    const id = req.body.catId;
+    const id = req.auth.catId;
     try {
       const result = await dataMapper.getCatById(id);
       res.json(result);
