@@ -21,6 +21,7 @@ import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContex
 import About from './Components/About/About';
 import FAQ from './Components/FAQ/FAQ';
 import { MessageContextProvider } from './contexts/MessageContext';
+import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -82,49 +83,54 @@ function App() {
                   element={(
                     <ListeProfile fav />
   )}
-                />
-                <Route
-                  path="/updateprofilehuman"
-                  element={<UpdateProfileHuman />}
-                  end
-                />
-                <Route
-                  path="/updateprofilecat"
-                  element={<UpdateProfileCat />}
-                  end
-                />
-                <Route
-                  path="/forgotpassword"
-                  element={<ForgotPassword />}
-                  end
-                />
-                <Route
-                  path="/resetpassword"
-                  element={<ResetPassword />}
-                  end
-                />
-                <Route
-                  path="/updateuser"
-                  element={<UpdateProfileUser />}
-                  end
-                />
-                <Route
-                  path="/about"
-                  element={<About />}
-                  end
-                />
-                <Route
-                  path="/faq"
-                  element={<FAQ />}
-                  end
-                />
-                <Route
-                  path="/chat"
-                  element={<Chat />}
-                  end
-                />
-              </Routes>
-            </div>
+              />
+              <Route
+                path="/updateprofilehuman"
+                element={<UpdateProfileHuman />}
+                end
+              />
+              <Route
+                path="/updateprofilecat"
+                element={<UpdateProfileCat />}
+                end
+              />
+              <Route
+                path="/forgotpassword"
+                element={<ForgotPassword />}
+                end
+              />
+              <Route
+                path="/resetpassword"
+                element={<ResetPassword />}
+                end
+              />
+              <Route
+                path="/updateuser"
+                element={<UpdateProfileUser />}
+                end
+              />
+              <Route
+                path="/about"
+                element={<About />}
+                end
+              />
+              <Route
+                path="/faq"
+                element={<FAQ />}
+                end
+              />
+              <Route
+                path="/chat"
+                element={<Chat />}
+                end
+              />
+              <Route
+                path="/messages"
+                element={<ConversationsList />}
+                end
+              />
+            </Routes>
+          </div>
           </MessageContextProvider>
         </LoginContextProvider>
       </AddCatProfileContextProvider>
