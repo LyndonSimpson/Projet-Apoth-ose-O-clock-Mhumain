@@ -1,0 +1,43 @@
+@use "../../../styles/vars";
+
+.message {
+    text-align: left;
+    margin-bottom: 2rem;
+
+    &__ismine {
+        text-align: right;
+        .message-author {
+            &::after {
+                right: 0;
+                left: unset;
+            }
+        }
+    }
+
+    &-author {
+        margin: 0 2rem 1rem;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: block;
+            width: 0;
+            border-bottom: 1rem solid white;
+            border-left: 1rem solid transparent;
+        }
+    }
+
+    &-body {
+        background-color: white;
+        border-radius: 2rem;
+        padding: 1.5rem;
+        color: black;
+        display: inline-block;
+        min-width: 10em;
+        max-width: 90%;
+        text-align: left;
+    }
+}
