@@ -32,6 +32,15 @@ const catMessage = {
             console.error(error);
             res.status(500).send(`An error occured with the database :\n${error.message}`);
         }
+    },
+    getMyPals: async (req, res) => {
+        try {
+            const result = await dataMapper.getContacts(req.auth.catId); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            res.json(result);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send(`An error occured with the database :\n${error.message}`);
+        }
     }
 }
 

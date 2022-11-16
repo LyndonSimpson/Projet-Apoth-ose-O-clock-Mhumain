@@ -31,6 +31,21 @@ const humanMessagesDataMapper = {
           };
         const result = await database.query(query);
         return result.rows;
+    },
+    /**
+     * 
+     * @param {*} human_id human in token
+     * @returns 
+     */
+    async getContacts(human_id) {
+      const query = {
+        text: `SELECT * FROM cat WHERE id in (
+              SELECT cat_id FROM conversation WHERE human_id = $1
+            )`,
+        values: [human_id]
+      };
+      const result = await database.query(query);
+      return result.rows;
     }
 }
 
