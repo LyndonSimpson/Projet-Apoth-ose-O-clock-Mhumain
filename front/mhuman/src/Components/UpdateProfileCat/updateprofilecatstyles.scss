@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80vh;
 }
 
 .form-update-cat {
@@ -13,7 +12,7 @@
     justify-content: center;
 }
 
-.form-update-all-informations {
+.form-update-cat-all-informations {
     display: flex;
     margin-top: 3rem;
     align-items: center;
@@ -41,11 +40,12 @@
     display: none;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1115px) {
     .update-profile-cat {
         border: none;
         margin-top: -25rem;
         margin-bottom: 2rem;
+        flex-direction: column;
     }
 
     .form-update-cat {
@@ -54,14 +54,14 @@
         width: 80vw;
     }
 
-    .form-update-all-informations {
+    .form-update-cat-all-informations {
         display: flex;
-        margin-top: 0rem;
         flex-direction: column;
     }
 
     .form-update-cat-buttons {
         height: 50px;
+        margin-bottom: 5rem;
     }
 
     .form-update-image {
