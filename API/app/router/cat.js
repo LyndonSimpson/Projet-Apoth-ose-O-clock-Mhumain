@@ -64,9 +64,8 @@ router.get("/cat", authorizationMiddleware, catController.allCats);
  * GET /catProfile
  * @summary selects a specific cat profile
  * @description retrieves the cat with the id passed in 
- * @param {request} request.body
  */
-router.post("/catProfile", authorizationMiddleware, catController.oneCat);
+router.get("/catProfile", authorizationMiddleware, catController.oneCat);
 
 /**
  * GET /adoptedcats

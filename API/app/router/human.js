@@ -62,7 +62,7 @@ const upload = multer({
     * @description retrieves the human with the id passed in params from database.
     * @param {number} id.path.required - category identifier
     */
-    router.post("/humanProfile", authorizationMiddleware, humanController.oneHuman);
+    router.get("/humanProfile", authorizationMiddleware, humanController.oneHuman);
  
     /**
     * PATCH /human
