@@ -129,8 +129,8 @@ function ListeProfile({ fav }) {
                 <ConsultProfile
                   toggleProfile={toggleProfile}
                   hasGarden={modaleProfile.hasGarden}
-                  hasKid={modaleProfile.hasKids}
-                  hasPet={modaleProfile.hasPets}
+                  hasKid={modaleProfile.hasKid}
+                  hasPet={modaleProfile.hasPet}
                   name={modaleProfile.name}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
@@ -189,7 +189,7 @@ function ListeProfile({ fav }) {
                   <ListeCard
                     toggleProfile={toggleProfile}
                     favorites={favorites}
-                    has_garden={favorite.has_garden}
+                    hasGarden={favorite.has_garden}
                     hasKid={favorite.has_kids}
                     hasPet={favorite.has_pets}
                     name={favorite.name}
