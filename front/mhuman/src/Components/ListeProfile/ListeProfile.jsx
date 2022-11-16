@@ -166,7 +166,7 @@ function ListeProfile({ fav }) {
                   <ConsultProfile
                     isCat
                     toggleProfile={toggleProfile}
-                    has_garden={modaleProfile.has_garden}
+                    hasGarden={modaleProfile.hasGarden}
                     hasKid={modaleProfile.hasKid}
                     hasPet={modaleProfile.hasPet}
                     name={modaleProfile.name}
@@ -225,7 +225,7 @@ function ListeProfile({ fav }) {
                       key={favorite.id}
                       favorites={favorites}
                       toggleProfile={toggleProfile}
-                      has_garden={favorite.needs_garden}
+                      hasGarden={favorite.needs_garden}
                       hasKid={favorite.likes_kids}
                       hasPet={favorite.likes_pets}
                       name={favorite.name}
