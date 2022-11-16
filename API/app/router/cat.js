@@ -143,5 +143,12 @@ router.post("/sendcatmessages", authorizationMiddleware, catMessageController.se
  */
 router.post("/getcatmessages", authorizationMiddleware, catMessageController.getMyMessages);
 
+/**
+ * GET /catcontacts
+ * @summary gets contacts
+ * @description get get contacts
+ */
+ router.get("/catcontacts", authorizationMiddleware, catMessageController.getMyPals);
+
 
 module.exports = router;
