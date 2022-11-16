@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import MobileNav from '../Header/MobileNav/MobileNav';
@@ -24,6 +25,7 @@ function ListeProfile({ fav }) {
   const [modaleProfile, setModaleProfile] = useState({});
   const type = localStorage.getItem('type');
   const email = localStorage.getItem('userEmail');
+  const Token = localStorage.getItem('Token');
 
   const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description) => {
     setModaleProfile({
@@ -262,7 +264,12 @@ function ListeProfile({ fav }) {
         )}
       </section>
       <Footer />
-      <MobileNav />
+      <MobileNav
+        type={type}
+      />
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }

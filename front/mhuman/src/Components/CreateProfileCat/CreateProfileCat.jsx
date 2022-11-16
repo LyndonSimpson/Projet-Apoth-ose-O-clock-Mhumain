@@ -1,11 +1,12 @@
 import React from 'react';
 import './createprofilecatstyles.scss';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import FormCatCheckbox from './FormCatCheckbox/FormCatCheckbox';
 import FormAPI from '../FormAPI/FormAPI';
 import Logo from '../../styles/logo.png';
 
 function CreateProfileCat() {
+  const Token = localStorage.getItem('Token');
   return (
     <div className="profile">
       <div className="profile-form">
@@ -17,6 +18,9 @@ function CreateProfileCat() {
       <div className="profile-API">
         <FormAPI />
       </div>
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }
