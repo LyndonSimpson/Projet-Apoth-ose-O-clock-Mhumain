@@ -9,15 +9,14 @@ const catMessagesDataMapper = {
      * @param {*} content message in body
      * @returns sent message
      */
-    async createMessage(cat_id, human_id, content) {
+    async createMessage(cat_id, human_id, author, content) {
         const query = {
-            text: `INSERT INTO cat_has_message(cat_id, human_id, content) 
-                  VALUES($1,$2,$3)`,
-            values: [cat_id, human_id, content]
+            text: `INSERT INTO conversation(cat_id, human_id, author, message) 
+                  VALUES($1,$2,$3,$4)`,
+            values: [cat_id, human_id, author, content]
           };
         const result = await database.query(query);
-        console.log(result);
-        return result.rows[0];
+        return result.rows;
     },
     /**
      * retrieves all the messages sent to this cat with the cat id
@@ -25,10 +24,10 @@ const catMessagesDataMapper = {
      * @param {*} cat_id receiver in cat token
      * @returns all sent messages to this cat
      */
-    async getMessages(cat_id) {
+    async getMessages(cat_id, human_id) {
         const query = {
-            text: `SELECT * FROM human_has_message WHERE cat_id = $1;`,
-            values: [cat_id]
+            text: `SELECT message, author FROM conversation WHERE cat_id = $1 AND human_id = $2 ORDER BY created_at DESC;`,
+            values: [cat_id, human_id]
           };
         const result = await database.query(query);
         return result.rows;

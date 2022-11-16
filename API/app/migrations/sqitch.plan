@@ -2,5 +2,4 @@
 %project=mhumain
 
 1.init_db 2022-10-27T14:30:14Z Lyndon <student@teleporter> # init database tables
-2.mailing_system 2022-11-14T11:20:45Z Lyndon <student@teleporter> # adding mailing system
-3.jwt_log 2022-11-15T12:51:06Z Lyndon <student@teleporter> # tokens-log-for-sessions
+2.conversations 2022-11-16T11:04:13Z Lyndon <student@teleporter> # refference conversations

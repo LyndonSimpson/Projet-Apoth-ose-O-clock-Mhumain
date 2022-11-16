@@ -9,11 +9,11 @@ const humanMessagesDataMapper = {
      * @param {*} content message in body
      * @returns sent message
      */
-    async createMessage(human_id, cat_id, content) {
+    async createMessage(human_id, cat_id, author, content) {
         const query = {
-            text: `INSERT INTO human_has_message(human_id, cat_id, content) 
-                  VALUES($1,$2,$3)`,
-            values: [human_id, cat_id, content]
+            text: `INSERT INTO conversation(cat_id, human_id, author, message) 
+            VALUES($1,$2,$3,$4)`,
+            values: [cat_id, human_id, author, content]
           };
         const result = await database.query(query);
         return result.rows;
@@ -24,10 +24,10 @@ const humanMessagesDataMapper = {
      * @param {*} human_id receiver in human token
      * @returns all sent messages to this human
      */
-    async getMessages(human_id) {
+    async getMessages(human_id, cat_id) {
         const query = {
-            text: `SELECT * FROM cat_has_message WHERE human_id = $1;`,
-            values: [human_id]
+            text: `SELECT message, author FROM conversation WHERE cat_id = $1 AND human_id = $2 ORDER BY created_at DESC;`,
+            values: [cat_id, human_id]
           };
         const result = await database.query(query);
         return result.rows;

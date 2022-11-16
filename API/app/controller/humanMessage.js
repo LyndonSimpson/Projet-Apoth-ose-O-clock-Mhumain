@@ -10,7 +10,7 @@ const humanMessage = {
      */
     sendMessage: async (req, res) => {
         try {
-            const result = await dataMapper.createMessage(req.auth.humanId, req.body.receiver_profile_id, req.body.content); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            const result = await dataMapper.createMessage(req.auth.humanId, req.body.receiver_profile_id, req.body.pseudo, req.body.content); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             res.json(result);
         } catch (error) {
             console.error(error);
@@ -26,7 +26,7 @@ const humanMessage = {
      */
     getMyMessages: async (req, res) => {
         try {
-            const result = await dataMapper.getMessages(req.auth.humanId); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
+            const result = await dataMapper.getMessages(req.auth.humanId, req.body.receiver_profile_id); //todo  const { firstName, lastName, email, password } = req.body; this his how you do it
             res.json(result);
         } catch (error) {
             console.error(error);
