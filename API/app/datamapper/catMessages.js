@@ -26,7 +26,7 @@ const catMessagesDataMapper = {
      */
     async getMessages(cat_id, human_id) {
         const query = {
-            text: `SELECT message, author FROM conversation WHERE cat_id = $1 AND human_id = $2 ORDER BY created_at DESC;`,
+            text: `SELECT message, author FROM conversation WHERE cat_id = $1 AND human_id = $2 ORDER BY created_at ASC;`,
             values: [cat_id, human_id]
           };
         const result = await database.query(query);
