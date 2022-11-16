@@ -20,6 +20,7 @@ import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
 import About from './Components/About/About';
 import FAQ from './Components/FAQ/FAQ';
+import { MessageContextProvider } from './contexts/MessageContext';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -32,97 +33,99 @@ function App() {
     <AddHumanProfileContextProvider>
       <AddCatProfileContextProvider>
         <LoginContextProvider>
-          <div className="App">
-            <Routes>
-              <Route
-                path="/"
-                element={(
-                  <LandingPage
-                    handleConnectedUser={handleConnectedUser}
-                  />
+          <MessageContextProvider>
+            <div className="App">
+              <Routes>
+                <Route
+                  path="/"
+                  element={(
+                    <LandingPage
+                      handleConnectedUser={handleConnectedUser}
+                    />
           )}
-              />
-              <Route
-                path="/homepage"
-                element={
-                  <HomePage />
+                />
+                <Route
+                  path="/homepage"
+                  element={
+                    <HomePage />
           }
-              />
-              <Route
-                path="/createprofilehuman"
-                element={<CreateProfileHuman />}
-                end
-              />
-              <Route
-                path="/createprofilecat"
-                element={<CreateProfileCat />}
-                end
-              />
-              <Route
-                path="/profileselect"
-                element={(
-                  <ProfileSelect
-                    connectedUser={connectedUser}
-                  />
+                />
+                <Route
+                  path="/createprofilehuman"
+                  element={<CreateProfileHuman />}
+                  end
+                />
+                <Route
+                  path="/createprofilecat"
+                  element={<CreateProfileCat />}
+                  end
+                />
+                <Route
+                  path="/profileselect"
+                  element={(
+                    <ProfileSelect
+                      connectedUser={connectedUser}
+                    />
           )}
-                end
-              />
-              <Route
-                path="/listeprofile"
-                element={(
-                  <ListeProfile />
+                  end
+                />
+                <Route
+                  path="/listeprofile"
+                  element={(
+                    <ListeProfile />
   )}
-              />
+                />
 
-              {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
-              <Route
-                path="/favprofile"
-                element={(
-                  <ListeProfile fav />
+                {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
+                <Route
+                  path="/favprofile"
+                  element={(
+                    <ListeProfile fav />
   )}
-              />
-              <Route
-                path="/updateprofilehuman"
-                element={<UpdateProfileHuman />}
-                end
-              />
-              <Route
-                path="/updateprofilecat"
-                element={<UpdateProfileCat />}
-                end
-              />
-              <Route
-                path="/forgotpassword"
-                element={<ForgotPassword />}
-                end
-              />
-              <Route
-                path="/resetpassword"
-                element={<ResetPassword />}
-                end
-              />
-              <Route
-                path="/updateuser"
-                element={<UpdateProfileUser />}
-                end
-              />
-              <Route
-                path="/about"
-                element={<About />}
-                end
-              />
-              <Route
-                path="/faq"
-                element={<FAQ />}
-                end
-              />
-              <Route
-                path="/chat"
-                element={<Chat />}
-                end
-              />
-            </Routes>
-          </div>
+                />
+                <Route
+                  path="/updateprofilehuman"
+                  element={<UpdateProfileHuman />}
+                  end
+                />
+                <Route
+                  path="/updateprofilecat"
+                  element={<UpdateProfileCat />}
+                  end
+                />
+                <Route
+                  path="/forgotpassword"
+                  element={<ForgotPassword />}
+                  end
+                />
+                <Route
+                  path="/resetpassword"
+                  element={<ResetPassword />}
+                  end
+                />
+                <Route
+                  path="/updateuser"
+                  element={<UpdateProfileUser />}
+                  end
+                />
+                <Route
+                  path="/about"
+                  element={<About />}
+                  end
+                />
+                <Route
+                  path="/faq"
+                  element={<FAQ />}
+                  end
+                />
+                <Route
+                  path="/chat"
+                  element={<Chat />}
+                  end
+                />
+              </Routes>
+            </div>
+          </MessageContextProvider>
         </LoginContextProvider>
       </AddCatProfileContextProvider>
     </AddHumanProfileContextProvider>

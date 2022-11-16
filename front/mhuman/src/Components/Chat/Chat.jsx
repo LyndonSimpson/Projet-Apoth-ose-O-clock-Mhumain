@@ -10,19 +10,17 @@ import { MessageContextProvider } from '../../contexts/MessageContext';
 
 function Chat() {
   const location = useLocation();
-  const { pseudo, id } = location.state;
+  const { messages, id } = location.state;
 
   return (
-    <MessageContextProvider>
-      <div className="chat">
-        <Header />
-        <div className="chat-content">
-          <MessagesList />
-          <MessageFormSend id={id} />
-        </div>
-        <Footer />
+    <div className="chat">
+      <Header />
+      <div className="chat-content">
+        <MessagesList />
+        <MessageFormSend receiverId={id} messages={messages} />
       </div>
-    </MessageContextProvider>
+      <Footer />
+    </div>
   );
 }
 

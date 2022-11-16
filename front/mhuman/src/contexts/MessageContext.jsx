@@ -1,36 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 
-const messagesData = [
-  {
-    author: 'Lyra',
-    message: 'Je veux un mhumain ! ',
-  },
-  {
-    author: 'Romain',
-    message: 'Ca tombe bien je cherche un chat ',
-  },
-  {
-    author: 'Lyra',
-    message: 'Ba je suis la plus belle prend moi !!!',
-  },
-  {
-    author: 'Romain',
-    message: "Je veut bien mais je te prévient j'ai des enfants",
-  },
-  {
-    author: 'Lyra',
-    message: "Berk j'aime pas les mioche mais si tu as des friandises on peut d'arranger !",
-  },
-  {
-    author: 'Romain',
-    message: "Ola ça commence mal tu m'as l'air bien éffronté",
-  },
-  {
-    author: 'Lyra',
-    message: 'Laisse tomber je parle pas avec les radins ! sale bête ...',
-  },
-];
+const messagesData = [];
 
 const MessageContext = React.createContext({
   messages: [],
