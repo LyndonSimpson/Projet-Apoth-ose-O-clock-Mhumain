@@ -26,7 +26,7 @@ const humanMessagesDataMapper = {
      */
     async getMessages(human_id) {
         const query = {
-            text: `SELECT * FROM cat_has_message WHERE cat_id = $1;`,
+            text: `SELECT * FROM cat_has_message WHERE human_id = $1;`,
             values: [human_id]
           };
         const result = await database.query(query);
