@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
@@ -13,15 +13,12 @@ import {
 import { getRandomHumanRequest } from '../../requests/getHumanRequest';
 import { getRandomCatRequest } from '../../requests/getCatRequest';
 import { setToken } from '../../requests/instance';
-import { getCatMessageRequest, getHumanMessageRequest } from '../../requests/messageRequests';
-import MessageContext from '../../contexts/MessageContext';
 
 const URL = 'https://catfact.ninja/fact';
 
 function HomePage() {
   const [catFact, setCatFact] = useState('');
   const [favorites, setFavorites] = useState([]);
-  const { sendMessage } = useContext(MessageContext);
   const [randomHumanProfiles, setRandomHumanProfiles] = useState([]);
   const [randomCatProfiles, setRandomCatProfiles] = useState([]);
   const pseudo = localStorage.getItem('profilePseudo');
@@ -56,20 +53,6 @@ function HomePage() {
     }
   }
 
-  const handleMessage = async (reiciverId) => {
-    if (type === 'cat') {
-      const response = await getCatMessageRequest(reiciverId);
-      console.log(response);
-      response.forEach((e) => {
-        console.log(e);
-        sendMessage({ author: e.author, messageText: e.message });
-      });
-    } else {
-      const response = await getHumanMessageRequest(reiciverId);
-      console.log(response);
-      response.forEach((e) => sendMessage({ author: e.author, messageText: e.message }));
-    }
-  };
   // Fonctions pour delete un favoris
   const handleDeleteFav = async (unlikedId) => {
     if (type === 'cat') {
@@ -129,7 +112,6 @@ function HomePage() {
                 image={randomCat.image}
                 handleAddFav={handleHumanAddCatToFavorite}
                 handleDeleteFav={handleDeleteFav}
-                handleMessage={handleMessage}
                 favorites={favorites}
                 email={email}
               />
@@ -149,7 +131,6 @@ function HomePage() {
                   image={randomHuman.image}
                   handleAddFav={handleCatAddHumanToFavorite}
                   handleDeleteFav={handleDeleteFav}
-                  handleMessage={handleMessage}
                   favorites={favorites}
                   email={email}
                 />
@@ -170,7 +151,6 @@ function HomePage() {
                 image={fav.image}
                 handleAddFav={handleCatAddHumanToFavorite}
                 handleDeleteFav={handleDeleteFav}
-                handleMessage={handleMessage}
                 favorites={favorites}
                 email={email}
               />

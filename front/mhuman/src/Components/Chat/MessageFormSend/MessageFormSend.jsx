@@ -1,15 +1,13 @@
 import React, {
-  useContext, useEffect, useRef, useState,
+  useEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from 'semantic-ui-react';
 
 import './messageFormSendStyles.scss';
-import MessageContext from '../../../contexts/MessageContext';
 import { sendCatMessagesRequest, sendHumanMessagesRequest } from '../../../requests/messageRequests';
 
-function MessageFormSend({ receiverId }) {
-  const { sendMessage } = useContext(MessageContext);
+function MessageFormSend({ receiverId, handleNewMessage }) {
   const [value, setValue] = useState('');
   const inputRef = useRef(null);
   const type = localStorage.getItem('type');
@@ -36,7 +34,7 @@ function MessageFormSend({ receiverId }) {
     }
 
     // on envoie la valeur au container du state message
-    sendMessage({ author: localStorage.getItem('profilePseudo'), messageText: value.trim() });
+    handleNewMessage({ author: localStorage.getItem('profilePseudo'), messageText: value.trim() });
     fetchMessage(receiverId, value.trim(), localStorage.getItem('profilePseudo'));
 
     // je reset l'input
@@ -63,6 +61,7 @@ function MessageFormSend({ receiverId }) {
 }
 MessageFormSend.propTypes = {
   receiverId: PropTypes.number.isRequired,
+  handleNewMessage: PropTypes.func.isRequired,
 };
 
 MessageFormSend.defaultProps = {};

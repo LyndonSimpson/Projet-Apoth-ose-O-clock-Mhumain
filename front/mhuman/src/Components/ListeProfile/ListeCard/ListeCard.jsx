@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes, { shape } from 'prop-types';
 import { Card, Icon, Image } from 'semantic-ui-react';
 import './listecard.scss';
@@ -12,7 +13,7 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  id, hasGarden, hasPet, hasKid, name, age, toggleProfile, image, race, sexe, color, handleAddFav, email, favorites, handleDeleteFav, description,
+  id, hasGarden, hasPet, hasKid, pseudo, age, toggleProfile, image, race, sexe, color, handleAddFav, favorites, handleDeleteFav, description,
 }) {
   // Fonction de comparaison pour savoir si un profil fait partie des favoris
   const ProfileIsFavorites = (param) => favorites.some((e) => e.id === param);
@@ -21,7 +22,7 @@ function ListeCard({
     <Card className="listeCard">
       <Image className="listeCard-img" src={image} wrapped ui={false} />
       <Card.Content className="card-content">
-        <Card.Header className="card-header">{name}</Card.Header>
+        <Card.Header className="card-header">{pseudo}</Card.Header>
         <Card.Meta>
           <span>
             {age}
@@ -53,14 +54,17 @@ function ListeCard({
               onClick={() => handleAddFav(id)}
             />
           )}
-          <a href={`mailto:${email}`}>
+          <Link
+            to="/chat"
+            state={{ pseudo, id }}
+          >
             <Icon className="card-icon-link-item" name="mail outline" size="big" />
-          </a>
+          </Link>
           <Icon
             className="card-icon-link-item"
             name="expand"
             size="big"
-            onClick={() => toggleProfile(hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description)}
+            onClick={() => toggleProfile(hasGarden, hasPet, hasKid, pseudo, age, image, race, sexe, color, description)}
           />
         </div>
       </Card.Content>
@@ -76,7 +80,7 @@ ListeCard.propTypes = {
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
   age: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  pseudo: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   race: PropTypes.string,
@@ -84,7 +88,6 @@ ListeCard.propTypes = {
   sexe: PropTypes.string,
   handleAddFav: PropTypes.func.isRequired,
   handleDeleteFav: PropTypes.func.isRequired,
-  email: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
   favorites: PropTypes.arrayOf(shape(
     { id: PropTypes.number },
