@@ -42,7 +42,7 @@ const humanController = {
    * @returns {JSON} the searched human 
    */
   oneHuman: async (req, res) => {
-    const id = req.auth.humanId;
+    const id = req.body.humanId;
     try {
       const result = await dataMapper.getHumanById(id);
       res.json(result);
