@@ -1,0 +1,32 @@
+.faq-styles {
+
+    background: rgb(63,108,251);
+    background: linear-gradient(162deg, rgba(63,108,251,1) 0%, rgba(252,70,117,1) 100%);
+    color: white;
+}
+
+.faq {
+    
+    margin-left: 10rem;
+    margin-right: 5rem;
+    padding: 2rem;
+    border: 2px black solid;
+    border-radius: 5px;
+    margin-top: 2rem;
+
+    &-question {
+        text-align: left;
+    }
+
+    &-response {
+        text-align: left;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .faq {
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+}
+

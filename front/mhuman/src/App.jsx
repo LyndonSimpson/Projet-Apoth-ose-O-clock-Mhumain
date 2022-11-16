@@ -18,6 +18,8 @@ import ResetPassword from './Components/LandingPage/ResetPassword/ResetPassword'
 import { LoginContextProvider } from './contexts/LoginContext';
 import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
+import About from './Components/About/About';
+import FAQ from './Components/FAQ/FAQ';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -102,6 +104,16 @@ function App() {
               <Route
                 path="/updateuser"
                 element={<UpdateProfileUser />}
+                end
+              />
+              <Route
+                path="/about"
+                element={<About />}
+                end
+              />
+              <Route
+                path="/faq"
+                element={<FAQ />}
                 end
               />
             </Routes>

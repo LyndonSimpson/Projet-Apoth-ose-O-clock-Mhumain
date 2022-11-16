@@ -21,6 +21,7 @@ function UpdateProfileCat() {
   const [errorMessage, setErrorMessage] = useState('');
   const [existedPseudo, setExistedPseudo] = useState(true);
   const [cats, setCats] = useState([]);
+  const Token = localStorage.getItem('Token');
 
   const PseudoExist = (param) => cats.some((e) => e.pseudo === param);
   const fetchData = async (data) => {
@@ -376,6 +377,9 @@ function UpdateProfileCat() {
       </div>
       {/* <MobileNav className="mobile-nav" /> */}
       <Footer />
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }

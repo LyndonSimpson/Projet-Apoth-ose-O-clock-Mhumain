@@ -12,6 +12,7 @@ import { setToken } from '../../requests/instance';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { getOneHumanRequest, getAllHumanRequest } from '../../requests/getHumanRequest';
+import MobileNav from '../Header/MobileNav/MobileNav';
 
 function UpdateProfileHuman() {
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
@@ -19,6 +20,7 @@ function UpdateProfileHuman() {
   const [errorMessage, setErrorMessage] = useState('');
   const [existedPseudo, setExistedPseudo] = useState(true);
   const [humans, setHumans] = useState([]);
+  const Token = localStorage.getItem('Token');
 
   const PseudoExist = (param) => humans.some((e) => e.pseudo === param);
   const fetchData = async (data) => {
@@ -300,6 +302,10 @@ function UpdateProfileHuman() {
         )}
       </section>
       <Footer />
+      <MobileNav />
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }

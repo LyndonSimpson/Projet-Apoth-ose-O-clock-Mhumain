@@ -10,7 +10,7 @@ function Footer() {
     <footer className="footer">
       <div className="left-link">
         <Link to="/faq">FAQ</Link>
-        <Link to="/contact">Contact</Link>
+        <a href="mailto:contact@mhumain.fr">contact@mhumain.fr</a>
       </div>
       <div className="middle-link">
         <h2>Adopte ton Mhumain</h2>

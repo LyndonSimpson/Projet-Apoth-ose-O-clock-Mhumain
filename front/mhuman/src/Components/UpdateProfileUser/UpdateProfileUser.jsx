@@ -14,6 +14,7 @@ function UpdateProfileUser() {
   const [errorMessage, setErrorMessage] = useState('');
   const [accountDelete, setAccountDelete] = useState(false);
   const [UpdateUserProfile, setUpdateUserProfile] = useState(false);
+  const Token = localStorage.getItem('Token');
 
   const fetchData = async (data) => {
     try {
@@ -120,6 +121,9 @@ function UpdateProfileUser() {
         />
       )}
       { accountDelete && (
+        <Navigate to="/" />
+      )}
+      {!Token && (
         <Navigate to="/" />
       )}
     </div>

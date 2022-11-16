@@ -1,0 +1,16 @@
+.about-styles {
+
+    background: rgb(63,108,251);
+    background: linear-gradient(162deg, rgba(63,108,251,1) 0%, rgba(252,70,117,1) 100%);
+    color: white;
+}
+
+.about-image {
+    width: 20rem;
+    height: 300px;
+
+    &-cats {
+        width: 25rem;
+        height: 200px;
+    }
+}

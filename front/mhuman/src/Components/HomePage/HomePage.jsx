@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Miniprofile from './Miniprofile/Miniprofile';
@@ -23,6 +24,7 @@ function HomePage() {
   const pseudo = localStorage.getItem('profilePseudo');
   const type = localStorage.getItem('type');
   const email = localStorage.getItem('userEmail');
+  const Token = localStorage.getItem('Token');
 
   async function getRandomProfile() {
     try {
@@ -164,7 +166,12 @@ function HomePage() {
         </section>
       </section>
       <Footer />
-      <MobileNav />
+      <MobileNav
+        type={type}
+      />
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }

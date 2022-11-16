@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import './profileselect.scss';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
 import logo from './fakeData/Logo-Mhumain-Colored.png';
 import AddProfile from './AddProfile/AddProfile';
@@ -13,7 +13,7 @@ import { catLoginRequest, humanLoginRequest } from '../../requests/loginRequest'
 function ProfileSelect() {
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
-
+  const Token = localStorage.getItem('Token');
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
     setToken(localStorage.getItem('Token'));
     async function getUserProfile() {
@@ -56,11 +56,13 @@ function ProfileSelect() {
 
   return (
     <div className="ProfileSelect">
+
       <img src={logo} className="ProfileTitle" alt="logo" />
       <div className="profile-icons">
         <Link to="/updateuser"><Icon className="profile-icon" name="pencil" size="big" /></Link>
         <Link to="/" onClick={() => localStorage.setItem('Token', '')}><Icon className="profile-icon logout" name="log out" size="big" /></Link>
       </div>
+      {Token && (
       <section className="ProfileContainer">
         <div className="CatProfile">
           <h1 className="ProfileSubtitle"> Profils Chats</h1>
@@ -109,11 +111,15 @@ function ProfileSelect() {
                   <AddProfile />
                 </Link>
               )}
-
           </div>
         </div>
       </section>
+      )}
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
+
   );
 }
 
