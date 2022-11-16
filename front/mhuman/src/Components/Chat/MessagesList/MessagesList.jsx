@@ -1,12 +1,10 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import './messagesListStyles.scss';
 import Message from '../Message/Message';
-import MessageContext from '../../../contexts/MessageContext';
 
-function MessagesList() {
-  const { messages } = useContext(MessageContext);
+function MessagesList({ messages }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -28,7 +26,9 @@ function MessagesList() {
     </div>
   );
 }
-MessagesList.propTypes = {};
+MessagesList.propTypes = {
+  messages: PropTypes.arrayOf().isRequired,
+};
 
 MessagesList.defaultProps = {};
 

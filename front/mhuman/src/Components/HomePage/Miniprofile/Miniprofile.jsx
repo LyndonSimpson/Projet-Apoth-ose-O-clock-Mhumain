@@ -5,7 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 function Miniprofile({
-  pseudo, image, id, handleAddFav, favorites, email, handleDeleteFav, handleMessage,
+  pseudo, image, id, handleAddFav, favorites, handleDeleteFav,
 }) {
   // Fonction de comparaison pour savoir si un profil fait partie des favoris
   const ProfileIsFavorites = (param) => favorites.some((e) => e.pseudo === param);
@@ -27,7 +27,6 @@ function Miniprofile({
             className="mail"
             name="mail outline"
             size="big"
-            onClick={() => handleMessage(id)}
           />
         </Link>
         {ProfileIsFavorites(pseudo) ? (
@@ -57,8 +56,6 @@ Miniprofile.propTypes = {
   id: Proptypes.number.isRequired,
   handleAddFav: Proptypes.func.isRequired,
   handleDeleteFav: Proptypes.func.isRequired,
-  handleMessage: Proptypes.func.isRequired,
-  email: Proptypes.string.isRequired,
   favorites: Proptypes.arrayOf(shape(
     { pseudo: Proptypes.string },
   )),
