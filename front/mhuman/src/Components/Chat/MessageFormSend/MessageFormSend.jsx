@@ -6,7 +6,7 @@ import { Icon } from 'semantic-ui-react';
 
 import './messageFormSendStyles.scss';
 import MessageContext from '../../../contexts/MessageContext';
-import { addCatMessageRequest, addHumanMessageRequest } from '../../../requests/messageRequests';
+import { sendCatMessagesRequest, sendHumanMessagesRequest } from '../../../requests/messageRequests';
 
 function MessageFormSend({ receiverId }) {
   const { sendMessage } = useContext(MessageContext);
@@ -19,11 +19,11 @@ function MessageFormSend({ receiverId }) {
     inputRef.current?.focus(); // le ?. remplace un if =>  if (inputRef.current) { inputRef.current.focus();}
   }, []);
 
-  const fetchMessage = async (id, content) => {
+  const fetchMessage = async (id, content, pseudo) => {
     if (type === 'cat') {
-      await addCatMessageRequest({ receiver_id: id, content });
+      await sendCatMessagesRequest(id, content, pseudo);
     } else {
-      await addHumanMessageRequest({ receiver_id: id, content });
+      await sendHumanMessagesRequest(id, content, pseudo);
     }
   };
 
@@ -37,7 +37,7 @@ function MessageFormSend({ receiverId }) {
 
     // on envoie la valeur au container du state message
     sendMessage({ author: localStorage.getItem('profilePseudo'), messageText: value.trim() });
-    fetchMessage(receiverId, value.trim());
+    fetchMessage(receiverId, value.trim(), localStorage.getItem('profilePseudo'));
 
     // je reset l'input
     setValue('');
