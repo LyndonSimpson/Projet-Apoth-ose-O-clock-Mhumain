@@ -20,6 +20,7 @@ import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
 import About from './Components/About/About';
 import FAQ from './Components/FAQ/FAQ';
+import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -119,6 +120,11 @@ function App() {
               <Route
                 path="/chat"
                 element={<Chat />}
+                end
+              />
+              <Route
+                path="/messages"
+                element={<ConversationsList />}
                 end
               />
             </Routes>
