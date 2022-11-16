@@ -20,7 +20,6 @@ import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
 import About from './Components/About/About';
 import FAQ from './Components/FAQ/FAQ';
-import { MessageContextProvider } from './contexts/MessageContext';
 import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
 
 function App() {
@@ -34,54 +33,53 @@ function App() {
     <AddHumanProfileContextProvider>
       <AddCatProfileContextProvider>
         <LoginContextProvider>
-          <MessageContextProvider>
-            <div className="App">
-              <Routes>
-                <Route
-                  path="/"
-                  element={(
-                    <LandingPage
-                      handleConnectedUser={handleConnectedUser}
-                    />
+          <div className="App">
+            <Routes>
+              <Route
+                path="/"
+                element={(
+                  <LandingPage
+                    handleConnectedUser={handleConnectedUser}
+                  />
           )}
-                />
-                <Route
-                  path="/homepage"
-                  element={
-                    <HomePage />
+              />
+              <Route
+                path="/homepage"
+                element={
+                  <HomePage />
           }
-                />
-                <Route
-                  path="/createprofilehuman"
-                  element={<CreateProfileHuman />}
-                  end
-                />
-                <Route
-                  path="/createprofilecat"
-                  element={<CreateProfileCat />}
-                  end
-                />
-                <Route
-                  path="/profileselect"
-                  element={(
-                    <ProfileSelect
-                      connectedUser={connectedUser}
-                    />
+              />
+              <Route
+                path="/createprofilehuman"
+                element={<CreateProfileHuman />}
+                end
+              />
+              <Route
+                path="/createprofilecat"
+                element={<CreateProfileCat />}
+                end
+              />
+              <Route
+                path="/profileselect"
+                element={(
+                  <ProfileSelect
+                    connectedUser={connectedUser}
+                  />
           )}
-                  end
-                />
-                <Route
-                  path="/listeprofile"
-                  element={(
-                    <ListeProfile />
+                end
+              />
+              <Route
+                path="/listeprofile"
+                element={(
+                  <ListeProfile />
   )}
-                />
+              />
 
-                {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
-                <Route
-                  path="/favprofile"
-                  element={(
-                    <ListeProfile fav />
+              {/* La route favprofile est une vue dynamique du composant ListeProfile a qui l'on passe une props fav */}
+              <Route
+                path="/favprofile"
+                element={(
+                  <ListeProfile fav />
   )}
               />
               <Route
@@ -131,7 +129,6 @@ function App() {
               />
             </Routes>
           </div>
-          </MessageContextProvider>
         </LoginContextProvider>
       </AddCatProfileContextProvider>
     </AddHumanProfileContextProvider>
