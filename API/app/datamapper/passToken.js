@@ -27,7 +27,7 @@ const tokenDattaMapper = {
         values: [account_id]
     };
     const result = await database.query(query);
-    return result.rows[0];
+    return result.rows;
   },
   async delete(account_id) {
     const query = {
