@@ -41,12 +41,16 @@ function ForgotPassword() {
   };
   const handleDismiss = () => { // Gere la fermeture du message
     setErrorMessage('');
+    setSucceededMessage('');
   };
 
   return (
-    <div className="forgotpassword-form">
+    <div className="forgotpassword">
       <div className="landingTitle">
         <img src={Logo} alt="logo" />
+      </div>
+      <div>
+        <Link to="/"><Icon className="forgotpassword-icon" name="home" size="big" /></Link>
       </div>
       {errorMessage
           && (
@@ -89,9 +93,6 @@ function ForgotPassword() {
           </Button>
         </div>
       </Form>
-      <div className="return-button">
-        <Link to="/"><Icon name="home" size="big" /></Link>
-      </div>
     </div>
   );
 }

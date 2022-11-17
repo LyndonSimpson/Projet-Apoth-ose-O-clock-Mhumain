@@ -6,13 +6,18 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import MessageFormSend from './MessageFormSend/MessageFormSend';
 import MessagesList from './MessagesList/MessagesList';
+import AdoptThisMhuman from './AdoptThisMhuman/AdoptThisMhuman';
 import { getCatMessageRequest, getHumanMessageRequest } from '../../requests/messageRequests';
 import { setToken } from '../../requests/instance';
+import ConfirmModale from './ConfirmModale/ConfirmModale';
+import adoptMyHuman from '../../requests/adoptHumanRequest';
 
 function Chat() {
   const location = useLocation();
   const { id } = location.state;
   const [messages, setMessages] = useState([]);
+  const [openModale, setOpenModale] = useState(false);
+  const [adoptionSuccess, setAdoptionSuccess] = useState(false);
   const type = localStorage.getItem('type');
 
   React.useEffect(() => {
@@ -39,14 +44,39 @@ function Chat() {
     ]);
   };
 
+  const handleAdoptButton = () => {
+    setOpenModale(true);
+  };
+
+  const toggleConfirmModale = () => {
+    setOpenModale(!openModale);
+  };
+
+  const handleAdoptMhuman = async () => {
+    try {
+      const response = await adoptMyHuman(id);
+      if (response.status === 200) {
+        setAdoptionSuccess('Félicitations! Vous avez votre nouvel humain de compagnie!');
+        toggleConfirmModale();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="chat">
       <Header />
+      <AdoptThisMhuman handleAdoptButton={handleAdoptButton} />
       <div className="chat-content">
         <MessagesList messages={messages} />
         <MessageFormSend receiverId={id} handleNewMessage={AddNewMessage} />
       </div>
       <Footer />
+      {openModale
+        && (
+          <ConfirmModale open={openModale} setOpen={toggleConfirmModale} handleAdoptMhuman={handleAdoptMhuman} />
+        )}
     </div>
   );
 }
