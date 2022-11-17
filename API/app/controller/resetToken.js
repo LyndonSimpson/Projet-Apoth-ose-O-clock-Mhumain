@@ -21,16 +21,17 @@ const resetPassword = {
             if (!user)
                 return res.status(400).send("user with given email doesn't exist");
             let token1 = await tokenDataMapper.get(user.id);
-            let tok = token1[0];
-            let token = tok.token || false;
+            let tokCheck = token1[0] || {};
+            let token = tokCheck.token || false;
             const fakeObject = {};
-            const check = Object.keys(tok || fakeObject).length === 0;
+            const check = Object.keys(tokCheck || fakeObject).length === 0;
             console.log('check -------->', check);
-            console.log('token ----->', token);
+            console.log('token tue or false----->', token);
             if (check) {
                 token = crypto.randomBytes(32).toString("hex");
                 const token3 = await tokenDataMapper.store(user.id, token);
             }
+            console.log('token after set ------>', token);
             const link = `http://localhost:3000/${user.id}/${token}`;
             await sendEmail(user.email, "Password reset", link);
             res.send("password reset link sent to your email account");
