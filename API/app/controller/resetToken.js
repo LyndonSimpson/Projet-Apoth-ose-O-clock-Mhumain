@@ -21,11 +21,12 @@ const resetPassword = {
                 return res.status(400).send("user with given email doesn't exist");
             let token1 = await tokenDataMapper.get(user.id);
             const token = token1[0];
+            console.log(token);
             if (!token) {
                 const token2 = crypto.randomBytes(32).toString("hex");
                 const token3 = await tokenDataMapper.store(user.id, token2);
             }
-            const link = `/${user.id}/${token}`;
+            const link = `http://localhost:3000/${user.id}/${token.token}`;
             await sendEmail(user.email, "Password reset", link);
             res.send("password reset link sent to your email account");
         } catch (error) {
