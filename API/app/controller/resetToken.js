@@ -40,9 +40,11 @@ const resetPassword = {
             if (passwordConfirm != req.body.password) return res.status(400).send('validate password did not match password')
             const info = await userDataMapper.getUserById(req.params.userId); // retrieves only email !
             const user = info[0];
+            console.log('user --->', user);
             if (!user) return res.status(400).send("invalid link or expired");
             const id = req.params.userId;
             const token = await tokenDataMapper.store(id, req.params.token);
+            console.log('token --->', token);
             if (!token) return res.status(400).send("Invalid link or expired");
             const password = req.body.password;
             const encryptedMsg = bcrypt.hashSync(password, 10);
