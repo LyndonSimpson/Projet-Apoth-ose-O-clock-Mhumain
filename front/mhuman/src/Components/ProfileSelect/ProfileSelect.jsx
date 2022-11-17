@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import './profileselect.scss';
 import { Link, Navigate } from 'react-router-dom';
 import { Icon } from 'semantic-ui-react';
-import logo from './fakeData/Logo-Mhumain-Colored.png';
+import logo from '../../styles/logo.png';
 import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';

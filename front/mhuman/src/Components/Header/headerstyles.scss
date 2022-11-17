@@ -1,5 +1,6 @@
 .header {
     // background-color: #FEFAE0;
+    z-index: 50;
     background-color: transparent;
     height: 15vh;
     display: flex;
@@ -32,7 +33,7 @@
         margin: 1rem;
 
         &:hover {
-            color: red
+            color: blueviolet;
         }
     }
 

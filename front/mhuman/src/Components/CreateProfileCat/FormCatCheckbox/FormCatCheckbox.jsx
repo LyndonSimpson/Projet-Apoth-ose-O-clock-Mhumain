@@ -34,6 +34,7 @@ function FormCatCheckbox() {
         <Form className="check-cat">
           {Checkboxes.map(({ description, id }, index) => (
             <Form.Field
+              className="check-cat-text"
               key={id}
               control={Checkbox}
               name={description}
