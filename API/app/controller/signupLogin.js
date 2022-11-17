@@ -1,5 +1,5 @@
 const dataMapper = require("../datamapper/user");
-const tokenDataMapper = require('../datamapper/storeToken');
+//const tokenDataMapper = require('../datamapper/storeToken'); ---- changed the tokendataMapper - repurposed for reset password.
 const emailValidator = require('email-validator');
 const jsonwebtoken = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
