@@ -6,6 +6,12 @@ const crypto = require("crypto");
 const bcrypt = require('bcrypt');
 
 const resetPassword = {
+    /**
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
     sendMessage: async (req, res) => {
         try {
             const schema = Joi.object({
@@ -40,6 +46,12 @@ const resetPassword = {
             console.log(error);
         }
     },
+    /**
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * @returns 
+     */
     resetPassword: async (req, res) => {
         try {
             const passwordConfirm = req.body.passwordConfirm;
