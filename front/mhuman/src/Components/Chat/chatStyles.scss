@@ -1,9 +1,7 @@
 .chat {
-  background-image: url('../../styles/layered-waves-haikei.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: top;
-  width: 100vw;
+  background: rgb(63,108,251);
+  background: linear-gradient(162deg, rgba(63,108,251,1) 0%, rgba(252,70,117,1) 100%);
+  color: white;
 
   @media screen and (max-width:480px){
       display: flex;
@@ -17,9 +15,10 @@
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.25);
+    padding-top: 0.5rem;
 
     width: 90%;
-    height: 80vh;
+    height: 70vh;
     margin: 2em auto;
     display: flex;
     flex-direction: column;
@@ -29,7 +28,6 @@
         justify-content: flex-start;
         align-items: center;
         height: 65vh;
-        padding-bottom: 3rem;
      }
 }
 }
