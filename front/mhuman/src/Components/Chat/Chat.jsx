@@ -7,6 +7,7 @@ import Footer from '../Footer/Footer';
 import MessageFormSend from './MessageFormSend/MessageFormSend';
 import MessagesList from './MessagesList/MessagesList';
 import { getCatMessageRequest, getHumanMessageRequest } from '../../requests/messageRequests';
+import { setToken } from '../../requests/instance';
 
 function Chat() {
   const location = useLocation();
@@ -15,6 +16,7 @@ function Chat() {
   const type = localStorage.getItem('type');
 
   React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
     const handleOldMessage = async (reiciverId) => {
       if (type === 'cat') {
         const response = await getCatMessageRequest(reiciverId);

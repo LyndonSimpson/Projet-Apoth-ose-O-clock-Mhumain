@@ -27,7 +27,10 @@ function MessagesList({ messages }) {
   );
 }
 MessagesList.propTypes = {
-  messages: PropTypes.arrayOf().isRequired,
+  messages: PropTypes.arrayOf(PropTypes.shape({
+    author: PropTypes.string.isRequired,
+    message: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 MessagesList.defaultProps = {};
