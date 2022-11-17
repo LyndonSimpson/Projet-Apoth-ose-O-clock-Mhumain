@@ -17,7 +17,7 @@ const humanFavoritesRouter = require('./app/router/humanFavorites');
 
 const session = require('express-session');
 
-const userMiddleware = require('./app/middlewares/user');
+//const userMiddleware = require('./app/middlewares/user');
 
 const PORT = process.env.PORT;
 
@@ -79,7 +79,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(cookieParser());
 
-//app.use(csrfProtection); //TODO - CURF casse insomnia - voir le pb avec Benjamin
+//app.use(csrfProtection); //TODO - CURF casse insomnia
 
 app.use(express.json());
 

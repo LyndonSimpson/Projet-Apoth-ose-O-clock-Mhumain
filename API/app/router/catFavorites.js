@@ -9,7 +9,7 @@ const router = Router();
     * POST /favorites
     * @summary creates a favorite between a cat and a human
     * @description inserts a favorite relationship into the database
-    * @param {string} request.body
+    * @param {Body} request.body
     */
     router.post("/catfavorites", authorizationMiddleware, catFavoritesController.newFavorite);
 

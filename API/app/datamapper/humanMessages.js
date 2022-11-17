@@ -2,35 +2,50 @@ const database = require('../../data/database');
 
 const humanMessagesDataMapper = {
     /**
-     * sends a new message to a cat
      * 
-     * @param {*} human_id sender in human token
-     * @param {*} cat_id receiver in body
-     * @param {*} content message in body
-     * @returns sent message
+     * @param {*} human_id 
+     * @param {*} cat_id 
+     * @param {*} author 
+     * @param {*} content 
+     * @returns 
      */
-    async createMessage(human_id, cat_id, content) {
+    async createMessage(human_id, cat_id, author, content) {
         const query = {
-            text: `INSERT INTO human_has_message(human_id, cat_id, content) 
-                  VALUES($1,$2,$3)`,
-            values: [human_id, cat_id, content]
+            text: `INSERT INTO conversation(cat_id, human_id, author, message) 
+            VALUES($1,$2,$3,$4)`,
+            values: [cat_id, human_id, author, content]
           };
         const result = await database.query(query);
         return result.rows;
     },
     /**
-     * retrieves all the messages sent to this human with the cat id
      * 
-     * @param {*} human_id receiver in human token
-     * @returns all sent messages to this human
+     * @param {*} human_id 
+     * @param {*} cat_id 
+     * @returns 
      */
-    async getMessages(human_id) {
+    async getMessages(human_id, cat_id) {
         const query = {
-            text: `SELECT * FROM cat_has_message WHERE human_id = $1;`,
-            values: [human_id]
+            text: `SELECT message, author FROM conversation WHERE cat_id = $1 AND human_id = $2 ORDER BY created_at ASC;`,
+            values: [cat_id, human_id]
           };
         const result = await database.query(query);
         return result.rows;
+    },
+    /**
+     * 
+     * @param {*} human_id human in token
+     * @returns 
+     */
+    async getContacts(human_id) {
+      const query = {
+        text: `SELECT * FROM cat WHERE id in (
+              SELECT cat_id FROM conversation WHERE human_id = $1
+            )`,
+        values: [human_id]
+      };
+      const result = await database.query(query);
+      return result.rows;
     }
 }
 

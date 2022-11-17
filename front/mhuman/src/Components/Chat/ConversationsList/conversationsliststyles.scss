@@ -1,0 +1,43 @@
+.conversations-styles {
+
+    background: rgb(63,108,251);
+    background: linear-gradient(162deg, rgba(63,108,251,1) 0%, rgba(252,70,117,1) 100%);
+    color: white;
+}
+
+.conversations{
+    
+    width: 500px;
+    margin:auto;
+    height: 80vh;
+    padding: 2rem;
+    border: 2px white solid;
+    border-radius: 5px;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.conversation-item {
+    border: 2px solid rgb(98, 0, 244);
+    border-radius: 20px;
+    padding: 0.5em;
+    text-align: left;
+    display: flex;
+    font-size: large;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        border: 2px solid rgb(250, 1, 221);
+    }
+}
+
+.conversation-image {
+    margin-right: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+    
+}

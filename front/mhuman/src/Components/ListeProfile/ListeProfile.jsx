@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import MobileNav from '../Header/MobileNav/MobileNav';
@@ -24,13 +25,14 @@ function ListeProfile({ fav }) {
   const [modaleProfile, setModaleProfile] = useState({});
   const type = localStorage.getItem('type');
   const email = localStorage.getItem('userEmail');
+  const Token = localStorage.getItem('Token');
 
-  const toggleProfile = (hasGarden, hasPet, hasKid, name, age, image, race, sexe, color, description) => {
+  const toggleProfile = (hasGarden, hasPet, hasKid, pseudo, age, image, race, sexe, color, description) => {
     setModaleProfile({
       hasGarden,
       hasPet,
       hasKid,
-      name,
+      pseudo,
       age,
       toggleProfile,
       image,
@@ -116,7 +118,7 @@ function ListeProfile({ fav }) {
                     hasGarden={human.has_garden}
                     hasKid={human.has_kids}
                     hasPet={human.has_pets}
-                    name={human.name}
+                    pseudo={human.pseudo}
                     age={human.age}
                     image={human.image}
                     id={human.id}
@@ -131,7 +133,7 @@ function ListeProfile({ fav }) {
                   hasGarden={modaleProfile.hasGarden}
                   hasKid={modaleProfile.hasKid}
                   hasPet={modaleProfile.hasPet}
-                  name={modaleProfile.name}
+                  pseudo={modaleProfile.pseudo}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
                   image={modaleProfile.image}
@@ -150,7 +152,7 @@ function ListeProfile({ fav }) {
                       hasGarden={cat.needs_garden}
                       hasKid={cat.likes_kids}
                       hasPet={cat.likes_pets}
-                      name={cat.name}
+                      pseudo={cat.pseudo}
                       age={cat.age}
                       image={cat.image}
                       id={cat.id}
@@ -169,7 +171,7 @@ function ListeProfile({ fav }) {
                     hasGarden={modaleProfile.hasGarden}
                     hasKid={modaleProfile.hasKid}
                     hasPet={modaleProfile.hasPet}
-                    name={modaleProfile.name}
+                    pseudo={modaleProfile.pseudo}
                     age={modaleProfile.age}
                     description={modaleProfile.description}
                     image={modaleProfile.image}
@@ -192,7 +194,7 @@ function ListeProfile({ fav }) {
                     hasGarden={favorite.has_garden}
                     hasKid={favorite.has_kids}
                     hasPet={favorite.has_pets}
-                    name={favorite.name}
+                    pseudo={favorite.pseudo}
                     age={favorite.age}
                     image={favorite.image}
                     key={favorite.id}
@@ -208,7 +210,7 @@ function ListeProfile({ fav }) {
                   hasGarden={modaleProfile.hasGarden}
                   hasKid={modaleProfile.hasKid}
                   hasPet={modaleProfile.hasPet}
-                  name={modaleProfile.name}
+                  pseudo={modaleProfile.pseudo}
                   age={modaleProfile.age}
                   description={modaleProfile.description}
                   image={modaleProfile.image}
@@ -228,7 +230,7 @@ function ListeProfile({ fav }) {
                       hasGarden={favorite.needs_garden}
                       hasKid={favorite.likes_kids}
                       hasPet={favorite.likes_pets}
-                      name={favorite.name}
+                      pseudo={favorite.pseudo}
                       age={favorite.age}
                       image={favorite.image}
                       id={favorite.id}
@@ -247,7 +249,7 @@ function ListeProfile({ fav }) {
                     hasGarden={modaleProfile.hasGarden}
                     hasKid={modaleProfile.hasKid}
                     hasPet={modaleProfile.hasPet}
-                    name={modaleProfile.name}
+                    pseudo={modaleProfile.pseudo}
                     age={modaleProfile.age}
                     description={modaleProfile.description}
                     image={modaleProfile.image}
@@ -262,7 +264,12 @@ function ListeProfile({ fav }) {
         )}
       </section>
       <Footer />
-      <MobileNav />
+      <MobileNav
+        type={type}
+      />
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }

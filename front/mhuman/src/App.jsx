@@ -8,7 +8,7 @@ import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 import HomePage from './Components/HomePage/HomePage';
 import ListeProfile from './Components/ListeProfile/ListeProfile';
 import NotFound from './Components/NotFound/NotFound';
-
+import Chat from './Components/Chat/Chat';
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
 import UpdateProfileHuman from './Components/UpdateProfileHuman/UpdateProfileHuman';
@@ -19,6 +19,9 @@ import ResetPassword from './Components/LandingPage/ResetPassword/ResetPassword'
 import { LoginContextProvider } from './contexts/LoginContext';
 import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
+import About from './Components/About/About';
+import FAQ from './Components/FAQ/FAQ';
+import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -108,6 +111,26 @@ function App() {
               <Route
                 path="*"
                 element={<NotFound />}
+              />
+              <Route
+                path="/about"
+                element={<About />}
+                end
+              />
+              <Route
+                path="/faq"
+                element={<FAQ />}
+                end
+              />
+              <Route
+                path="/chat"
+                element={<Chat />}
+                end
+              />
+              <Route
+                path="/messages"
+                element={<ConversationsList />}
+                end
               />
             </Routes>
           </div>
