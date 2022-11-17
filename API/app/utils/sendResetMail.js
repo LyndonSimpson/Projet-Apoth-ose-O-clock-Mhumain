@@ -19,9 +19,7 @@ const sendEmail = async (email, subject, text) => {
             subject: subject,
             text: text,
         });
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-        const info1 = nodemailer.getTestMessageUrl(info);
-        console.log("email sent sucessfully");
+        console.log("reset email sent ---> Preview URL: %s", nodemailer.getTestMessageUrl(info));
     } catch (error) {
         console.log(error, "email not sent");
     }
