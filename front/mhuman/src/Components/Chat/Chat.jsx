@@ -69,9 +69,9 @@ function Chat() {
     <div className="chat">
       <Header />
       {type === 'cat'
-        && (!isAdopted ? (
-          <AdoptThisMhuman handleAdoptButton={handleAdoptButton} />
-        ) : adoptionSuccess || ('Tu as déja ton humain, arrête d\'essayer de trouver une gamelle ailleurs !')
+        && (isAdopted !== 'true' ? (
+          adoptionSuccess || <AdoptThisMhuman handleAdoptButton={handleAdoptButton} />
+        ) : ('Tu as déja ton humain, arrête d\'essayer de trouver une gamelle ailleurs !')
         )}
 
       <div className="chat-content">
