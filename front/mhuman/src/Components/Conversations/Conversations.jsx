@@ -19,7 +19,7 @@ function Conversations() {
         setConversations(response);
       } else {
         const response = await getHumanConversationsRequest();
-        setConversations('inComponent', response);
+        setConversations(response);
       }
     };
     getConversations();
