@@ -11,10 +11,12 @@ import './forgotpasswordstyles.scss';
 function ForgotPassword() {
   const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
+  const [succeededMessage, setSucceededMessage] = useState('');
 
   const fetchData = async ({ email }) => {
     try {
-      await forgotPasswordRequest(email);
+      const response = await forgotPasswordRequest(email);
+      setSucceededMessage(response);
     } catch (err) {
       setErrorMessage(err.response.data);
     }
@@ -55,6 +57,16 @@ function ForgotPassword() {
             onDismiss={handleDismiss}
             content={errorMessage}
           />
+          )}
+      {succeededMessage
+          && (
+            <Message
+              positive
+              className="error-msg"
+              header="Success"
+              onDismiss={handleDismiss}
+              content={succeededMessage}
+            />
           )}
       <Form className="forgotpassword-form" onSubmit={handleSubmit}>
         <h3> Mot de passe oublié </h3>
