@@ -16,15 +16,12 @@ import UpdateProfileCat from './Components/UpdateProfileCat/UpdateProfileCat';
 import UpdateProfileUser from './Components/UpdateProfileUser/UpdateProfileUser';
 import ForgotPassword from './Components/LandingPage/ForgotPassword/ForgotPassword';
 import ResetPassword from './Components/LandingPage/ResetPassword/ResetPassword';
-import About from './Components/About/About';
-import FAQ from './Components/FAQ/FAQ';
 import Conversations from './Components/Conversations/Conversations';
 import { LoginContextProvider } from './contexts/LoginContext';
 import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
 import About from './Components/About/About';
 import FAQ from './Components/FAQ/FAQ';
-import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
 import DataPolicy from './Components/DataPolicy/DataPolicy';
 
 function App() {
