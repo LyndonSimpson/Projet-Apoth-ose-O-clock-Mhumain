@@ -18,13 +18,13 @@ function UpdateProfileHuman() {
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
   const [UpdateHumanProfil, setUpdateCreateHumanProfil] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [existedPseudo, setExistedPseudo] = useState(true);
+  const [existedPseudo, setExistedPseudo] = useState(false);
   const [humans, setHumans] = useState([]);
   const Token = localStorage.getItem('Token');
-
+  const pseudo = localStorage.getItem('profilePseudo');
   const type = localStorage.getItem('type');
 
-  const PseudoExist = (param) => humans.some((e) => e.pseudo === param);
+  const PseudoExist = (param) => humans.some((e) => e.pseudo === param && e.pseudo !== pseudo);
   const fetchData = async (data) => {
     try {
       const response = await updateHumanProfileRequest(data);
@@ -69,6 +69,10 @@ function UpdateProfileHuman() {
       setErrorMessage('Le nom est obligatoire');
       return;
     }
+    if (PseudoExist(humanProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déjà');
+      return;
+    }
     if (!humanProfileState.pseudo.trim()) {
       setErrorMessage('Le pseudo est obligatoire');
       return;
@@ -109,10 +113,10 @@ function UpdateProfileHuman() {
 
   const handlePseudoFieldChange = (e) => {
     humanProfileDispatch(getActionSetValue(e.target.name, e.target.value));
-    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
-      setExistedPseudo(true);
-    } else {
+    if (!PseudoExist(e.target.value) && e.target.value.trim() !== '') {
       setExistedPseudo(false);
+    } else {
+      setExistedPseudo(true);
     }
   };
 
