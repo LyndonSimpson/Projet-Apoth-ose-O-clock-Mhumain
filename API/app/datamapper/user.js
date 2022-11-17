@@ -75,6 +75,16 @@ const userDattaMapper = {
     const result = await database.query(query);
     return result.rows;
   },
+  async updateUserPassword(password, id) {
+    const query = {
+      text: `UPDATE account
+            SET password = $1
+            WHERE id = $2`,
+      values: [password, id]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
   /**
    * returns the email of the account linked to cat in token
    * 
