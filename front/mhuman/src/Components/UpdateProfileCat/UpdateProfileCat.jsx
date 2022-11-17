@@ -20,12 +20,13 @@ function UpdateProfileCat() {
   const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
-  const [existedPseudo, setExistedPseudo] = useState(true);
+  const [existedPseudo, setExistedPseudo] = useState(false);
   const [cats, setCats] = useState([]);
   const Token = localStorage.getItem('Token');
   const type = localStorage.getItem('type');
+  const pseudo = localStorage.getItem('profilePseudo');
 
-  const PseudoExist = (param) => cats.some((e) => e.pseudo === param);
+  const PseudoExist = (param) => cats.some((e) => (e.pseudo === param && e.pseudo !== pseudo));
   const fetchData = async (data) => {
     try {
       const response = await updateCatProfileRequest(data);
@@ -106,6 +107,10 @@ function UpdateProfileCat() {
       setErrorMessage('Le pseudo est obligatoire');
       return;
     }
+    if (PseudoExist(catProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déjà');
+      return;
+    }
     if (!catProfileState.color.trim()) {
       setErrorMessage('La couleur est obligatoire');
       return;
@@ -153,10 +158,10 @@ function UpdateProfileCat() {
 
   const handlePseudoFieldChange = (e) => {
     catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
-    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
-      setExistedPseudo(true);
-    } else {
+    if (!PseudoExist(e.target.value) && e.target.value.trim() !== '') {
       setExistedPseudo(false);
+    } else {
+      setExistedPseudo(true);
     }
   };
 
