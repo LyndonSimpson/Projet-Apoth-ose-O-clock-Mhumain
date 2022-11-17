@@ -18,3 +18,9 @@
 .conversation-image {
     margin-right: 1rem;
 }
+
+@media only screen and (max-width: 768px) {
+    .conversation-item {
+        font-size: small;
+    }
+}

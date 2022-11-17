@@ -24,7 +24,7 @@ function ConsultProfile({
   hasGarden,
   hasPet,
   hasKid,
-  name,
+  pseudo,
   age,
   description,
   image,
@@ -56,7 +56,7 @@ function ConsultProfile({
             <Icon className="displayClosingButton-item" size="big" color="black" name="close" onClick={toggleProfile} />
           </div>
           <h1 className="profileTitle">
-            {name}
+            {pseudo}
           </h1>
           <header className="consultHeader">
             <div className="consultHeader-icons">
@@ -82,7 +82,7 @@ function ConsultProfile({
           </header>
           <section className="infoContainer">
             <div className="infoContainer-oneLine">
-              <p>{name}</p>
+              <p>{pseudo}</p>
               <p>
                 {age}
                 {' '}
@@ -118,7 +118,7 @@ ConsultProfile.propTypes = {
   hasPet: PropTypes.bool.isRequired,
   sexe: PropTypes.string.isRequired,
   age: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
+  pseudo: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   race: PropTypes.string.isRequired,
