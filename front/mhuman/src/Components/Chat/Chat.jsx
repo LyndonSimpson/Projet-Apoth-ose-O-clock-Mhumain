@@ -17,8 +17,9 @@ function Chat() {
   const { id } = location.state;
   const [messages, setMessages] = useState([]);
   const [openModale, setOpenModale] = useState(false);
-  const [adoptionSuccess, setAdoptionSuccess] = useState(false);
+  const [adoptionSuccess, setAdoptionSuccess] = useState(null);
   const type = localStorage.getItem('type');
+  const isAdopted = localStorage.getItem('isAdopted');
 
   React.useEffect(() => {
     setToken(localStorage.getItem('Token'));
@@ -67,7 +68,12 @@ function Chat() {
   return (
     <div className="chat">
       <Header />
-      <AdoptThisMhuman handleAdoptButton={handleAdoptButton} />
+      {type === 'cat'
+        && (!isAdopted ? (
+          <AdoptThisMhuman handleAdoptButton={handleAdoptButton} />
+        ) : adoptionSuccess || ('Tu as déja ton humain, arrête d\'essayer de trouver une gamelle ailleurs !')
+        )}
+
       <div className="chat-content">
         <MessagesList messages={messages} />
         <MessageFormSend receiverId={id} handleNewMessage={AddNewMessage} />
