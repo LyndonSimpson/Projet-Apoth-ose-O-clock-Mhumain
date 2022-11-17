@@ -24,7 +24,7 @@ function Miniprofile({
           state={{ pseudo, id }}
         >
           <Icon
-            className="mail"
+            className="mailIcon"
             name="mail outline"
             size="big"
           />

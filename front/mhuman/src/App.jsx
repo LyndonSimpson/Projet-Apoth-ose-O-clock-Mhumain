@@ -22,6 +22,7 @@ import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContex
 import About from './Components/About/About';
 import FAQ from './Components/FAQ/FAQ';
 import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
+import DataPolicy from './Components/DataPolicy/DataPolicy';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -130,6 +131,11 @@ function App() {
               <Route
                 path="/messages"
                 element={<ConversationsList />}
+                end
+              />
+              <Route
+                path="/data-policy"
+                element={<DataPolicy />}
                 end
               />
             </Routes>
