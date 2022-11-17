@@ -1,3 +1,12 @@
+
+.conversations-styles {
+    background-image: url('../../../styles/layered-waves-haikei.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+}
+
 .conversations{
     
     width: 500px;
@@ -10,6 +19,26 @@
     display: flex;
     flex-direction: column;
 
+}
+
+
+.conversation-item {
+    border: 2px solid rgb(98, 0, 244);
+    border-radius: 20px;
+    padding: 0.5em;
+    text-align: left;
+    display: flex;
+    font-size: large;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+        border: 2px solid rgb(250, 1, 221);
+    }
+}
+
+.conversation-image {
+    margin-right: 1rem;
 }
 
 @media only screen and (max-width: 768px) {

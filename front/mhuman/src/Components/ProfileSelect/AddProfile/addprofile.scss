@@ -1,5 +1,5 @@
 .AddProfile {
-    color: grey;
+    color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -12,12 +12,11 @@
 
     &:hover {
         cursor: pointer;
-        color: #DDA15E
     }
 }
 
 .AddProfilePlus {
-    border: 2px grey solid;
+    border: 2px white solid;
     width: 10em;
     height: 10em;
     border-radius: 10px;
@@ -25,9 +24,6 @@
     align-items: center;
     justify-content: center;
 
-    &:hover {
-        border: 2px #DDA15E solid;
-    }
 
     @media screen and (max-width: 480px) {
         width: 8em;

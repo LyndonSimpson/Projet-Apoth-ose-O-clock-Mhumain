@@ -1,10 +1,10 @@
+/* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Miniprofile from './Miniprofile/Miniprofile';
-import './homepage.scss';
 import MobileNav from './MobileNav/MobileNav';
 import {
   addCatFavoritesRequest, addHumanFavoritesRequest, catFavoritesRequest,
@@ -13,6 +13,8 @@ import {
 import { getRandomHumanRequest } from '../../requests/getHumanRequest';
 import { getRandomCatRequest } from '../../requests/getCatRequest';
 import { setToken } from '../../requests/instance';
+
+import './homepage.scss';
 
 const URL = 'https://catfact.ninja/fact';
 
