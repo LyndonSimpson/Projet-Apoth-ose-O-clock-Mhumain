@@ -12,7 +12,7 @@ const resetPassword = {
             const { error } = schema.validate(req.body);
             if (error) return res.status(400).send(error.details[0].message);
     
-            const info = await userDataMapper.getOneUserByEmail(req.body.email);
+            const info = await userDataMapper.getIdUserByEmail(req.body.email);
             const user = info[0];
             console.log(user, '--------------------> user');
             if (!user)
@@ -23,10 +23,10 @@ const resetPassword = {
             console.log(token, '--------------------------> token');
             if (!token) {
                 const token2 = crypto.randomBytes(32).toString("hex");
-                token = await tokenDataMapper.store(user.id, token2);
+                const token3 = await tokenDataMapper.store(user.id, token2);
             }
     
-            const link = `${process.env.BASE_URL}/password-reset/${user.id}/${token.token}`;
+            const link = `/${user.id}/${token.token}`;
             await sendEmail(user.email, "Password reset", link);
     
             res.send("password reset link sent to your email account");
@@ -37,16 +37,11 @@ const resetPassword = {
     },
     resetPassword: async (req, res) => {
         try {
-            const schema = Joi.object({ password: Joi.string().required() });
-            const { error } = schema.validate(req.body);
-            if (error) return res.status(400).send(error.details[0].message);
-            
             const passwordConfirm = req.body.passwordConfirm;
             if (passwordConfirm != req.body.password) return res.status(400).send('validate password did not match password')
 
             const info = await userDataMapper.getUserById(req.params.userId); // retrieves only email !
             const user = info[0];
-            console.log(user, '----------------- WE ARE IN reset password, bofire store token');
             if (!user) return res.status(400).send("invalid link or expired");
             
             const id = req.params.userId;

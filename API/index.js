@@ -85,7 +85,7 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-app.use(userRouter, humanRouter, catRouter, catFavoritesRouter, humanFavoritesRouter, ); 
+app.use(userRouter, humanRouter, catRouter, catFavoritesRouter, humanFavoritesRouter, resetRouter); 
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}, visit at http http://localhost:${PORT}/`);
