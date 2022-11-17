@@ -23,7 +23,7 @@ const resetPassword = {
             if (error) return res.status(400).send(error.details[0].message);
             const info = await userDataMapper.getIdUserByEmail(req.body.email);
             const user = info[0];
-            console.log('user----->', user);
+            //console.log('user----->', user);
             if (!user)
                 return res.status(400).send("user with given email doesn't exist");
             let token1 = await tokenDataMapper.get(user.id);
@@ -31,13 +31,13 @@ const resetPassword = {
             let token = tokCheck.token || false;
             const fakeObject = {};
             const check = Object.keys(tokCheck || fakeObject).length === 0;
-            console.log('check -------->', check);
-            console.log('token tue or false----->', token);
+            //console.log('check -------->', check);
+            //console.log('token tue or false----->', token);
             if (check) {
                 token = crypto.randomBytes(32).toString("hex");
                 const token3 = await tokenDataMapper.store(user.id, token);
             }
-            console.log('token after set ------>', token);
+            //console.log('token after set ------>', token);
             const link = `http://localhost:3000/${user.id}/${token}`;
             await sendEmail(user.email, "Password reset", link);
             res.send("password reset link sent to your email account");
@@ -60,8 +60,13 @@ const resetPassword = {
             const user = info[0];
             if (!user) return res.status(400).send("invalid link or expired");
             const id = req.params.userId;
-            const token = await tokenDataMapper.store(id, req.params.token);
-            if (!token) return res.status(400).send("Invalid link or expired");
+            const token = await tokenDataMapper.getByTokenAndId(id, req.params.token);
+
+            const token1 = token[0] || {};
+            const check = Object.keys(token1 || fakeObject).length === 0;
+            const tok = token1.token;
+
+            if (check) return res.status(400).send("Invalid link or expired");
             const password = req.body.password;
             const encryptedMsg = bcrypt.hashSync(password, 10);
             const result = await userDataMapper.updateUserPassword(encryptedMsg, id);

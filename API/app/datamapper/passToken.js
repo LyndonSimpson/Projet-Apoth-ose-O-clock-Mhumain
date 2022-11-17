@@ -29,6 +29,14 @@ const tokenDattaMapper = {
     const result = await database.query(query);
     return result.rows;
   },
+  async getByTokenAndId(account_id, token) {
+    const query = {
+        text: `SELECT * FROM password_token WHERE account_id = $1 AND token = $2`,
+        values: [account_id, token]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
   async delete(account_id) {
     const query = {
         text: `DELETE FROM password_token WHERE account_id = $1`,
