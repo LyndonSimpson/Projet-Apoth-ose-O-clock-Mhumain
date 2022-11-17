@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import {
   Button, Form, Message, Icon,
 } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import useUserReducer, { getActionReset, getActionSetValue } from '../../../hooks/useUserReducer';
-
+import { forgotPasswordRequest } from '../../../requests/loginRequest';
 import Logo from '../logo.png';
 import './forgotpasswordstyles.scss';
 
@@ -16,9 +14,7 @@ function ForgotPassword() {
 
   const fetchData = async ({ email }) => {
     try {
-      await axios.post('http://localhost:3001/user/signup', {
-        email,
-      });
+      await forgotPasswordRequest(email);
     } catch (err) {
       setErrorMessage(err.response.data);
     }
