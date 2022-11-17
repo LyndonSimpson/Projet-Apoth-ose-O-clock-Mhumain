@@ -7,6 +7,7 @@ import LandingPage from './Components/LandingPage/LandingPage';
 import ProfileSelect from './Components/ProfileSelect/ProfileSelect';
 import HomePage from './Components/HomePage/HomePage';
 import ListeProfile from './Components/ListeProfile/ListeProfile';
+import NotFound from './Components/NotFound/NotFound';
 import Chat from './Components/Chat/Chat';
 import CreateProfileHuman from './Components/CreateProfileHuman/CreateProfileHuman';
 import CreateProfileCat from './Components/CreateProfileCat/CreateProfileCat';
@@ -106,6 +107,10 @@ function App() {
                 path="/updateuser"
                 element={<UpdateProfileUser />}
                 end
+              />
+              <Route
+                path="*"
+                element={<NotFound />}
               />
               <Route
                 path="/about"
