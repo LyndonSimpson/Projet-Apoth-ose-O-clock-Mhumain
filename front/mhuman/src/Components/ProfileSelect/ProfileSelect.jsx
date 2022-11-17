@@ -46,7 +46,6 @@ function ProfileSelect() {
   const handleHumanProfileClick = async (pseudo) => {
     try {
       const response = await humanLoginRequest(pseudo);
-      console.log('receptionDesInfosDunHumain', response);
       localStorage.setItem('isLogged', response.logged);
       localStorage.setItem('profilePseudo', response.pseudo);
       localStorage.setItem('type', 'human');
