@@ -46,7 +46,15 @@ const userDattaMapper = {
     //console.log(result);
     return result.rows;
   },
-
+  async getIdUserByEmail(email) {
+    const query = {
+      text: `SELECT id, email FROM account WHERE email = $1`,
+      values: [email]
+    };
+    const result = await database.query(query);
+    //console.log(result);
+    return result.rows;
+  },
   /**
    * query to get all users from DB !
    * 
@@ -71,6 +79,16 @@ const userDattaMapper = {
             SET email = $1, password = $2
             WHERE id = $3`,
       values: [email, password, id]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
+  async updateUserPassword(password, id) {
+    const query = {
+      text: `UPDATE account
+            SET password = $1
+            WHERE id = $2`,
+      values: [password, id]
     };
     const result = await database.query(query);
     return result.rows;

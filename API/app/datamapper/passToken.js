@@ -9,7 +9,7 @@ const tokenDattaMapper = {
    */
   async store(user_id, token) {
     const query = {
-      text: `INSERT INTO user_tokens(account_id, content)
+      text: `INSERT INTO password_token(account_id, token)
       VALUES($1,$2)`,
       values: [user_id, token]
     };
@@ -21,18 +21,26 @@ const tokenDattaMapper = {
    * @param {*} user_id user id in token
    * @returns user_token
    */
-  async get(token) {
+  async get(account_id) {
     const query = {
-        text: `SELECT content FROM user_tokens WHERE content = $1`,
-        values: [token]
+        text: `SELECT token FROM password_token WHERE account_id = $1`,
+        values: [account_id]
     };
     const result = await database.query(query);
     return result.rows;
   },
-  async delete(token) {
+  async getByTokenAndId(account_id, token) {
     const query = {
-        text: `DELETE FROM user_tokens WHERE content = $1`,
-        values: [token]
+        text: `SELECT * FROM password_token WHERE account_id = $1 AND token = $2`,
+        values: [account_id, token]
+    };
+    const result = await database.query(query);
+    return result.rows;
+  },
+  async delete(account_id) {
+    const query = {
+        text: `DELETE FROM password_token WHERE account_id = $1`,
+        values: [account_id]
     };
     const result = await database.query(query);
     return result.rows;

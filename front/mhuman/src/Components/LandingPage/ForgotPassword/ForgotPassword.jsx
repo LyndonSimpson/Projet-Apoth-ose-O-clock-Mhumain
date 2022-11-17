@@ -2,23 +2,21 @@ import React, { useState } from 'react';
 import {
   Button, Form, Message, Icon,
 } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import useUserReducer, { getActionReset, getActionSetValue } from '../../../hooks/useUserReducer';
-
+import { forgotPasswordRequest } from '../../../requests/loginRequest';
 import Logo from '../logo.png';
 import './forgotpasswordstyles.scss';
 
 function ForgotPassword() {
   const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
+  const [succeededMessage, setSucceededMessage] = useState('');
 
   const fetchData = async ({ email }) => {
     try {
-      await axios.post('http://localhost:3001/user/signup', {
-        email,
-      });
+      const response = await forgotPasswordRequest(email);
+      setSucceededMessage(response);
     } catch (err) {
       setErrorMessage(err.response.data);
     }
@@ -43,12 +41,16 @@ function ForgotPassword() {
   };
   const handleDismiss = () => { // Gere la fermeture du message
     setErrorMessage('');
+    setSucceededMessage('');
   };
 
   return (
-    <div className="forgotpassword-form">
+    <div className="forgotpassword">
       <div className="landingTitle">
         <img src={Logo} alt="logo" />
+      </div>
+      <div>
+        <Link to="/"><Icon className="forgotpassword-icon" name="home" size="big" /></Link>
       </div>
       {errorMessage
           && (
@@ -59,6 +61,16 @@ function ForgotPassword() {
             onDismiss={handleDismiss}
             content={errorMessage}
           />
+          )}
+      {succeededMessage
+          && (
+            <Message
+              positive
+              className="error-msg"
+              header="Success"
+              onDismiss={handleDismiss}
+              content={succeededMessage}
+            />
           )}
       <Form className="forgotpassword-form" onSubmit={handleSubmit}>
         <h3> Mot de passe oublié </h3>
@@ -81,9 +93,6 @@ function ForgotPassword() {
           </Button>
         </div>
       </Form>
-      <div className="return-button">
-        <Link to="/"><Icon name="home" size="big" /></Link>
-      </div>
     </div>
   );
 }

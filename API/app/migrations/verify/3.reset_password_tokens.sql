@@ -1,4 +1,4 @@
--- Verify mhumain:2.conversations.sql on pg
+-- Verify mhumain:3.reset_password_tokens on pg
 
 BEGIN;
 

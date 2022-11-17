@@ -26,3 +26,18 @@ export async function humanLoginRequest(pseudo) {
   localStorage.setItem('Token', response.data.token);
   return response.data;
 }
+
+export async function resetPasswordRequest(userinfo, routeId, routeToken) {
+  const response = await apiInstance.post(`/${routeId}/${routeToken}`, {
+    password: userinfo.password,
+    passwordConfirm: userinfo.passwordConfirm,
+  });
+  return response;
+}
+
+export async function forgotPasswordRequest(email) {
+  const response = await apiInstance.post('/generateMail', {
+    email,
+  });
+  return response.data;
+}

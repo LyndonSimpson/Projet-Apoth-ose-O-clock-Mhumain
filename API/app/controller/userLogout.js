@@ -1,4 +1,4 @@
-const tokenDataMapper = require('../datamapper/storeToken');
+//const tokenDataMapper = require('../datamapper/storeToken'); -------- changed the name - repurposed for reset password tokens
 const {
     expressjwt: jwt
 } = require("express-jwt");

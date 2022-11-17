@@ -1,27 +1,26 @@
 import React, { useState } from 'react';
 import {
-  Button, Form, Message, Icon,
+  Button, Form, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
+import { useParams, Navigate } from 'react-router-dom';
+import { resetPasswordRequest } from '../../../requests/loginRequest';
 import useUserReducer, { getActionReset, getActionSetValue } from '../../../hooks/useUserReducer';
 
 import Logo from '../logo.png';
 import './resetpasswordstyles.scss';
 
-function ResetPassword({
-  handleSucceededCreateUser,
-}) {
+function ResetPassword() {
   const { userState, userDispatch } = useUserReducer();
   const [errorMessage, setErrorMessage] = useState('');
+  const [succeededResetPasword, setSucceededResetPasword] = useState(false);
+  const { id, token } = useParams();
 
-  const fetchData = async ({ email }) => {
+  const fetchData = async (userinfo, routeId, routeToken) => {
     try {
-      const response = await axios.post('http://localhost:3001/user/signup', {
-        email,
-      });
+      const response = await resetPasswordRequest(userinfo, routeId, routeToken);
       if (response.status === 200) {
-        handleSucceededCreateUser();
+        setSucceededResetPasword(true);
       }
     } catch (err) {
       setErrorMessage(err.response.data);
@@ -47,7 +46,7 @@ function ResetPassword({
       return;
     }
     // TODO : use emailValue and passwordValue for add new user in db
-    fetchData(userState);
+    fetchData(userState, id, token);
     handleReset();
   };
   const handleDismiss = () => { // Gere la fermeture du message
@@ -100,12 +99,12 @@ function ResetPassword({
           </Button>
         </div>
       </Form>
+      {succeededResetPasword
+        && <Navigate to="/" />}
     </div>
   );
 }
 
-ResetPassword.propTypes = {
-  handleSucceededCreateUser: PropTypes.func.isRequired,
-};
+ResetPassword.propTypes = {};
 
 export default React.memo(ResetPassword);

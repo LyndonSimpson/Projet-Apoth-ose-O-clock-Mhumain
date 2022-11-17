@@ -63,7 +63,8 @@ const catLoginController = {
                 console.log('<< 200 cat logged in');
                 res.json({
                     logged: true,
-                    pseudo: sessionUser.name,
+                    pseudo: sessionUser.pseudo,
+                    isAdopted: sessionUser.is_adopted,
                     token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
                 });
             } else {

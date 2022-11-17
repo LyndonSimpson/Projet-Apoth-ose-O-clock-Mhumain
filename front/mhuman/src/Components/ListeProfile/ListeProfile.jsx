@@ -92,9 +92,6 @@ function ListeProfile({ fav }) {
     getListProfiles();
     getFavorites();
   }, []);
-  // console.log('LOG >>>>', modaleProfile);
-  // console.log('HUMAN PROFILE>>>>', humansProfile);
-  // console.log('CAT PROFILE >>>>', catsProfile); modaleProfile.needs_garden
 
   return (
     <div className="listeProfile">

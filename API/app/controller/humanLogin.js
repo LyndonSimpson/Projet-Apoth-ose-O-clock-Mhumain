@@ -71,7 +71,7 @@ const humanLoginController = {
                 console.log('<< 200 hooman logged in');
                 res.json({
                     logged: true,
-                    pseudo: sessionUser.name,
+                    pseudo: sessionUser.pseudo,
                     token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
                 });
             } else {
