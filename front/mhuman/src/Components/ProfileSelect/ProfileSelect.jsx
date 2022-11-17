@@ -37,6 +37,7 @@ function ProfileSelect() {
       const response = await catLoginRequest(pseudo);
       localStorage.setItem('isLogged', response.logged);
       localStorage.setItem('profilePseudo', response.pseudo);
+      localStorage.setItem('isAdopted', response.isAdopted);
       localStorage.setItem('type', 'cat');
     } catch (err) {
       console.log(err.response.data);
