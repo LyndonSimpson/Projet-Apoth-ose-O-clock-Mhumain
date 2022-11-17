@@ -22,6 +22,10 @@ import Conversations from './Components/Conversations/Conversations';
 import { LoginContextProvider } from './contexts/LoginContext';
 import { AddCatProfileContextProvider } from './contexts/AddCatProfileContext';
 import { AddHumanProfileContextProvider } from './contexts/AddHumanProfileContext';
+import About from './Components/About/About';
+import FAQ from './Components/FAQ/FAQ';
+import ConversationsList from './Components/Chat/ConversationsList/ConversationsList';
+import DataPolicy from './Components/DataPolicy/DataPolicy';
 
 function App() {
   const [connectedUser, setConnectedUser] = useState('');
@@ -130,6 +134,11 @@ function App() {
               <Route
                 path="/messages"
                 element={<Conversations />}
+                end
+              />
+              <Route
+                path="/data-policy"
+                element={<DataPolicy />}
                 end
               />
             </Routes>
