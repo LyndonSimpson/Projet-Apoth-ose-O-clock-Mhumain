@@ -16,7 +16,6 @@ export async function sendCatMessagesRequest(id, content, pseudo) {
 
 export async function getCatConversationsRequest() { // TODO : add route for random
   const response = await apiInstance.get('/catcontacts');
-  console.log('inRequest', response);
   return response.data;
 }
 
@@ -36,6 +35,5 @@ export async function sendHumanMessagesRequest(id, content, pseudo) { // TODO : 
 
 export async function getHumanConversationsRequest() { // TODO : add route for random
   const response = await apiInstance.get('/humancontacts');
-  console.log('inRequest', response);
   return response.data;
 }

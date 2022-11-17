@@ -37,7 +37,6 @@ function ConsultProfile({
     isFemale = true;
   } else {
     isFemale = false;
-    console.log(sexe);
   }
 
   return (
