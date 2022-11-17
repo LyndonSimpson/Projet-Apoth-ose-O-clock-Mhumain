@@ -39,7 +39,7 @@ const resetPassword = {
             }
             //console.log('token after set ------>', token);
             const link = `http://localhost:3000/${user.id}/${token}`;
-            await sendEmail(user.email, "Password reset", link);
+            await sendEmail(user.email, "Password reset", `Bonjour, Voici le lien pour récupérer votre mot de passe : ${link}`);
             res.send("password reset link sent to your email account");
         } catch (error) {
             res.send("An error occured");

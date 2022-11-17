@@ -141,10 +141,9 @@ const catController = {
    * @returns {JSON} the adopted cat info
    */
   adoptCat: async (req, res) => {
-    const id = req.body.adopted_cat_id;
+    const id = req.body.human_id;
     try {
-      const result = await dataMapper.adopt(req.auth.humanId,
-        id);
+      const result = await dataMapper.adopt(id, req.auth.catId);
       res.json(result);
     } catch (error) {
       console.error(error);

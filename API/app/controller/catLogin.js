@@ -64,6 +64,7 @@ const catLoginController = {
                 res.json({
                     logged: true,
                     pseudo: sessionUser.pseudo,
+                    isAdopted: sessionUser.is_adopted,
                     token: jsonwebtoken.sign(jwtContent, jwtSecret, jwtOptions),
                 });
             } else {
