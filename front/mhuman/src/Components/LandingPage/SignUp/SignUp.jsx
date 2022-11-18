@@ -19,7 +19,7 @@ function SignUp({
 
   const fetchData = async ({ email, password, passwordConfirm }) => {
     try {
-      const response = await axios.post('http://lyndonsimpson-server.eddi.cloud:8080/', {
+      const response = await axios.post('http://lyndonsimpson-server.eddi.cloud:8080/user/signup', {
 
         email,
         password,
