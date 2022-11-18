@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 import './App.scss';
@@ -25,12 +25,6 @@ import FAQ from './Components/FAQ/FAQ';
 import DataPolicy from './Components/DataPolicy/DataPolicy';
 
 function App() {
-  const [connectedUser, setConnectedUser] = useState('');
-
-  const handleConnectedUser = (obj) => {
-    setConnectedUser(obj);
-  };
-
   return (
     <AddHumanProfileContextProvider>
       <AddCatProfileContextProvider>
@@ -40,9 +34,7 @@ function App() {
               <Route
                 path="/"
                 element={(
-                  <LandingPage
-                    handleConnectedUser={handleConnectedUser}
-                  />
+                  <LandingPage />
           )}
               />
               <Route
@@ -64,9 +56,7 @@ function App() {
               <Route
                 path="/profileselect"
                 element={(
-                  <ProfileSelect
-                    connectedUser={connectedUser}
-                  />
+                  <ProfileSelect />
           )}
                 end
               />

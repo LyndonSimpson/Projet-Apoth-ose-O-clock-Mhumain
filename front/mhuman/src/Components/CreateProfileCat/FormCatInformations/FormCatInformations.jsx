@@ -85,7 +85,7 @@ function FormCatInformations({
   };
 
   const options = [
-    { key: 'mois', text: 'mois', value: 'mois' },
+    // { key: 'mois', text: 'mois', value: 'mois' },
     { key: 'ans', text: 'ans', value: 'ans' },
   ];
 
@@ -163,7 +163,7 @@ function FormCatInformations({
               />
               <Input
                 className="form-informations-input"
-                label={<Dropdown defaultValue="mois" options={options} />}
+                label={<Dropdown defaultValue="ans" options={options} />}
                 labelPosition="right"
                 placeholder="Entrez l'âge du chat"
                 name="age"

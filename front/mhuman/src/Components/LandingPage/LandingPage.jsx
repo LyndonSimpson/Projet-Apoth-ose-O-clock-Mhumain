@@ -11,9 +11,7 @@ import LogIn from './LogIn/LogIn';
 
 import SignUp from './SignUp/SignUp';
 
-function LandingPage({
-  handleConnectedUser,
-}) {
+function LandingPage() {
   const [choice, setChoice] = useState('');
 
   const handleSignUp = () => {
@@ -74,7 +72,6 @@ function LandingPage({
 
         <LogIn
           handleReturnClick={handleReturnButton}
-          handleConnectedUser={handleConnectedUser}
         />
 
       )}
@@ -84,9 +81,6 @@ function LandingPage({
   );
 }
 
-LandingPage.propTypes = {
-  handleConnectedUser: PropTypes.func.isRequired,
-
-};
+LandingPage.propTypes = {};
 
 export default React.memo(LandingPage);
