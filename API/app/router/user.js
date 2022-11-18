@@ -2,6 +2,8 @@ const { Router } = require('express');
 const userController = require('../controller/user');
 const signupLoginController = require('../controller/signupLogin');
 const authorizationMiddleware = require('../middlewares/jwt');
+const userLogoutController = require('../controller/userLogout');
+//const checkToken = require('../middlewares/checkToken');
  
 const router = Router();
 
@@ -27,7 +29,7 @@ const router = Router();
     * @summary logs out the user
     * @description logs out a user and takes him out of his session.
     */
-    router.get("/user/logout", authorizationMiddleware, signupLoginController.disconnect);
+    router.get("/user/logout", authorizationMiddleware, userLogoutController.disconnect);
 
     /**
     * GET /user
@@ -42,7 +44,7 @@ const router = Router();
     * @description retrieves the user with the id passed in params from database.
     * @param {integer} request.params - id PK
     */
-    router.get("/user/:id", userController.oneUser);
+    router.get("/userProfile", authorizationMiddleware, userController.oneUser);
 
     /**
     * PATCH /user
@@ -75,7 +77,5 @@ const router = Router();
     * @param {number} id.path.required - category identifier
     */
     router.delete("/user", authorizationMiddleware, userController.delete);
-
-
 
 module.exports = router;

@@ -1,0 +1,35 @@
+.update-user {
+    background-image: url('../../styles/layered-waves-haikei.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.update-buttons {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    justify-content: space-around;
+}
+
+.update-user-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5rem;
+}
+
+.update-user-input {
+    width: 300px;
+}
+
+.success-message {
+    width: 300px;
+}

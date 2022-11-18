@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import './formhumaninformationstyles.scss';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Button, Icon, Form, Input, Message, Radio,
 } from 'semantic-ui-react';
@@ -8,13 +8,21 @@ import {
 import propTypes from 'prop-types';
 import FormHumanDesc from '../FormHumanDesc/FormHumanDesc';
 import useHumanProfileReducer, { getActionSetValue } from '../../../hooks/useHumanProfileReducer';
+import AddHumanProfileContext from '../../../contexts/AddHumanProfileContext';
+import { setToken } from '../../../requests/instance';
+import { getAllHumanRequest } from '../../../requests/getHumanRequest';
 
 function FormHumanInformations({
   handleReturnClick,
 }) {
+  const { addHumanInformation } = useContext(AddHumanProfileContext);
   const { humanProfileState, humanProfileDispatch } = useHumanProfileReducer();
+  const [humans, setHumans] = useState([]);
+  const [existedPseudo, setExistedPseudo] = useState(true);
   const [next, setNext] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const PseudoExist = (param) => humans.some((e) => e.pseudo === param);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!humanProfileState.name.trim()) {
@@ -25,27 +33,48 @@ function FormHumanInformations({
       setErrorMessage('Le pseudo est obligatoire');
       return;
     }
+    if (PseudoExist(humanProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déja');
+      return;
+    }
     if (!humanProfileState.age.trim()) {
       setErrorMessage('L\'age est obligatoire');
       return;
     }
+    addHumanInformation(humanProfileState);
     setNext('FormHumanDesc');
   };
   const handleDismiss = () => {
     setErrorMessage('');
   };
 
+  const handlePseudoFieldChange = (e) => {
+    humanProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
+      setExistedPseudo(true);
+    } else {
+      setExistedPseudo(false);
+    }
+  };
+
   const handleTextFieldChange = (e) => {
     humanProfileDispatch(getActionSetValue(e.target.name, e.target.value));
   };
-
   const handleRadioFieldChange = (e, { name, value }) => {
     humanProfileDispatch(getActionSetValue(name, value));
   };
-
   const handleReturnButton = () => {
     setNext('');
   };
+
+  React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
+    async function getHumans() {
+      const response = await getAllHumanRequest();
+      setHumans(response);
+    }
+    getHumans();
+  }, []);
 
   return (
     <>
@@ -76,8 +105,9 @@ function FormHumanInformations({
                 id="form-input-control-last-name"
                 placeholder="Pseudo"
                 name="pseudo"
+                icon={existedPseudo ? 'close' : 'check'}
                 value={humanProfileState.pseudo}
-                onChange={handleTextFieldChange}
+                onChange={handlePseudoFieldChange}
               />
               <Input
                 className="form-informations-input"
@@ -93,64 +123,64 @@ function FormHumanInformations({
 
             <div className="form-informations-radios">
               <Form.Group grouped>
-                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
+                <label htmlFor="has_pets">Avez-vous des animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasPets"
+                    name="has_pets"
                     value="true"
-                    checked={humanProfileState.hasPets === 'true'}
+                    checked={humanProfileState.has_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasPets"
+                    name="has_pets"
                     value="false"
-                    checked={humanProfileState.hasPets === 'false'}
+                    checked={humanProfileState.has_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
+                <label htmlFor="has_kids">Avez-vous des enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasKids"
+                    name="has_kids"
                     value="true"
-                    checked={humanProfileState.hasKids === 'true'}
+                    checked={humanProfileState.has_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasKids"
+                    name="has_kids"
                     value="false"
-                    checked={humanProfileState.hasKids === 'false'}
+                    checked={humanProfileState.has_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
+                <label htmlFor="has_garden">Avez-vous un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasGarden"
+                    name="has_garden"
                     value="true"
-                    checked={humanProfileState.hasGarden === 'true'}
+                    checked={humanProfileState.has_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasGarden"
+                    name="has_garden"
                     value="false"
-                    checked={humanProfileState.hasGarden === 'false'}
+                    checked={humanProfileState.has_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>

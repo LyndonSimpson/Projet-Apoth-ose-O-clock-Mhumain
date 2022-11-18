@@ -3,37 +3,49 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './updateprofilecatstyles.scss';
 import {
-  Button, Icon, TextArea, Input, Form, Radio, Image, Dropdown,
+  Button, Icon, TextArea, Input, Form, Radio, Dropdown, Message,
 } from 'semantic-ui-react';
 import { Navigate } from 'react-router-dom';
-import cat from '../../styles/cat.jpg';
-import useCatProfileReducer, { getActionSetValue } from '../../hooks/useCatProfileReducer';
-import MobileNav from '../HomePage/MobileNav/MobileNav';
+import { updateCatProfileRequest, updateCatImageProfileRequest } from '../../requests/profilesRequest';
+import { deleteCatProfile } from '../../requests/deleteProfileRequest';
+import useCatProfileReducer, { getActionSetValue, getActionInitValue } from '../../hooks/useCatProfileReducer';
+import { setToken } from '../../requests/instance';
+import { getOneCatRequest, getAllCatRequest } from '../../requests/getCatRequest';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import MobileNav from '../Header/MobileNav/MobileNav';
 
 function UpdateProfileCat() {
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
-  const [UpdateCatProfil, setUpdateCreateCatProfil] = useState(false);
+  const [UpdateCatProfil, setUpdateUpdateCatProfil] = useState(false);
   const [listOption, setListOption] = useState([]);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [existedPseudo, setExistedPseudo] = useState(false);
+  const [cats, setCats] = useState([]);
+  const Token = localStorage.getItem('Token');
+  const type = localStorage.getItem('type');
+  const pseudo = localStorage.getItem('profilePseudo');
 
-  const fetchData = async (payload) => {
+  const PseudoExist = (param) => cats.some((e) => (e.pseudo === param && e.pseudo !== pseudo));
+  const fetchData = async (data) => {
     try {
-      const response = await axios.patch('http://localhost:3001/cat', {
-        image: payload.image, // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-        account_id: payload.account_id, // TODO : Gérer l'id de l'utilisateur en cours
-        pseudo: payload.pseudo,
-        name: payload.name,
-        description: payload.description,
-        age: payload.age,
-        has_pets: payload.has_pets,
-        has_kids: payload.has_kids,
-        has_garden: payload.has_garden,
-      });
-      console.log(response);
+      const response = await updateCatProfileRequest(data);
       if (response.status === 200) {
-        setUpdateCreateCatProfil(true);
+        setUpdateUpdateCatProfil(true);
       }
     } catch (error) {
       // TODO : Récupérer l'erreur de l'API et renvoyer un message à l'utilisateur
+      console.log(error.message);
+    }
+  };
+
+  const fetchFileUpload = async (data) => {
+    try {
+      const response = await updateCatImageProfileRequest(data);
+      if (response.status === 200) {
+        setUpdateUpdateCatProfil(true);
+      }
+    } catch (error) {
       console.log(error.message);
     }
   };
@@ -44,6 +56,11 @@ function UpdateProfileCat() {
   ];
 
   React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
+    async function getCats() {
+      const response = await getAllCatRequest();
+      setCats(response);
+    }
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -68,25 +85,54 @@ function UpdateProfileCat() {
       });
       setListOption(listOptions);
     }
+    getCats();
     getCatBreed();
+    getOneCatRequest().then((response) => {
+      catProfileDispatch(getActionInitValue(response[0]));
+    });
   }, []);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // if (!catProfileState.description.trim()) {
-    //   setErrorMessage('Une description est obligatoire');
-    // }
+
+    if (!catProfileState.description.trim()) {
+      setErrorMessage('Une description est obligatoire');
+    }
+
+    if (!catProfileState.name.trim()) {
+      setErrorMessage('Le nom est obligatoire');
+      return;
+    }
+    if (!catProfileState.pseudo.trim()) {
+      setErrorMessage('Le pseudo est obligatoire');
+      return;
+    }
+    if (PseudoExist(catProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déjà');
+      return;
+    }
+    if (!catProfileState.color.trim()) {
+      setErrorMessage('La couleur est obligatoire');
+      return;
+    }
+
     fetchData({
-      image: 'todo.png', // TODO : gérer les images (upload sur public et envoyer le nom de l'image)
-      account_id: 1, // TODO : Gérer l'id de l'utilisateur en cours
       pseudo: catProfileState.pseudo,
       name: catProfileState.name,
       description: catProfileState.description,
       age: catProfileState.age,
-      has_pets: catProfileState.hasPets,
-      has_kids: catProfileState.hasKids,
-      has_garden: catProfileState.hasGarden,
+      race: catProfileState.race,
+      sexe: catProfileState.sexe,
+      color: catProfileState.color,
+      likes_pets: catProfileState.likes_pets,
+      likes_kids: catProfileState.likes_kids,
+      needs_garden: catProfileState.needs_garden,
     });
+    if (catProfileState.fileUpload) {
+      const imageData = new FormData();
+      imageData.append('fileUpload', catProfileState.fileUpload);
+      fetchFileUpload(imageData);
+    }
   };
 
   const handleTextFieldChange = (e) => {
@@ -101,10 +147,31 @@ function UpdateProfileCat() {
     catProfileDispatch(getActionSetValue(data.name, data.value));
   };
 
+  const handleDismiss = () => {
+    setErrorMessage('');
+  };
+
+  const handleDelete = () => {
+    deleteCatProfile();
+    setUpdateUpdateCatProfil(true);
+  };
+
+  const handlePseudoFieldChange = (e) => {
+    catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+    if (!PseudoExist(e.target.value) && e.target.value.trim() !== '') {
+      setExistedPseudo(false);
+    } else {
+      setExistedPseudo(true);
+    }
+  };
+
   return (
-    <>
-      <div className="update-profile">
-        {/* {errorMessage
+    <div className="update-page">
+      <Header
+        type={type}
+      />
+      <div className="update-profile-cat">
+        {errorMessage
               && (
               <Message
                 negative
@@ -113,17 +180,33 @@ function UpdateProfileCat() {
                 onDismiss={handleDismiss}
                 content={errorMessage}
               />
-              )} */}
+              )}
         <form
           onSubmit={handleSubmit}
           className="form-update-cat"
         >
           <div className="form-update-image">
-            <Image.Group size="small">
-              <Image rounded src={cat} />
-            </Image.Group>
+            <span>
+              <img
+                style={{ padding: '10px' }}
+                width={150}
+                height={150}
+                src={catProfileState.fileUpload ? URL.createObjectURL(catProfileState.fileUpload) : catProfileState.image}
+                alt="Photos"
+              />
+            </span>
+            <input
+              className="form-desc-cat-input"
+              name="fileUpload"
+              onChange={(e) => {
+                catProfileDispatch(getActionSetValue(e.target.name, e.target.files[0]));
+              }}
+              type="file"
+              accept="image/*"
+              id="fileUpload"
+            />
           </div>
-          <div className="form-update-all-informations">
+          <div className="form-update-cat-all-informations">
             <div className="form-update-informations">
               <div className="form-update-input">
                 <Form.Group className="form-informations">
@@ -140,8 +223,9 @@ function UpdateProfileCat() {
                     id="form-input-control-last-name"
                     placeholder="Pseudo"
                     name="pseudo"
+                    icon={existedPseudo ? 'close' : 'check'}
                     value={catProfileState.pseudo}
-                    onChange={handleTextFieldChange}
+                    onChange={handlePseudoFieldChange}
                   />
                   <Input
                     className="form-informations-input"
@@ -179,12 +263,11 @@ function UpdateProfileCat() {
               />
               <Dropdown
                 className="form-informations-dropdown"
-                clearable
                 placeholder="Sélectionnez la race du chat"
-                name="breed"
+                name="race"
                 fluid
                 selection
-                value={catProfileState.breed}
+                value={catProfileState.race}
                 options={listOption}
                 onChange={handleDropdownChange}
               />
@@ -201,91 +284,114 @@ function UpdateProfileCat() {
 
             <div className="form-update-radios">
               <Form.Group grouped>
-                <label htmlFor="hasPets">Avez-vous des animaux ?</label>
+                <label htmlFor="likes_pets">Aime-t-il les animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasPets"
+                    name="likes_pets"
                     value="true"
-                    checked={catProfileState.hasPets === 'true'}
+                    checked={typeof catProfileState.likes_pets === 'boolean' ? catProfileState.likes_pets.toString() === 'true'
+                      : catProfileState.likes_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasPets"
+                    name="likes_pets"
                     value="false"
-                    checked={catProfileState.hasPets === 'false'}
+                    checked={typeof catProfileState.likes_pets === 'boolean' ? catProfileState.likes_pets.toString() === 'false'
+                      : catProfileState.likes_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasKids">Avez-vous des enfants ?</label>
+                <label htmlFor="likes_kids">Aime-t-il les enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasKids"
+                    name="likes_kids"
                     value="true"
-                    checked={catProfileState.hasKids === 'true'}
+                    checked={typeof catProfileState.likes_kids === 'boolean' ? catProfileState.likes_kids.toString() === 'true'
+                      : catProfileState.likes_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasKids"
+                    name="likes_kids"
                     value="false"
-                    checked={catProfileState.hasKids === 'false'}
+                    checked={typeof catProfileState.likes_kids === 'boolean' ? catProfileState.likes_kids.toString() === 'false'
+                      : catProfileState.likes_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="hasGarden">Avez-vous un jardin ?</label>
+                <label htmlFor="needs_garden">A-t-il besoin d'un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="hasGarden"
+                    name="needs_garden"
                     value="true"
-                    checked={catProfileState.hasGarden === 'true'}
+                    checked={typeof catProfileState.needs_garden === 'boolean' ? catProfileState.needs_garden.toString() === 'true'
+                      : catProfileState.needs_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="hasGarden"
+                    name="needs_garden"
                     value="false"
-                    checked={catProfileState.hasGarden === 'false'}
+                    checked={typeof catProfileState.needs_garden === 'boolean' ? catProfileState.needs_garden.toString() === 'false'
+                      : catProfileState.needs_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
             </div>
           </div>
+          <div className="form-update-cat-buttons">
+            <Button
+              className="delete-cat-profile"
+              animated="fade"
+              type="button"
+              onClick={handleDelete}
+              color="red"
+            >
+              <Button.Content visible>Supprimer ce profil</Button.Content>
+              <Button.Content hidden>
+                <Icon name="user delete" />
+              </Button.Content>
+            </Button>
+            <Button
+              className="form-update-cat-button"
+              animated="fade"
+              type="submit"
+            >
+              <Button.Content visible>Enregistrer</Button.Content>
+              <Button.Content hidden>
+                <Icon name="check" />
+              </Button.Content>
+            </Button>
+          </div>
         </form>
-        <div className="form-update-cat-buttons">
-          <Button
-            className="form-update-cat-button"
-            animated="fade"
-            type="submit"
-          >
-            <Button.Content visible>Enregistrer</Button.Content>
-            <Button.Content hidden>
-              <Icon name="check" />
-            </Button.Content>
-          </Button>
-        </div>
+
         { UpdateCatProfil && (
-        <Navigate to="/homepage" />
+        <Navigate to="/profileselect" />
         )}
-
       </div>
-
-      {/* <MobileNav className="mobile-nav" /> */}
-    </>
+      <Footer />
+      <MobileNav
+        type={type}
+      />
+      {!Token && (
+        <Navigate to="/" />
+      )}
+    </div>
   );
 }
 

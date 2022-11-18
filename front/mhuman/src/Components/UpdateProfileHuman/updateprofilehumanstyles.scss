@@ -1,7 +1,16 @@
+.update-page {
+    
+    background-image: url('../../styles/layered-waves-haikei.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
+    width: 100vw;
+}
+
 .update-profile {
     display: flex;
     flex-direction: column;
-    height: 75vh;
+    height: 80vh;
     justify-content: center;
     align-items: center;
 }
@@ -36,8 +45,8 @@
 
 @media only screen and (max-width: 768px) {
     .update-profile {
-        border: none;
-        
+        margin-top: -6rem;
+        margin-bottom: 25rem;
     }
 
     .form-update-human {

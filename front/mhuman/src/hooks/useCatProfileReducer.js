@@ -6,12 +6,12 @@ const catProfileInitialState = {
   description: '',
   age: '',
   color: '',
-  sexe: '',
-  breed: '',
-  likesPets: 'false',
-  likesKids: 'false',
-  needsGarden: 'false',
-  fileUpload: [],
+  sexe: 'male',
+  race: 'Chat de gouttière',
+  likes_pets: 'false',
+  likes_kids: 'false',
+  needs_garden: 'false',
+  fileUpload: null,
 };
 
 function catProfileReducer(oldState, action) {

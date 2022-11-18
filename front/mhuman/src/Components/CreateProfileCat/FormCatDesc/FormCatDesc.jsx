@@ -13,7 +13,7 @@ import { setToken } from '../../../requests/instance';
 function FormCatDesc({
   handleReturnClick,
 }) {
-  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
+  const { catInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
   const [errorMessage, setErrorMessage] = useState('');
   const [SucceededCreateCatProfil, setSucceededCreateCatProfil] = useState(false);
@@ -21,8 +21,7 @@ function FormCatDesc({
   const fetchData = async (data) => {
     try {
       const response = await addCatProfileRequest(data);
-      console.log(response);
-      if (response === 200) {
+      if (response.status === 200) {
         setSucceededCreateCatProfil(true);
       }
     } catch (error) {
@@ -32,8 +31,8 @@ function FormCatDesc({
   };
 
   React.useEffect(() => {
-    catProfileDispatch(getActionInitValue(catInformation));
     setToken(localStorage.getItem('Token'));
+    catProfileDispatch(getActionInitValue(catInformation));
   }, []);
 
   const handleSubmit = (evt) => {
@@ -48,9 +47,9 @@ function FormCatDesc({
     data.append('race', catProfileState.race);
     data.append('sexe', catProfileState.sexe);
     data.append('color', catProfileState.color);
-    data.append('likes_pets', catProfileState.likesPets);
-    data.append('likes_kids', catProfileState.likesKids);
-    data.append('needs_garden', catProfileState.needsGarden);
+    data.append('likes_pets', catProfileState.likes_pets);
+    data.append('likes_kids', catProfileState.likes_kids);
+    data.append('needs_garden', catProfileState.needs_garden);
 
     if (!catProfileState.description.trim()) {
       setErrorMessage('Une description est obligatoire');
@@ -67,7 +66,7 @@ function FormCatDesc({
   };
 
   return (
-    <div>
+    <div className="form-container">
       {errorMessage
           && (
           <Message
@@ -93,15 +92,18 @@ function FormCatDesc({
         />
 
         <div>
+          {catProfileState.fileUpload
+          && (
           <span>
             <img
               style={{ padding: '10px' }}
               width={150}
               height={150}
-              src={catProfileState.fileUpload}
+              src={URL.createObjectURL(catProfileState.fileUpload)}
               alt="Photos"
             />
           </span>
+          )}
           <input
             className="form-desc-cat-input"
             name="fileUpload"

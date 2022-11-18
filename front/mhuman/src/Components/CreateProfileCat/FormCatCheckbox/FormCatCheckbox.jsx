@@ -30,9 +30,11 @@ function FormCatCheckbox() {
     <>
       {!next && (
       <div className="form-checkbox">
+        <h2>A cocher (ou pas...)</h2>
         <Form className="check-cat">
           {Checkboxes.map(({ description, id }, index) => (
             <Form.Field
+              className="check-cat-text"
               key={id}
               control={Checkbox}
               name={description}
@@ -42,7 +44,13 @@ function FormCatCheckbox() {
               label={description}
             />
           ))}
-
+          <a
+            href="https://chaire-bea.vetagro-sup.fr/wp-content/uploads/2022/10/certificat-engagement-chat.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Certificat obligatoire pour l'adoption
+          </a>
         </Form>
         <div className="check-cat-button">
           <Button

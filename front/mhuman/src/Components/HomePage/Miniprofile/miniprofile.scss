@@ -53,6 +53,7 @@
 .profileName{
     font-size: 1.4vw;
     padding-left: 0.7em;
+    color: white;
 
     @media screen and (max-width:480px){
         font-size: 1.1rem;
@@ -61,4 +62,22 @@
 
 .heartIcon{
     height: 100%;
+    color: white;
+    &:hover {
+        color: blueviolet;
+    }
+}
+
+.mailIcon {
+    color: white;
+
+    &:hover {
+        color: blueviolet;
+    }
+}
+
+.bloc-icons {
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
 }

@@ -15,6 +15,14 @@
     }
 }
 
+.error-form-msg {
+    .header {
+        max-height: 20px;
+    }
+}
+
+
+
 .form-informations {
 
     &-input {
@@ -24,6 +32,10 @@
 
     &-radios {
         margin-top: 1rem;
+        background-color: white;
+        border-radius: 24px;
+        padding: 1.5em;
+        box-sizing: border-box;
     }
 
     &-dropdown {
@@ -34,7 +46,14 @@
 
 @media only screen and (max-width: 768px) {
     .form-cat-informations {
-        margin-top: 80px;
+        margin-top: 0;
+        height: 100vh;
+    }
+
+    .error-form-msg {
+        .header {
+            max-height: 20px;
+        }
     }
 
 }

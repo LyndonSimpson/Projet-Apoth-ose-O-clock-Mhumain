@@ -5,9 +5,10 @@ const humanProfileInitialState = {
   pseudo: '',
   description: '',
   age: '',
-  hasPets: 'false',
-  hasKids: 'false',
-  hasGarden: 'false',
+  has_pets: 'false',
+  has_kids: 'false',
+  has_garden: 'false',
+  fileUpload: null,
 };
 
 function humanProfileReducer(oldState, action) {
@@ -17,6 +18,8 @@ function humanProfileReducer(oldState, action) {
         ...oldState,
         [action.payload.name]: action.payload.value,
       };
+    case 'INIT_VALUE':
+      return action.payload;
     case 'RESET': {
       return humanProfileInitialState;
     }
@@ -31,6 +34,13 @@ export function getActionSetValue(name, value) {
     payload: {
       name, value,
     },
+  };
+}
+
+export function getActionInitValue(obj) {
+  return {
+    type: 'INIT_VALUE',
+    payload: obj,
   };
 }
 

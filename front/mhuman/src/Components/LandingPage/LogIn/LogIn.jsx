@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
-
 import './LogIn.scss';
 import {
   Button, Form, Icon, Message,
 } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import Logo from '../logo.png';
-import loginRequest from '../../../requests/loginRequest';
-import { setToken } from '../../../requests/instance';
+import { loginRequest } from '../../../requests/loginRequest';
 
 function LogIn({
   handleReturnClick,
@@ -21,10 +19,9 @@ function LogIn({
   const fetchData = async (email, password) => {
     try {
       const response = await loginRequest(email, password);
-      setToken(response.token);
-      localStorage.setItem('Token', response.token);
       if (response.logged) {
         setIsConnected(true);
+        localStorage.setItem('userEmail', response.pseudo);
       }
     } catch (err) {
       setErrorMessage(err.response.data);
@@ -87,6 +84,7 @@ function LogIn({
                 value={passwordValue}
                 onChange={(e) => { SetPasswordValue(e.target.value); }}
               />
+              <a href="/forgotpassword" className="forgot-password">Mot de passe oublié ?</a>
             </Form.Field>
             <Button size="big" type="submit"> Se connecter </Button>
           </Form>

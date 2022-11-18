@@ -1,8 +1,15 @@
 const database = require('../../data/database');
 
 const catSearchDattaMapper = {
-  
-  async find(has_pets, has_kids, has_garden) {       
+  /**
+   * selects all humans that fit the filter options selected by the human 
+   * 
+   * @param {boolean} has_pets true or false
+   * @param {boolean} has_kids true or false
+   * @param {boolean} has_garden true or false
+   * @returns array of humans that fit the search
+   */
+  async find(has_pets, has_kids, has_garden) {
     const filter1 = has_pets;
     const filter2 = has_kids;
     const filter3 = has_garden;

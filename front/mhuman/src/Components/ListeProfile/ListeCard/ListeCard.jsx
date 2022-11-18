@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import PropTypes, { shape } from 'prop-types';
 import { Card, Icon, Image } from 'semantic-ui-react';
-import cat2 from '../../ProfileSelect/fakeData/pexels-cat-2.jpg';
 import './listecard.scss';
 import {
   IconNoGarden,
@@ -13,16 +13,21 @@ import {
 } from '../Icons/Icons';
 
 function ListeCard({
-  hasGarden, hasPet, hasKid, name, age, toggleProfile,
+  id, hasGarden, hasPet, hasKid, pseudo, age, toggleProfile, image, race, sexe, color, handleAddFav, favorites, handleDeleteFav, description,
 }) {
+  // Fonction de comparaison pour savoir si un profil fait partie des favoris
+  const ProfileIsFavorites = (param) => favorites.some((e) => e.id === param);
+
   return (
     <Card className="listeCard">
-      <Image src={cat2} wrapped ui={false} />
+      <Image className="listeCard-img" src={image} wrapped ui={false} />
       <Card.Content className="card-content">
-        <Card.Header className="card-header">{name}</Card.Header>
+        <Card.Header className="card-header">{pseudo}</Card.Header>
         <Card.Meta>
           <span>
             {age}
+            {' '}
+            ans
           </span>
         </Card.Meta>
         <Card.Description className="card-icon">
@@ -33,8 +38,34 @@ function ListeCard({
       </Card.Content>
       <Card.Content extra>
         <div className="card-icon-link">
-          <Icon className="card-icon-link-item" name="heart outline" size="big" />
-          <Icon className="card-icon-link-item" name="expand" size="big" onClick={toggleProfile} />
+          {ProfileIsFavorites(id) ? (
+            <Icon
+              className="heartIcon"
+              color="red"
+              name="heart"
+              size="big"
+              onClick={() => handleDeleteFav(id)}
+            />
+          ) : (
+            <Icon
+              className="heartIcon"
+              name="heart outline"
+              size="big"
+              onClick={() => handleAddFav(id)}
+            />
+          )}
+          <Link
+            to="/chat"
+            state={{ pseudo, id }}
+          >
+            <Icon className="card-icon-link-item" name="mail outline" size="big" />
+          </Link>
+          <Icon
+            className="card-icon-link-item"
+            name="expand"
+            size="big"
+            onClick={() => toggleProfile(hasGarden, hasPet, hasKid, pseudo, age, image, race, sexe, color, description)}
+          />
         </div>
       </Card.Content>
     </Card>
@@ -48,6 +79,24 @@ ListeCard.propTypes = {
   hasGarden: PropTypes.bool.isRequired,
   hasKid: PropTypes.bool.isRequired,
   hasPet: PropTypes.bool.isRequired,
-  age: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  age: PropTypes.number.isRequired,
+  pseudo: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  race: PropTypes.string,
+  color: PropTypes.string,
+  sexe: PropTypes.string,
+  handleAddFav: PropTypes.func.isRequired,
+  handleDeleteFav: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
+  favorites: PropTypes.arrayOf(shape(
+    { id: PropTypes.number },
+  )),
+};
+
+ListeCard.defaultProps = {
+  race: '',
+  color: '',
+  sexe: '',
+  favorites: [],
 };

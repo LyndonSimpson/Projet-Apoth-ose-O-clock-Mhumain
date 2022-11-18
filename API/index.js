@@ -14,10 +14,11 @@ const humanRouter = require('./app/router/human');
 const catRouter = require('./app/router/cat');
 const catFavoritesRouter = require('./app/router/catFavorites');
 const humanFavoritesRouter = require('./app/router/humanFavorites');
+const resetRouter = require('./app/router/resetPassword');
 
 const session = require('express-session');
 
-const userMiddleware = require('./app/middlewares/user');
+//const userMiddleware = require('./app/middlewares/user');
 
 const PORT = process.env.PORT;
 
@@ -79,12 +80,12 @@ app.use(express.urlencoded({extended: true}));
 
 app.use(cookieParser());
 
-//app.use(csrfProtection); //TODO - CURF casse insomnia - voir le pb avec Benjamin
+//app.use(csrfProtection); //TODO - CURF casse insomnia
 
 app.use(express.json());
 
 
-app.use(userRouter, humanRouter, catRouter, catFavoritesRouter, humanFavoritesRouter); 
+app.use(userRouter, humanRouter, catRouter, catFavoritesRouter, humanFavoritesRouter, resetRouter); 
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}, visit at http http://localhost:${PORT}/`);

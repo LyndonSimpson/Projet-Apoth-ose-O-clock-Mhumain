@@ -2,14 +2,23 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    color: white;
+    &-text{
+        color: white;
+    }
 }
 
 .form-checkbox {
     width: 90%;
+    color: white;
+    background-color: white;
+    border-radius: 32px;
+    padding: 1.5em;
+    box-sizing: border-box;
 }
 
 @media only screen and (max-width: 768px) {
     .form-checkbox {
-        margin-top: 100px;
+        margin-top: 0;
     }
 }

@@ -13,6 +13,8 @@ function userReducer(oldState, action) {
         ...oldState,
         [action.payload.name]: action.payload.value,
       };
+    case 'INIT_VALUE':
+      return action.payload;
     case 'RESET': {
       return userInitialState;
     }
@@ -27,6 +29,13 @@ export function getActionSetValue(name, value) {
     payload: {
       name, value,
     },
+  };
+}
+
+export function getActionInitValue(obj) {
+  return {
+    type: 'INIT_VALUE',
+    payload: obj,
   };
 }
 

@@ -10,16 +10,21 @@ import propTypes from 'prop-types';
 import FormCatDesc from '../FormCatDesc/FormCatDesc';
 import useCatProfileReducer, { getActionSetValue } from '../../../hooks/useCatProfileReducer';
 import AddCatProfileContext from '../../../contexts/AddCatProfileContext';
+import { getAllCatRequest } from '../../../requests/getCatRequest';
+import { setToken } from '../../../requests/instance';
 
 function FormCatInformations({
   handleReturnClick,
 }) {
-  const { addCatInformation, catInformation } = useContext(AddCatProfileContext);
+  const { addCatInformation } = useContext(AddCatProfileContext);
   const { catProfileState, catProfileDispatch } = useCatProfileReducer();
+  const [cats, setCats] = useState([]);
+  const [existedPseudo, setExistedPseudo] = useState(true);
   const [next, setNext] = useState('');
   const [listOption, setListOption] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
 
+  const PseudoExist = (param) => cats.some((e) => e.pseudo === param);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!catProfileState.name.trim()) {
@@ -30,12 +35,24 @@ function FormCatInformations({
       setErrorMessage('Le pseudo est obligatoire');
       return;
     }
+    if (PseudoExist(catProfileState.pseudo)) {
+      setErrorMessage('Ce pseudo existe déja');
+      return;
+    }
     if (!catProfileState.age.trim()) {
       setErrorMessage('L\'age est obligatoire');
       return;
     }
     if (!catProfileState.color.trim()) {
       setErrorMessage('La couleur est obligatoire');
+      return;
+    }
+    if (!catProfileState.sexe.trim()) {
+      setErrorMessage('Le sexe est obligatoire');
+      return;
+    }
+    if (!catProfileState.race.trim()) {
+      setErrorMessage('La race est obligatoire');
       return;
     }
     addCatInformation(catProfileState);
@@ -47,6 +64,16 @@ function FormCatInformations({
   const handleReturnButton = () => {
     setNext('');
   };
+
+  const handlePseudoFieldChange = (e) => {
+    catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
+    if (PseudoExist(e.target.value) || !e.target.value.trim()) {
+      setExistedPseudo(true);
+    } else {
+      setExistedPseudo(false);
+    }
+  };
+
   const handleTextFieldChange = (e) => {
     catProfileDispatch(getActionSetValue(e.target.name, e.target.value));
   };
@@ -58,7 +85,7 @@ function FormCatInformations({
   };
 
   const options = [
-    { key: 'mois', text: 'mois', value: 'mois' },
+    // { key: 'mois', text: 'mois', value: 'mois' },
     { key: 'ans', text: 'ans', value: 'ans' },
   ];
 
@@ -68,6 +95,11 @@ function FormCatInformations({
   ];
 
   React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
+    async function getCats() {
+      const response = await getAllCatRequest();
+      setCats(response);
+    }
     async function getCatBreed() {
       const response = await axios.get('https://api.thecatapi.com/v1/breeds');
       const listOptions = response.data.map((element) => ({
@@ -92,6 +124,7 @@ function FormCatInformations({
       });
       setListOption(listOptions);
     }
+    getCats();
     getCatBreed();
   }, []);
 
@@ -103,7 +136,7 @@ function FormCatInformations({
           && (
           <Message
             negative
-            className="error-msg"
+            className="error-form-msg"
             header="Erreur"
             onDismiss={handleDismiss}
             content={errorMessage}
@@ -124,12 +157,13 @@ function FormCatInformations({
                 id="form-input-control-last-name"
                 placeholder="Pseudo"
                 name="pseudo"
+                icon={existedPseudo ? 'close' : 'check'}
                 value={catProfileState.pseudo}
-                onChange={handleTextFieldChange}
+                onChange={handlePseudoFieldChange}
               />
               <Input
                 className="form-informations-input"
-                label={<Dropdown defaultValue="mois" options={options} />}
+                label={<Dropdown defaultValue="ans" options={options} />}
                 labelPosition="right"
                 placeholder="Entrez l'âge du chat"
                 name="age"
@@ -147,12 +181,11 @@ function FormCatInformations({
               />
               <Dropdown
                 className="form-informations-dropdown"
-                clearable
                 placeholder="Sélectionnez la race du chat"
-                name="breed"
+                name="race"
                 fluid
                 selection
-                value={catProfileState.breed}
+                value={catProfileState.race}
                 options={listOption}
                 onChange={handleDropdownChange}
               />
@@ -169,64 +202,64 @@ function FormCatInformations({
 
             <div className="form-informations-radios">
               <Form.Group>
-                <label htmlFor="likesPets">Aime-t-il les autres animaux ?</label>
+                <label htmlFor="likes_pets">Aime-t-il les autres animaux ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="likesPets"
+                    name="likes_pets"
                     value="true"
-                    checked={catProfileState.likesPets === 'true'}
+                    checked={catProfileState.likes_pets === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="likesPets"
+                    name="likes_pets"
                     value="false"
-                    checked={catProfileState.likesPets === 'false'}
+                    checked={catProfileState.likes_pets === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="likesKids">Aime-t-il les enfants ?</label>
+                <label htmlFor="likes_kids">Aime-t-il les enfants ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="likesKids"
+                    name="likes_kids"
                     value="true"
-                    checked={catProfileState.likesKids === 'true'}
+                    checked={catProfileState.likes_kids === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="likesKids"
+                    name="likes_kids"
                     value="false"
-                    checked={catProfileState.likesKids === 'false'}
+                    checked={catProfileState.likes_kids === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
               </Form.Group>
               <Form.Group grouped>
-                <label htmlFor="needsGarden">A-t-il besoin d'un jardin ?</label>
+                <label htmlFor="needs_garden">A-t-il besoin d'un jardin ?</label>
                 <Form.Field>
                   <Radio
                     label="Oui"
-                    name="needsGarden"
+                    name="needs_garden"
                     value="true"
-                    checked={catProfileState.needsGarden === 'true'}
+                    checked={catProfileState.needs_garden === 'true'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>
                 <Form.Field>
                   <Radio
                     label="Non"
-                    name="needsGarden"
+                    name="needs_garden"
                     value="false"
-                    checked={catProfileState.needsGarden === 'false'}
+                    checked={catProfileState.needs_garden === 'false'}
                     onChange={handleRadioFieldChange}
                   />
                 </Form.Field>

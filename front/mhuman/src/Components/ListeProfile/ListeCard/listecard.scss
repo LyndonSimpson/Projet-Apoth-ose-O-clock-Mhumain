@@ -11,6 +11,14 @@
 }
 //---------------------
 
+.listeCard{
+    &-img{
+        min-height: 290px;
+        max-height: 290px;
+        overflow: hidden;
+    }
+}
+
 .card-icon{
     display: flex;
     justify-content: space-evenly;

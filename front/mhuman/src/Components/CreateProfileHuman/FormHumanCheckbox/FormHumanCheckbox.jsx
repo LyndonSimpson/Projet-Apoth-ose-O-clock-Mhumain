@@ -43,7 +43,13 @@ function FormHumanCheckbox() {
               required
             />
           ))}
-
+          <a
+            href="https://chaire-bea.vetagro-sup.fr/wp-content/uploads/2022/10/certificat-engagement-chat.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Certificat obligatoire pour l'adoption
+          </a>
         </Form>
         <div className="check-human-button">
           <Button

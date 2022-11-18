@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 
 import './profileselect.scss';
-import { Link } from 'react-router-dom';
-import logo from './fakeData/Logo-Mhumain-Colored.png';
+import { Link, Navigate } from 'react-router-dom';
+import { Icon } from 'semantic-ui-react';
+import logo from '../../styles/logo.png';
 import AddProfile from './AddProfile/AddProfile';
 import ProfileCard from './ProfileCard/ProfileCard';
 import { catProfilesRequest, humanProfilesRequest } from '../../requests/profilesRequest';
+import { setToken } from '../../requests/instance';
+import { catLoginRequest, humanLoginRequest } from '../../requests/loginRequest';
 
 function ProfileSelect() {
   const [catsProfile, setCatsProfile] = useState('');
   const [humansProfile, setHumansProfile] = useState('');
-
+  const Token = localStorage.getItem('Token');
   useEffect(() => { // j'essaye de récupérer les profils de chat et d'humain pour l'utilisateur connecté
+    setToken(localStorage.getItem('Token'));
     async function getUserProfile() {
       try {
         const [userCats, userHumans] = await Promise.all([
@@ -28,9 +32,38 @@ function ProfileSelect() {
     getUserProfile();
   }, []);
 
+  const handleCatProfileClick = async (pseudo) => {
+    try {
+      const response = await catLoginRequest(pseudo);
+      localStorage.setItem('isLogged', response.logged);
+      localStorage.setItem('profilePseudo', response.pseudo);
+      localStorage.setItem('isAdopted', response.isAdopted);
+      localStorage.setItem('type', 'cat');
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
+  const handleHumanProfileClick = async (pseudo) => {
+    try {
+      const response = await humanLoginRequest(pseudo);
+      localStorage.setItem('isLogged', response.logged);
+      localStorage.setItem('profilePseudo', response.pseudo);
+      localStorage.setItem('type', 'human');
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
+
   return (
     <div className="ProfileSelect">
+
       <img src={logo} className="ProfileTitle" alt="logo" />
+      <div className="profile-icons">
+        <Link to="/updateuser"><Icon className="profile-icon" name="pencil" size="big" /></Link>
+        <Link to="/" onClick={() => localStorage.setItem('Token', '')}><Icon className="profile-icon logout" name="log out" size="big" /></Link>
+      </div>
+      {Token && (
       <section className="ProfileContainer">
         <div className="CatProfile">
           <h1 className="ProfileSubtitle"> Profils Chats</h1>
@@ -38,11 +71,17 @@ function ProfileSelect() {
 
             {catsProfile
               && catsProfile.map(({ pseudo, image, id }) => (
-                <ProfileCard
+                <Link
                   key={id}
-                  pseudo={pseudo}
-                  image={image}
-                />
+                  to="/homepage"
+                  onClick={() => handleCatProfileClick(pseudo)}
+                >
+                  <ProfileCard
+                    key={id}
+                    pseudo={pseudo}
+                    image={image}
+                  />
+                </Link>
               ))}
 
             <Link to="/createprofilecat">
@@ -56,22 +95,32 @@ function ProfileSelect() {
 
             {humansProfile.length > 0
               ? humansProfile.map(({ pseudo, image, id }) => (
-                <ProfileCard
+                <Link
                   key={id}
-                  pseudo={pseudo}
-                  image={image}
-                />
+                  to="/homepage"
+                  onClick={() => handleHumanProfileClick(pseudo)}
+                >
+                  <ProfileCard
+                    key={id}
+                    pseudo={pseudo}
+                    image={image}
+                  />
+                </Link>
               ))
               : (
                 <Link to="/createprofilehuman">
                   <AddProfile />
                 </Link>
               )}
-
           </div>
         </div>
       </section>
+      )}
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
+
   );
 }
 
