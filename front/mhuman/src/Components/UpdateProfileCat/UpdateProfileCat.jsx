@@ -167,7 +167,9 @@ function UpdateProfileCat() {
 
   return (
     <div className="update-page">
-      <Header />
+      <Header
+        type={type}
+      />
       <div className="update-profile-cat">
         {errorMessage
               && (

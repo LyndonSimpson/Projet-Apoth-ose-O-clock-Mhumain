@@ -2,15 +2,15 @@ import React from 'react';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
 import './datapolicystyles.scss';
-import Cats from '../../styles/cats.jpg';
-import Cat from '../../styles/catInArms.jpg';
 import MobileNav from '../Header/MobileNav/MobileNav';
 
 function DataPolicy() {
   const type = localStorage.getItem('type');
   return (
     <div className="datapolicy-styles">
-      <Header />
+      <Header
+        type={type}
+      />
       <div>
         <div>
           <h1>Mentions légales</h1>

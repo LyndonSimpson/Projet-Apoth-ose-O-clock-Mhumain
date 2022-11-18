@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './chatStyles.scss';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import MessageFormSend from './MessageFormSend/MessageFormSend';
@@ -20,9 +20,9 @@ function Chat() {
   const [adoptionSuccess, setAdoptionSuccess] = useState(null);
   const type = localStorage.getItem('type');
   const isAdopted = localStorage.getItem('isAdopted');
+  const Token = setToken(localStorage.getItem('Token'));
 
   React.useEffect(() => {
-    setToken(localStorage.getItem('Token'));
     const handleOldMessage = async (reiciverId) => {
       if (type === 'cat') {
         const response = await getCatMessageRequest(reiciverId);
@@ -67,7 +67,9 @@ function Chat() {
 
   return (
     <div className="chat">
-      <Header />
+      <Header
+        type={type}
+      />
       {type === 'cat'
         && (isAdopted !== 'true' ? (
           adoptionSuccess || <AdoptThisMhuman handleAdoptButton={handleAdoptButton} />
@@ -83,6 +85,9 @@ function Chat() {
         && (
           <ConfirmModale open={openModale} setOpen={toggleConfirmModale} handleAdoptMhuman={handleAdoptMhuman} />
         )}
+      {!Token && (
+      <Navigate to="/" />
+      )}
     </div>
   );
 }

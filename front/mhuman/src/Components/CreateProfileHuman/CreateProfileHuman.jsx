@@ -1,6 +1,6 @@
 import React from 'react';
 import './createprofilehumanstyles.scss';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import FormHumanCheckbox from './FormHumanCheckbox/FormHumanCheckbox';
 import FormAPI from '../FormAPI/FormAPI';
 import Logo from '../../styles/logo.png';
@@ -11,7 +11,7 @@ function CreateProfileHuman() {
     <div className="profile">
       <div className="profile-form">
         <div className="create-title">
-          <img src={Logo} alt="logo" />
+          <Link to="/profileselect"><img className="profile-logo" src={Logo} alt="logo adopte ton mhumains" /></Link>
         </div>
         <FormHumanCheckbox />
       </div>

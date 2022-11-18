@@ -9,16 +9,16 @@ function Footer() {
 
     <footer className="footer">
       <div className="left-link">
-        <Link to="/faq">FAQ</Link>
-        <a href="mailto:contact@mhumain.fr">contact@mhumain.fr</a>
+        <Link className="link-white" to="/faq">FAQ</Link>
+        <a className="link-white" href="mailto:contact@mhumain.fr">contact@mhumain.fr</a>
       </div>
       <div className="middle-link">
         <h2>Adopte ton Mhumain</h2>
         <p>2022</p>
       </div>
       <div className="right-link">
-        <Link to="/data-policy">Mentions Légales</Link>
-        <Link to="/about">A propos</Link>
+        <Link className="link-white" to="/data-policy">Mentions Légales</Link>
+        <Link className="link-white" to="/about">A propos</Link>
       </div>
     </footer>
 

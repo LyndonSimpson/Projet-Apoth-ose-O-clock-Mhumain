@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+import { Navigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import ConversationsList from './ConversationsList/ConversationsList';
@@ -10,6 +12,7 @@ import { setToken } from '../../requests/instance';
 function Conversations() {
   const [conversations, setConversations] = useState([]);
   const type = localStorage.getItem('type');
+  const Token = localStorage.getItem('Token');
 
   React.useEffect(() => {
     setToken(localStorage.getItem('Token'));
@@ -27,13 +30,18 @@ function Conversations() {
 
   return (
     <div className="conversations-styles">
-      <Header />
+      <Header
+        type={type}
+      />
       <ConversationsList conversations={conversations} />
       <Footer />
 
       <MobileNav
         type={type}
       />
+      {!Token && (
+        <Navigate to="/" />
+      )}
     </div>
   );
 }

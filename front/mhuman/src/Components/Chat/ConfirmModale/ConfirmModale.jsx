@@ -6,13 +6,14 @@ import {
 } from 'semantic-ui-react';
 
 function ConfirmModale({ open, setOpen, handleAdoptMhuman }) {
+  const type = localStorage.getItem('type');
   return (
     <Modal
       closeIcon
       open={open}
       onClose={setOpen}
     >
-      <Header className="header-modal" icon="paw" content="Adopt this Mhuman ?" />
+      <Header type={type} className="header-modal" icon="paw" content="Adopt this Mhuman ?" />
       <Modal.Content>
         Etes vous sûr de vouloir adopter cet humain ? Cette opération vous impactera toute votre existence...
       </Modal.Content>

@@ -8,7 +8,9 @@ function FAQ() {
   const type = localStorage.getItem('type');
   return (
     <div className="faq-styles">
-      <Header />
+      <Header
+        type={type}
+      />
       <div>
         <div className="faq">
           <h2 className="faq-question">Lorem, ipsum dolor sit amet consectetur adipisicing elit ?</h2>

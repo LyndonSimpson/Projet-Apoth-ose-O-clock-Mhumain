@@ -10,7 +10,9 @@ function About() {
   const type = localStorage.getItem('type');
   return (
     <div className="about-styles">
-      <Header />
+      <Header
+        type={type}
+      />
       <div>
         <img className="about-image-cats" alt="Some Cats" src={Cats} />
         <p>
