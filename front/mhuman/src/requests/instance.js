@@ -1,10 +1,7 @@
 import axios from 'axios';
-import * as dotenv from 'dotenv';
-
-dotenv.config();
 
 const apiInstance = axios.create({
-  baseURL: process.env.BASE_URL,
+  baseURL: 'http://lyndonsimpson-server.eddi.cloud:8080/',
 });
 
 export function setToken(token) {
