@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import * as dotenv from 'dotenv';
+
 import {
   Button, Form, Message, Icon,
 } from 'semantic-ui-react';
@@ -9,6 +11,8 @@ import useUserReducer, { getActionReset, getActionSetValue } from '../../../hook
 import Logo from '../logo.png';
 import './signupstyles.scss';
 
+dotenv.config();
+
 function SignUp({
   handleReturnClick,
   handleSucceededCreateUser,
@@ -18,7 +22,7 @@ function SignUp({
 
   const fetchData = async ({ email, password, passwordConfirm }) => {
     try {
-      const response = await axios.post('http://localhost:3001/user/signup', {
+      const response = await axios.post(process.env.BASE_URL, {
 
         email,
         password,
