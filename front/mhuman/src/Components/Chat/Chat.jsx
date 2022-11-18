@@ -20,9 +20,10 @@ function Chat() {
   const [adoptionSuccess, setAdoptionSuccess] = useState(null);
   const type = localStorage.getItem('type');
   const isAdopted = localStorage.getItem('isAdopted');
-  const Token = setToken(localStorage.getItem('Token'));
+  const Token = localStorage.getItem('Token');
 
   React.useEffect(() => {
+    setToken(localStorage.getItem('Token'));
     const handleOldMessage = async (reiciverId) => {
       if (type === 'cat') {
         const response = await getCatMessageRequest(reiciverId);
