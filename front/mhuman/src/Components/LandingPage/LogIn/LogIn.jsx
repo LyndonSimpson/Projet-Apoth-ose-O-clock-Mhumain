@@ -11,8 +11,8 @@ import { loginRequest } from '../../../requests/loginRequest';
 function LogIn({
   handleReturnClick,
 }) {
-  const [emailValue, SetEmailValue] = useState('romain@street.fr');
-  const [passwordValue, SetPasswordValue] = useState('Wesh_1');
+  const [emailValue, SetEmailValue] = useState('');
+  const [passwordValue, SetPasswordValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [isConnected, setIsConnected] = useState('');
 
