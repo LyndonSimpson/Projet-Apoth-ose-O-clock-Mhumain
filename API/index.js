@@ -71,9 +71,9 @@ app.use(session({
 
 //app.use(userMiddleware);
 
-app.options("*", cors({ origin: 'http://localhost:3000', optionsSuccessStatus: 200 })); //TODO see if settings are safe
+app.options("*", cors({ origin: "http://lyndonsimpson-server.eddi.cloud:3000/", optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
-app.use(cors({ origin: "http://localhost:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ? found this all over internet : app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: "http://lyndonsimpson-server.eddi.cloud:3000/", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ? found this all over internet : app.use(cors({origin: true, credentials: true}));
 //todo we have to set "content-type : application/json?"
 
 app.use(express.urlencoded({extended: true}));
@@ -88,5 +88,5 @@ app.use(express.json());
 app.use(userRouter, humanRouter, catRouter, catFavoritesRouter, humanFavoritesRouter, resetRouter); 
 
 app.listen(PORT, () => {
-	console.log(`Listening on port ${PORT}, visit at http http://localhost:${PORT}/`);
+	console.log(`Listening on port ${PORT}, visit at http http://localhost:${PORT}/ or http://lyndonsimpson-server.eddi.cloud:${PORT}/`);
 });

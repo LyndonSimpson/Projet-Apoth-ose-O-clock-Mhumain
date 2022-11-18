@@ -31,12 +31,7 @@ const router = Router();
     */
     router.get("/user/logout", authorizationMiddleware, userLogoutController.disconnect);
 
-    /**
-    * GET /user
-    * @summary get all users
-    * @description retrieves all the user accounts from the database
-    */
-    router.get("/user", userController.allUsers);
+
 
     /**
     * GET /user/:id
