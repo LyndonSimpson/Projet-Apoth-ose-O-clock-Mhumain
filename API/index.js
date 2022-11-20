@@ -71,9 +71,9 @@ app.use(session({
 
 //app.use(userMiddleware);
 
-app.options("*", cors({ origin: "http://lyndonsimpson-server.eddi.cloud", optionsSuccessStatus: 200 })); //TODO see if settings are safe
+app.options("*", cors({ origin: "http://lyndonsimpson-server.eddi.cloud:3000", optionsSuccessStatus: 200 })); //TODO see if settings are safe
 
-app.use(cors({ origin: "http://lyndonsimpson-server.eddi.cloud", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ? found this all over internet : app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: "http://lyndonsimpson-server.eddi.cloud:3000", optionsSuccessStatus: 200  })); //TODO see if settings are safe  // app.use(cors({origin: 'localhost:3000', credentials:true })); // sinon bug coté axios ? found this all over internet : app.use(cors({origin: true, credentials: true}));
 //todo we have to set "content-type : application/json?"
 
 app.use(express.urlencoded({extended: true}));
