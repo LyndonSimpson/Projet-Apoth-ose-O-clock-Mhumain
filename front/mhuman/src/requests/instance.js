@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiInstance = axios.create({
-  baseURL: 'http://lyndonsimpson-server.eddi.cloud:8080/',
+  baseURL: 'http://localhost:3001/',
 });
 
 export function setToken(token) {
