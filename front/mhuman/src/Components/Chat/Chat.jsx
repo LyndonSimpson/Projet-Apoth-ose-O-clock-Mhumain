@@ -8,6 +8,7 @@ import MessageFormSend from './MessageFormSend/MessageFormSend';
 import MessagesList from './MessagesList/MessagesList';
 import AdoptThisMhuman from './AdoptThisMhuman/AdoptThisMhuman';
 import { getCatMessageRequest, getHumanMessageRequest } from '../../requests/messageRequests';
+import { setToken } from '../../requests/instance';
 import ConfirmModale from './ConfirmModale/ConfirmModale';
 import adoptMyHuman from '../../requests/adoptHumanRequest';
 
