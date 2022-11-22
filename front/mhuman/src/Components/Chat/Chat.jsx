@@ -86,9 +86,6 @@ function Chat() {
         && (
           <ConfirmModale open={openModale} setOpen={toggleConfirmModale} handleAdoptMhuman={handleAdoptMhuman} />
         )}
-      {!Token && (
-      <Navigate to="/" />
-      )}
     </div>
   );
 }

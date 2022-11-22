@@ -48,7 +48,7 @@ function ListeCard({
             />
           ) : (
             <Icon
-              className="heartIcon"
+              className="listCard-heartIcon"
               name="heart outline"
               size="big"
               onClick={() => handleAddFav(id)}

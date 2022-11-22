@@ -19,6 +19,15 @@
     }
 }
 
+.listCard-heartIcon {
+    color: black;
+    cursor: pointer;
+
+    &:hover {
+        color: blueviolet;
+    }
+}
+
 .card-icon{
     display: flex;
     justify-content: space-evenly;
