@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import {
   Button, Form, Message, Icon,
 } from 'semantic-ui-react';
@@ -18,7 +19,7 @@ function SignUp({
 
   const fetchData = async ({ email, password, passwordConfirm }) => {
     try {
-      const response = await axios.post('http://localhost:3001/user/signup', {
+      const response = await axios.post('http://alinemassard-server.eddi.cloud:8080/user/signup', {
 
         email,
         password,

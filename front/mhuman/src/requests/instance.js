@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiInstance = axios.create({
-  baseURL: 'http://localhost:3001',
+  baseURL: 'http://alinemassard-server.eddi.cloud:8080/',
 });
 
 export function setToken(token) {

@@ -38,7 +38,7 @@ const resetPassword = {
                 const token3 = await tokenDataMapper.store(user.id, token);
             }
             //console.log('token after set ------>', token);
-            const link = `http://localhost:3000/${user.id}/${token}`;
+            const link = `http://lyndonsimpson-server.eddi.cloud:8080/${user.id}/${token}`;
             await sendEmail(user.email, "Password reset", `Bonjour, Voici le lien pour récupérer votre mot de passe : ${link}`);
             res.send("password reset link sent to your email account");
         } catch (error) {
