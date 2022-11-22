@@ -23,13 +23,13 @@ function NotFound() {
         <div className="notfound-text">
           <h1 className="notfound-title">404</h1>
           <h2>Mia'oups ! !</h2>
-          <h2>La page que vous cherchez n'as pas l'air d'être ici !</h2>
+          <h2>La page que vous cherchez n'a pas l'air d'être ici !</h2>
           <div className="notfound-linkwrapper">
             <Link
               to="/"
               className="notfound-link"
             >
-              <p> Retourner a la page d'acceuil </p>
+              <p> Retourner à la page d'accueil </p>
             </Link>
             <Link
               to="/"
