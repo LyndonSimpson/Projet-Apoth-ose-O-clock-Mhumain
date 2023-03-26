@@ -8,7 +8,7 @@ but to use sqitch, you must change configuration in the sqitch.conf file and spe
 
 you must aso set-up your .env, it contains important info, you can check the required environement variables in the .env.example file.
 
-once these 2 things are doàne you can launch this comand line `sqitch deploy`, this will create the tables of the database. You can also use `sqitch revert` to come back to older versions and even specify to what state you want to come back to; For more information on sqitch, please visit their offcicial doc ---> https://sqitch.org/docs/
+once these 2 things are done you can launch this comand line `sqitch deploy`, this will create the tables of the database. You can also use `sqitch revert` to come back to older versions and even specify to what state you want to come back to; For more information on sqitch, please visit their offcicial doc ---> https://sqitch.org/docs/
 
 ### launching the API
 
